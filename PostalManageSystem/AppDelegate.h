@@ -11,7 +11,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (retain,nonatomic)NSString * titleForCurrentPage;
+@property BOOL login;
 
 @end
 
