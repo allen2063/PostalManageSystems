@@ -42,7 +42,7 @@
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    self.titleLabel.textColor = [UIColor yellowColor];//UIColorFromRGBValue(0xfbcf02);
+    self.titleLabel.textColor = [UIColor yellowColor];   //UIColorFromRGBValue(0xfbcf02);
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.text = app.titleForCurrentPage;
     self.navigationItem.titleView = self.titleLabel;
