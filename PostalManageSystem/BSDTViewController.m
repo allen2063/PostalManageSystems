@@ -48,6 +48,9 @@
     self.titleLabel.text = app.titleForCurrentPage;
     self.navigationItem.titleView = self.titleLabel;
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(doLogin) name:@"doLogin" object:nil];
+
+    
     self.bsdtView = [[UIView alloc]initWithFrame:self.view.bounds];
     self.bsdtView.backgroundColor = [UIColor grayColor];
     [self.view addSubview:self.bsdtView];
@@ -202,13 +205,24 @@
 }
 
 - (void)login{
-    [self.view sendSubviewToBack:self.loginView];
-    self.titleLabel.text = @"办事大厅";
+    if (accountTextField.text.length > 0 && passwordTextField.text.length > 0) {
+        [app.network loginWithToken:@"jiou" AndUserName:accountTextField.text AndUserPassword:passwordTextField.text];
+
+    }else{
+        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:nil message:@"账户密码均不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
+    }
+    
     if (passwordTextField.isFirstResponder) {
         [passwordTextField resignFirstResponder];
     }else if (accountTextField.isFirstResponder){
         [accountTextField resignFirstResponder];
     }
+}
+
+- (void)doLogin{
+            [self.view sendSubviewToBack:self.loginView];
+            self.titleLabel.text = @"办事大厅";
 }
 
 - (void)jumpPageForBSDT:(UIButton*)btn{

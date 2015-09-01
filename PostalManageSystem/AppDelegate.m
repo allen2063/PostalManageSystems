@@ -21,10 +21,11 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGBValue(0x028e45)];//邮政的绿色
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [[UINavigationBar appearance] setTintColor:[UIColor yellowColor]];    //导航栏按钮颜色
     self.titleForCurrentPage = @"邮政普遍服务信息管理系统";
     self.login = NO;
+    self.network = [[ConnectionAPI alloc]init];
     MainViewController * mainViewController = [[MainViewController alloc] initWithNibName:nil bundle:nil];
     UINavigationController * navCon = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     self.window.rootViewController = navCon;

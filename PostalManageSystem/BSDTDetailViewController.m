@@ -213,15 +213,11 @@
     [self.view addSubview:submitBtn];
 }
 
-- (void)submit{
-   
-}
-
 #pragma mark - 申请新增网点
 - (void)initCreateBranches{
     createBranchesScrollView = [[UIScrollView alloc]initWithFrame:self.view.bounds];
     createBranchesScrollView.delegate = self;
-    createBranchesScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height*2.5);
+    createBranchesScrollView.contentSize = CGSizeMake(self.view.frame.size.width, heightInterval*27+heightForOneLine*26);
     currentView = createBranchesScrollView;
     createBranchesScrollView.bounces = NO;
     self.blackView.frame = CGRectMake(0, 0,  createBranchesScrollView.contentSize.width, createBranchesScrollView.contentSize.height);
@@ -765,6 +761,24 @@
     textField32.returnKeyType = UIReturnKeyDone;
     textField32.font = [UIFont systemFontOfSize:selectedfont];
     [createBranchesScrollView addSubview:textField32];
+    //line24
+    UIButton * submitBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    submitBtn.frame = CGRectMake(UISCREENWIDTH/6, heightInterval*25+heightForOneLine*24, UISCREENWIDTH*2/3, heightForOneLine*1.5);
+    submitBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
+    //绘制圆角矩形按钮和边线
+    [submitBtn.layer setMasksToBounds:YES];
+    [submitBtn.layer setCornerRadius:10.0]; //设置矩形四个圆角半径
+    [submitBtn.layer setBorderWidth:1.0];   //边框宽度
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 2/255.0, 142/255.0, 69/255.0, 1 });
+    [submitBtn.layer setBorderColor:colorref];//边框颜色
+    [submitBtn setTitle:@"提交" forState:UIControlStateNormal] ;
+    [submitBtn setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
+    submitBtn.titleLabel.font = [UIFont systemFontOfSize:17];
+    submitBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [submitBtn addTarget:self action:@selector(submit) forControlEvents:UIControlEventTouchUpInside];
+    [createBranchesScrollView addSubview:submitBtn];
+
     
 }
 
@@ -1030,6 +1044,10 @@
         NSLog(@"black been touched");
     }
     [self cancelView];
+}
+
+- (void)submit{
+
 }
 
 /*

@@ -14,7 +14,7 @@
 //#import "GMDCircleLoader.h"
 //#import "HYSegmentedControl.h"
 #import "AppDelegate.h"
-
+#import "ConnectionAPI.h"
 #define UISCREENHEIGHT  self.view.bounds.size.height
 #define UISCREENWIDTH  self.view.bounds.size.width
 #define isPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)?YES:NO
