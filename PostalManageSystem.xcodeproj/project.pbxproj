@@ -10,6 +10,10 @@
 		565430631B96AF3300B49E0E /* GMDCircleLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 565430621B96AF3300B49E0E /* GMDCircleLoader.m */; };
 		565430691B96C3B500B49E0E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 565430681B96C3B500B49E0E /* settings.png */; };
 		56B535881B8718B400238BE6 /* BSDTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B535871B8718B400238BE6 /* BSDTViewController.m */; };
+		56B636DC1B9C65030005290D /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636D71B9C65030005290D /* TFHpple.m */; };
+		56B636DD1B9C65030005290D /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636D91B9C65030005290D /* TFHppleElement.m */; };
+		56B636DE1B9C65030005290D /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636DB1B9C65030005290D /* XPathQuery.m */; };
+		56B636E01B9C65400005290D /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56B636DF1B9C65400005290D /* libxml2.2.dylib */; };
 		56BFF5411B8AF2AB00D5E896 /* BSDTDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */; };
 		56C59DD11B82DD5F00D96F08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD01B82DD5F00D96F08 /* main.m */; };
 		56C59DD41B82DD5F00D96F08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD31B82DD5F00D96F08 /* AppDelegate.m */; };
@@ -84,6 +88,13 @@
 		565430681B96C3B500B49E0E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		56B535861B8718B400238BE6 /* BSDTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTViewController.h; sourceTree = "<group>"; };
 		56B535871B8718B400238BE6 /* BSDTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTViewController.m; sourceTree = "<group>"; };
+		56B636D61B9C65030005290D /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
+		56B636D71B9C65030005290D /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
+		56B636D81B9C65030005290D /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
+		56B636D91B9C65030005290D /* TFHppleElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHppleElement.m; sourceTree = "<group>"; };
+		56B636DA1B9C65030005290D /* XPathQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPathQuery.h; sourceTree = "<group>"; };
+		56B636DB1B9C65030005290D /* XPathQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPathQuery.m; sourceTree = "<group>"; };
+		56B636DF1B9C65400005290D /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		56BFF53F1B8AF2AB00D5E896 /* BSDTDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTDetailViewController.h; sourceTree = "<group>"; };
 		56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTDetailViewController.m; sourceTree = "<group>"; };
 		56C59DCB1B82DD5F00D96F08 /* PostalManageSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostalManageSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56B636E01B9C65400005290D /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,6 +214,20 @@
 				56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */,
 			);
 			name = BanShiDaTing;
+			sourceTree = "<group>";
+		};
+		56B636D51B9C65030005290D /* Hpple */ = {
+			isa = PBXGroup;
+			children = (
+				56B636DF1B9C65400005290D /* libxml2.2.dylib */,
+				56B636D61B9C65030005290D /* TFHpple.h */,
+				56B636D71B9C65030005290D /* TFHpple.m */,
+				56B636D81B9C65030005290D /* TFHppleElement.h */,
+				56B636D91B9C65030005290D /* TFHppleElement.m */,
+				56B636DA1B9C65030005290D /* XPathQuery.h */,
+				56B636DB1B9C65030005290D /* XPathQuery.m */,
+			);
+			path = Hpple;
 			sourceTree = "<group>";
 		};
 		56C59DC21B82DD5F00D96F08 = {
@@ -245,6 +271,7 @@
 		56C59DCE1B82DD5F00D96F08 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				56B636D51B9C65030005290D /* Hpple */,
 				56CE5B871B9ADAFE008D3B75 /* DJRefresh */,
 				565430601B96AF0900B49E0E /* Indicator */,
 				56E508161B95963900DB22A7 /* Network */,
@@ -529,7 +556,10 @@
 				56CE5B861B9AD769008D3B75 /* Pager.m in Sources */,
 				56C59E451B8331D500D96F08 /* HZAreaPickerView.m in Sources */,
 				56C59E471B8331D500D96F08 /* HZLocation.m in Sources */,
+				56B636DD1B9C65030005290D /* TFHppleElement.m in Sources */,
 				565430631B96AF3300B49E0E /* GMDCircleLoader.m in Sources */,
+				56B636DE1B9C65030005290D /* XPathQuery.m in Sources */,
+				56B636DC1B9C65030005290D /* TFHpple.m in Sources */,
 				56C59E341B831DFC00D96F08 /* YZBMCXViewController.m in Sources */,
 				56B535881B8718B400238BE6 /* BSDTViewController.m in Sources */,
 				56C59DD41B82DD5F00D96F08 /* AppDelegate.m in Sources */,
@@ -663,8 +693,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -675,8 +710,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

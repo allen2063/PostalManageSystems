@@ -24,7 +24,7 @@
 + (NSString *)md5:(NSString *)str;  //md5加密
 - (void)loginWithToken:(NSString *)token AndUserName:(NSString *)userName AndUserPassword:(NSString *)userPassword;                     //获取首页热点新闻的图片、标题、内容
 - (void)getListWithToken:(NSString *)token AndType:(NSString *)type AndListPager:(Pager *)listPager;
-
+- (void)getDetailViewWithToken:(NSString *)token AndID:(NSString *)ID;
 @property (strong, nonatomic) NSMutableData *webData;
 @property (strong, nonatomic) NSURLConnection *conn;
 @property (strong, nonatomic) NSMutableString *getXMLResults;

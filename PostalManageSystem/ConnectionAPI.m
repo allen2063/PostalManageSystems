@@ -106,7 +106,7 @@
 - (void)withInterface:(NSString *)interface{
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"",@"", nil];
     NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
-    NSLog(@"%@",soapMsg);
+    NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
     NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
@@ -132,7 +132,7 @@
 - (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value {
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,nil];
     NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
-    NSLog(@"%@",soapMsg);
+    NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
     NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
@@ -157,10 +157,10 @@
 
 //2参数
 - (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(NSString *)argument2Value{
-    NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Name,argument1Value,argument1Name,argument2Name,argument2Value,argument2Name, nil];
+    NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name, nil];
     NSString *soapMsg = [NSString stringWithFormat:@"%@",dic];
     
-    NSLog(@"%@",soapMsg);
+    NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
     NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
@@ -185,7 +185,7 @@
 - (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(NSString *)argument2Value andArgument3Name:(NSString *)argument3Name andArgument3Value:(id)argument3Value{
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name,argument3Value,argument3Name, nil];
     NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
-    NSLog(@"%@",soapMsg);
+    NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
     NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
@@ -212,7 +212,7 @@
     
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name,argument3Value,argument3Name,argument4Value,argument4Name, nil];
     NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
-    NSLog(@"%@",soapMsg);
+    NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
     NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
@@ -244,6 +244,11 @@
     NSDictionary * listPagerJson = [ConnectionAPI getObjectData:listPager];
     communicatingInterface = @"baseNewsApi/getNewsByType";
     [self withInterface:@"baseNewsApi/getNewsByType" andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"type" andArgument2Value:type andArgument3Name:@"listPager" andArgument3Value:listPagerJson];
+}
+
+- (void)getDetailViewWithToken:(NSString *)token AndID:(NSString *)ID{
+    communicatingInterface = @"baseNewsApi/getNewsById";
+    [self withInterface:@"baseNewsApi/getNewsById" andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"id" andArgument2Value:ID];
 }
 
 
@@ -296,7 +301,6 @@
     }
 }
 
-
 // 完成接收数据时调用
 -(void) connectionDidFinishLoading:(NSURLConnection *) connection {
     NSString *theXML = [[NSString alloc] initWithBytes:[self.webData mutableBytes]
@@ -334,6 +338,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"doLogin" object:self userInfo:resultDic];
     }else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsByType" object:self userInfo:resultDic];
+    }else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById" ]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsById" object:self userInfo:resultDic];
     }
 }
 

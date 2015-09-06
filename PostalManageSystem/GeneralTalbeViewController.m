@@ -17,6 +17,7 @@
     BOOL isLoading;              //  加载状态
     int threadBackCount;
     BOOL shouldUpdateCache;
+    NSString * titleID;
 }
 @property (strong,nonatomic)UILabel * titleLabel;
 @property (strong,nonatomic)UITableView * tableView;
@@ -97,12 +98,13 @@
     app.pager.currentPage = [[[noteDic objectForKey:@"listPager"]objectForKey:@"currentPage"]intValue];
     app.pager.totalPages = [[[noteDic objectForKey:@"listPager"]objectForKey:@"totalPages"]intValue];
     NSString * getNewsByType = [noteDic objectForKey:@"result"];
-    if ([getNewsByType isEqualToString:@"0"]) {
-        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"获取列表失败" message:@"请检查网络后重试！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alerts show];
-    }else if ([getNewsByType isEqualToString:@"1"]){
+    //验证返回是否正确
+    if ([getNewsByType isEqualToString:@"1"]) {
         [self.tempDataList removeAllObjects];
         self.tempDataList = [noteDic objectForKey:@"data"];
+    }else if ([getNewsByType isEqualToString:@"1"]){
+        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"获取列表失败" message:@"请检查网络后重试！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
     }
     //通过md5值判断缓存是否需要更新
     NSString * interface = [app.interfaceTransform objectForKey:app.titleForCurrentPage];
@@ -219,7 +221,7 @@
     if (cell == nil) {
         cell = [[GeneralTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    
+    //无图片布局
     if([[[self.dataList objectAtIndex:indexPath.row]objectForKey:@"imageUrl"] isKindOfClass:[NSString class]]
        && [(NSString *)[[self.dataList objectAtIndex:indexPath.row]objectForKey:@"imageUrl"] length]==0){
         cell.titleLabel.text = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"title"];
@@ -227,7 +229,9 @@
         NSString * pubTime = [[[self.dataList objectAtIndex:indexPath.row]objectForKey:@"pubTime"]substringWithRange:NSMakeRange(0,10)];
         pubTime = [NSString stringWithFormat:@"发布时间:%@",pubTime];
         cell.timeLabel.text = pubTime;
-    }else{
+    }
+    //有图片布局
+    else{
         [cell addPicLayout];
         cell.titleLabel.text = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"title"];
         cell.writerLabel.text = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"author"];
@@ -242,10 +246,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    //if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
+    if (isLoading == NO) {
+    titleID = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"id"];
+    [app.network getDetailViewWithToken:@"jiou" AndID:titleID];
         MYDDCBGViewController * myddcbg = [[MYDDCBGViewController alloc]init];
         [self.navigationController pushViewController:myddcbg animated:YES];
-    //}
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
