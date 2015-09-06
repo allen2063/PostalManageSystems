@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface GeneralTableViewCell : UITableViewCell
+- (void)addPicLayout;
 @property(nonatomic,strong) UILabel * titleLabel;
 @property(nonatomic,strong) UILabel * writerLabel;
 @property(nonatomic,strong) UILabel * timeLabel;

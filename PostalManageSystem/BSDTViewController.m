@@ -11,14 +11,18 @@
 #define BTNWIDTH (UISCREENWIDTH/2-2)
 #define BTNHEIGHT ((UISCREENHEIGHT - NAVIGATIONHIGHT)/4-2)
 #define IMGSIZERATIO 0.7
-@interface BSDTViewController ()<UITextFieldDelegate>{
+#define TABLEVIEWCELLWIDTH 70
+@interface BSDTViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>{
     AppDelegate *app;
     UITextField * accountTextField;
     UITextField * passwordTextField;
+    BOOL showLoginSetting;
 }
 @property (strong,nonatomic) UILabel * titleLabel;
 @property (strong,nonatomic) UIView * loginView;
 @property (strong,nonatomic) UIView * bsdtView;
+@property (strong,nonatomic) UITableView * table;
+@property (strong,nonatomic) NSMutableArray * dataList;
 @end
 
 @implementation BSDTViewController
@@ -27,10 +31,17 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.view.backgroundColor = [UIColor whiteColor];
-        
+        self.table =[[UITableView alloc]init];
+        self.dataList = [[NSMutableArray alloc]initWithObjects:@"注销",@"关于", nil];
+        self.table.dataSource = self;
+        self.table.delegate = self;
+        self.table.frame = CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, 0, TABLEVIEWCELLWIDTH, 0);
+        [self.view addSubview:self.table];
     }
     return self;
 }
+
+#pragma mark - UI
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -48,8 +59,14 @@
     self.titleLabel.text = app.titleForCurrentPage;
     self.navigationItem.titleView = self.titleLabel;
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(doLogin) name:@"doLogin" object:nil];
-
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(doLogin:) name:@"doLogin" object:nil];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"settings"]forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setting)forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 25, 25);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.rightBarButtonItem = menuButton;
     
     self.bsdtView = [[UIView alloc]initWithFrame:self.view.bounds];
     self.bsdtView.backgroundColor = [UIColor grayColor];
@@ -199,15 +216,37 @@
         [self.loginView addSubview:forgetBtn];
         [self.view addSubview:self.loginView];
         [self.view bringSubviewToFront:self.loginView];
-        
+        accountTextField.text = @"1";
+        passwordTextField.text = @"q";
     }
 
 }
 
+- (void)jumpPageForBSDT:(UIButton*)btn{
+    BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
+    switch (btn.tag) {
+        case 1:
+            app.titleForCurrentPage = @"用户信息修改";
+            bsdt = [bsdt init];
+            [self.navigationController pushViewController:bsdt animated:YES];
+            break;
+        case 2:
+            app.titleForCurrentPage = @"申请新增网点";
+            bsdt = [bsdt init];
+            [self.navigationController pushViewController:bsdt animated:YES];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - 功能实现
+
 - (void)login{
     if (accountTextField.text.length > 0 && passwordTextField.text.length > 0) {
+        [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
         [app.network loginWithToken:@"jiou" AndUserName:accountTextField.text AndUserPassword:passwordTextField.text];
-
     }else{
         UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:nil message:@"账户密码均不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alerts show];
@@ -220,29 +259,91 @@
     }
 }
 
-- (void)doLogin{
-            [self.view sendSubviewToBack:self.loginView];
-            self.titleLabel.text = @"办事大厅";
+- (void)doLogin:(NSNotification *)note{
+    [GMDCircleLoader hideFromView:self.view animated:YES];
+    NSString * loginResult = [[note userInfo] objectForKey:@"result"];
+    if ([loginResult isEqualToString:@"0"]) {
+        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"登录失败" message:@"请检查账号、密码！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
+    }else if ([loginResult isEqualToString:@"1"]){
+        [self.view sendSubviewToBack:self.loginView];
+        
+        self.titleLabel.text = @"办事大厅";
+        app.login = YES;
+    }
 }
 
-- (void)jumpPageForBSDT:(UIButton*)btn{
-    BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
-    switch (btn.tag) {
-        case 1:
-            app.titleForCurrentPage = @"用户信息修改";
+- (void)setting{
+    if (showLoginSetting ==YES) {
+        showLoginSetting = NO;
+        [self cancelView];
+    }else{
+        showLoginSetting = YES;
+        [self showTableView];
+    }
+}
 
-            bsdt = [bsdt init];
-            [self.navigationController pushViewController:bsdt animated:YES];
-            break;
-        case 2:
-            app.titleForCurrentPage = @"申请新增网点";
+#pragma mark - TableView
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [self.dataList count];
+}
 
-            bsdt = [bsdt init];
-            [self.navigationController pushViewController:bsdt animated:YES];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    //这样写在IOS7.0以后 TableViewCell的分割线就不会往右挫15个像素点了
+    [tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"cell" ];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    }
+    cell.textLabel.text = [self.dataList objectAtIndex:indexPath.row];
+    cell.backgroundColor = UIColorFromRGBValue(0x028e45);
+    cell.textLabel.textColor = [UIColor yellowColor];
+    cell.alpha = 0.8;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
+    switch (indexPath.row) {
+        case 0:{
+            NSLog(@"注销");
+            UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"注销" message:@"是否确定注销" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alerts.delegate = self;
+            [alerts show];
             break;
-            
+        }
+        case 1:{
+            NSLog(@"关于");
+            UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"关于" message:@"2015-2016 贵阳市邮政管理局保留所有权利" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alerts show];
+            break;
+        }
         default:
             break;
+    }
+}
+
+-(void)cancelView
+{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.table.frame =  CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, 0, TABLEVIEWCELLWIDTH, 0);
+    }];
+    
+}
+
+- (void)showTableView{
+    [UIView animateWithDuration:0.3 animations:^{
+        self.table.frame = CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, NAVIGATIONHIGHT, TABLEVIEWCELLWIDTH, 44*self.dataList.count);
+                }];
+}
+
+#pragma mark - AlertView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        NSLog(@"logout");
+        app.login = NO;
+        [self cancelView];
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -257,8 +358,13 @@
     return YES;
 }
 
+#pragma mark - touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
+    UITouch *touch = [touches anyObject];
+    if (touch.view != self.table ) {
+        [self cancelView];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

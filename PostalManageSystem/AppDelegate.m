@@ -26,7 +26,10 @@
     self.titleForCurrentPage = @"邮政普遍服务信息管理系统";
     self.login = NO;
     self.network = [[ConnectionAPI alloc]init];
+    self.pager = [[Pager alloc]init];
     MainViewController * mainViewController = [[MainViewController alloc] initWithNibName:nil bundle:nil];
+    self.interfaceTransform = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"baseNewsApi/getNewsByType",@"满意度调查结果通告", nil];
+    
     UINavigationController * navCon = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     self.window.rootViewController = navCon;
     [self.window makeKeyAndVisible];

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Pager.h"
 @interface ConnectionAPI : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate>{
     //UIAlertView * alerts;
     float timeout;
@@ -19,8 +20,10 @@
     NSString * urlToServer;
     UIAlertView * alerts;
 }
-- (NSString *)md5:(NSString *)str;  //md5加密
++(NSMutableDictionary *)readFileDic;
++ (NSString *)md5:(NSString *)str;  //md5加密
 - (void)loginWithToken:(NSString *)token AndUserName:(NSString *)userName AndUserPassword:(NSString *)userPassword;                     //获取首页热点新闻的图片、标题、内容
+- (void)getListWithToken:(NSString *)token AndType:(NSString *)type AndListPager:(Pager *)listPager;
 
 @property (strong, nonatomic) NSMutableData *webData;
 @property (strong, nonatomic) NSURLConnection *conn;
