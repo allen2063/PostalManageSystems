@@ -183,7 +183,19 @@
 - (void)getDataFromServer{
     if (isLoading == NO) {
         isLoading = YES;
-        [app.network getListWithToken:@"jiou" AndType:@"myddc" AndListPager:app.pager];
+        if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
+            [app.network getListWithToken:@"jiou" AndType:@"myddc" AndListPager:app.pager];
+        }else if([app.titleForCurrentPage isEqualToString:@"信息公告"]){
+            [app.network getListWithToken:@"jiou" AndType:@"xxgg" AndListPager:app.pager];
+        }else if([app.titleForCurrentPage isEqualToString:@"行业统计"]){
+            [app.network getListWithToken:@"jiou" AndType:@"hytj" AndListPager:app.pager];
+        }else if([app.titleForCurrentPage isEqualToString:@"领导讲话"]){
+            [app.network getListWithToken:@"jiou" AndType:@"ldjh" AndListPager:app.pager];
+        }else if([app.titleForCurrentPage isEqualToString:@"行业动态"]){
+            [app.network getListWithToken:@"jiou" AndType:@"hydt" AndListPager:app.pager];
+        }else if([app.titleForCurrentPage isEqualToString:@"政策法规"]){
+            [app.network getListWithToken:@"jiou" AndType:@"zcfg" AndListPager:app.pager];
+        }
     }
 }
 
@@ -191,7 +203,7 @@
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
     directionForNow = direction;
     //isLoading = YES;
-    if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
+    //if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
         if (self.refresh.refreshingDirection==DJRefreshingDirectionBottom){
             if (app.pager.currentPage < app.pager.totalPages) {
                 //数据返回太快   影响动画效果  顾延迟请求
@@ -210,7 +222,7 @@
             [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServer) userInfo:nil repeats:NO];
             
         }
-    }
+   // }
 }
 
 - (void)addDataWithDirection:(DJRefreshDirection)direction{

@@ -134,8 +134,8 @@
         int index = 0;
         NSString * insertString =@" width=\"100%\" height=\"auto\" ";
         while ([tempString rangeOfString:@"<img"].length) {
-            [tempArray addObject:[NSString stringWithFormat:@"%lu",
-                                  [tempString rangeOfString:@"<img"].location+[tempString rangeOfString:@"<img"].length]];
+            [tempArray addObject:[NSString stringWithFormat:@"%d",
+                                  (int)([tempString rangeOfString:@"<img"].location+[tempString rangeOfString:@"<img"].length)]];
             tempString = [tempString substringFromIndex:[tempString rangeOfString:@"<img"].location+[tempString rangeOfString:@"<img"].length];
             index = index + [[tempArray objectAtIndex:countOfArray]intValue];
             [htmlString insertString:insertString atIndex:index];
