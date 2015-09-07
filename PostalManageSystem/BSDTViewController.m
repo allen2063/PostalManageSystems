@@ -32,6 +32,7 @@
     if (self) {
         self.view.backgroundColor = [UIColor whiteColor];
         self.table =[[UITableView alloc]init];
+        self.table.scrollEnabled = NO;
         self.dataList = [[NSMutableArray alloc]initWithObjects:@"注销",@"关于", nil];
         self.table.dataSource = self;
         self.table.delegate = self;
