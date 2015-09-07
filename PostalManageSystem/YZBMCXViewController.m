@@ -55,14 +55,14 @@
     self.titleLabel.text = app.titleForCurrentPage;
     self.navigationItem.titleView = self.titleLabel;
     
-    self.areaText = [[UITextField alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT*2.5, UISCREENWIDTH/2, 45)];
+    self.areaText = [[UITextField alloc]initWithFrame:CGRectMake(0, UISCREENHEIGHT/5, UISCREENWIDTH/2, 45)];
     [self.areaText.layer setMasksToBounds:YES];
     [self.areaText.layer setCornerRadius:8.0]; //设置矩形四个圆角半径
     [self.areaText.layer setBorderWidth:2.0];   //边框宽度
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 2/255.0, 142/255.0, 69/255.0, 1 });
     [self.areaText.layer setBorderColor:colorref];//边框颜色
-    self.areaText.center = CGPointMake(self.view.center.x, NAVIGATIONHIGHT*3.7);
+    self.areaText.center = CGPointMake(self.view.center.x, UISCREENHEIGHT/2.5);
     self.areaText.delegate = self;
     self.areaText.text = @" 北京 通州";
     self.areaText.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -89,7 +89,7 @@
     searchBtn.backgroundColor = [UIColor lightGrayColor];
     [searchBtn setTitle:@"查询" forState:UIControlStateNormal];
     searchBtn.frame =CGRectMake(0, 0, UISCREENWIDTH/3, 30);
-    searchBtn.center = self.view.center;
+    searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +20);;
     searchBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
     [searchBtn setTintColor:[UIColor yellowColor]];
     [searchBtn addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];

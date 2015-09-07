@@ -7,15 +7,14 @@
 //
 
 #import "MYDDCBGViewController.h"
-
-@interface MYDDCBGViewController ()<UIWebViewDelegate,NSXMLParserDelegate>{
+#import "TFHpple.h"
+@interface MYDDCBGViewController ()<UIWebViewDelegate>{
     AppDelegate *app;
     NSString * matchingElement;
     BOOL elementFound;
 }
 @property (strong,nonatomic)UILabel * titleLabel;
 @property (strong,nonatomic)UIWebView * webView;
-@property (strong, nonatomic) NSXMLParser *xmlParser;
 
 @end
 
@@ -25,21 +24,22 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.view.backgroundColor = UIColorFromRGBValue(0xececec);
+        self.view.backgroundColor = [UIColor whiteColor];//UIColorFromRGBValue(0xececec);
         matchingElement = @"img";
-        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT + UISCREENHEIGHT/7, UISCREENWIDTH, UISCREENHEIGHT*6/7-NAVIGATIONHIGHT)];
+        int headLabelHieght = UISCREENHEIGHT/7 < 70 ? UISCREENHEIGHT/7: 70;
+
+        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT + headLabelHieght, UISCREENWIDTH, UISCREENHEIGHT-NAVIGATIONHIGHT - headLabelHieght)];
         self.webView.backgroundColor = [UIColor clearColor];
-        self.webView.scrollView.bounces = NO;
+        self.webView.scrollView.bounces = YES;
         self.webView.delegate = self;
         [self.view addSubview:self.webView];
         self.automaticallyAdjustsScrollViewInsets = NO;
-        
-        UILabel * headLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT, UISCREENWIDTH, UISCREENHEIGHT/7)];
-        headLabel.backgroundColor = [UIColor whiteColor];
+        UILabel * headLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT, UISCREENWIDTH, headLabelHieght)];
+        headLabel.backgroundColor = [UIColor clearColor];
         [self.view addSubview:headLabel];
         
         UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, UISCREENWIDTH, headLabel.frame.size.height*2/3)];
-        titleLabel.text = @"你要干什么  我是标题！！你要干什么  我是标题！！你要干什么  我是标题！！";
+        titleLabel.text = @"标题";
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.font = [UIFont boldSystemFontOfSize:17];
         titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -65,6 +65,7 @@
         writeLabel.textColor = UIColorFromRGBValue(0x9e9e9e);
         writeLabel.tag = 3;
         [headLabel addSubview:writeLabel];
+        
     }
     return self;
 }
@@ -111,31 +112,51 @@
         tempLabel = (UILabel *)[self.view viewWithTag:3];
         tempLabel.text = [NSString stringWithFormat:@"%@%@",tempLabel.text,[detailDic objectForKey:@"author"]];
         
-        NSString * htmlString = [detailDic objectForKey:@"details"];
-        [self adjustPicForScreen:htmlString];
+        NSMutableString * htmlString =[[NSMutableString alloc]initWithString: [detailDic objectForKey:@"details"]];
+        
+        htmlString = [self adjustPicForScreen:htmlString];
+        
         self.webView.scalesPageToFit = NO;
         [self.webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:htmlString]];
     }else{
         UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"获取列表失败" message:@"请检查网络后重试！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
         [alerts show];
     }
-//    NSData * webData =[htmlString dataUsingEncoding:NSUTF8StringEncoding] ;
-//    self.xmlParser = [[NSXMLParser alloc] initWithData: webData];
-//    [self.xmlParser setDelegate: self];
-//    [self.xmlParser setShouldResolveExternalEntities: YES];
-//    [self.xmlParser parse];
-    
 }
 
-- (void)adjustPicForScreen:(NSString *)htmlString{
-    if ([htmlString rangeOfString:@"<img src="].location >0) {
-        int countOfPic = [htmlString rangeOfString:@"<img src="].location;
-        NSMutableArray * arr = (NSMutableArray *)[htmlString componentsSeparatedByString:@"<img src="];
-        NSLog(@"!!!!!!!!!!!%@  %d",arr,countOfPic);
-        //NSRange
-//        NSString * d = @"1626636456124w46e6r456";
-//        NSLog(@"%d  %d",[d rangeOfString:@"6"].length,[d rangeOfString:@"6"].location);
+//在HTML代码中找到图片标签(<img) 并在后面添加图片的长宽标签(@" width=\"100%\" height=\"auto\" ")适应屏幕
+- (NSMutableString *)adjustPicForScreen:(NSMutableString *)htmlString{
+    
+    if ([htmlString rangeOfString:@"<img"].length>0) {
+        NSString * tempString = [NSString stringWithFormat:@"%@",htmlString];
+        NSMutableArray * tempArray = [[NSMutableArray alloc]init];
+        int countOfArray = 0;
+        int index = 0;
+        NSString * insertString =@" width=\"100%\" height=\"auto\" ";
+        while ([tempString rangeOfString:@"<img"].length) {
+            [tempArray addObject:[NSString stringWithFormat:@"%lu",
+                                  [tempString rangeOfString:@"<img"].location+[tempString rangeOfString:@"<img"].length]];
+            tempString = [tempString substringFromIndex:[tempString rangeOfString:@"<img"].location+[tempString rangeOfString:@"<img"].length];
+            index = index + [[tempArray objectAtIndex:countOfArray]intValue];
+            [htmlString insertString:insertString atIndex:index];
+            index = index + (int)[insertString length];
+            countOfArray++;
+//            NSLog(@"tempString:%@  length:%d",tempString,[tempString length]);
+//            NSLog(@"htmlString auto %@   length:%d",htmlString,[htmlString length]);
+        }
     }
+    
+    //第三方库TFHpple解析html并获得图片标签
+//    参见博客：http://www.cnblogs.com/YouXianMing/p/3731866.html    及github工程：https://github.com/topfunky/hpple
+//    NSData  * data      = [htmlString dataUsingEncoding:NSASCIIStringEncoding];
+//    TFHpple * doc       = [[TFHpple alloc] initWithHTMLData:data];
+//    NSArray * elements  = [doc searchWithXPathQuery:@"//img"];
+//    NSMutableArray * newLabel = [[NSMutableArray alloc]init];
+//    for (TFHppleElement * element in elements) {
+//        NSLog(@"%@",element.raw);
+//    }
+    
+    return  htmlString;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -143,66 +164,13 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+    [GMDCircleLoader hideFromView:self.view animated:YES];
+    //[GMDCircleLoader setOnView:self.view withTitle:@"网页解析中..." animated:YES];
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    [webView stringByEvaluatingJavaScriptFromString:
-     @"var script = document.createElement('script');"
-     "script.type = 'text/javascript';"
-     "script.text = \"function ResizeImages() { "
-     "var myimg,oldwidth;"
-     "var maxwidth = 300.0;" // UIWebView中显示的图片宽度
-     "for(i=0;i <document.images.length;i++){"
-     "myimg = document.images[i];"
-     "if(myimg.width > maxwidth){"
-     "oldwidth = myimg.width;"
-     "myimg.width = maxwidth;"
-     "}"
-     "}"
-     "}\";"
-     "document.getElementsByTagName('head')[0].appendChild(script);"];
-    
-    [webView stringByEvaluatingJavaScriptFromString:@"ResizeImages();"];
-    
-  
-    
-
-}
-
-#pragma mark XML Parser Delegate Methods
-
-// 开始解析一个元素名
--(void) parser:(NSXMLParser *) parser didStartElement:(NSString *) elementName namespaceURI:(NSString *) namespaceURI qualifiedName:(NSString *) qName attributes:(NSDictionary *) attributeDict {
-    NSLog(@"%@",elementName);
-    if ([elementName isEqualToString:matchingElement]) {
-        elementFound = YES;
-        }
-}
-
-// 追加找到的元素值，一个元素值可能要分几次追加
--(void)parser:(NSXMLParser *) parser foundCharacters:(NSString *)string {
-    if (elementFound) {
-        NSLog(@"%@",string);
-    }
-}
-
-// 结束解析这个元素名
--(void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-    
-    
-}
-
-// 解析整个文件结束后
-- (void)parserDidEndDocument:(NSXMLParser *)parser {
-//    if (self.soapResults) {
-//        self.soapResults = nil;
-//    }
-}
-
-// 出错时，例如强制结束解析
-- (void) parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-//    if (self.soapResults) {
-//        self.soapResults = nil;
-//    }
-    //NSLog(@"????????????%@",parseError);
+    //[GMDCircleLoader hideFromView:self.view animated:YES];
 }
 
 /*

@@ -16,8 +16,9 @@
     DJRefreshDirection directionForNow;
     BOOL isLoading;              //  加载状态
     int threadBackCount;
-    BOOL shouldUpdateCache;
+    BOOL shouldUpdateCacheForTitle;
     NSString * titleID;
+    BOOL shouldUpdateCacheForPic;
 }
 @property (strong,nonatomic)UILabel * titleLabel;
 @property (strong,nonatomic)UITableView * tableView;
@@ -55,14 +56,18 @@
     self.navigationItem.titleView = self.titleLabel;
     self.automaticallyAdjustsScrollViewInsets = NO;         //  解决视图偏移  默认YES  这样控制器可以自动调整  设置为NO后即可自己调整
     app.pager = [app.pager init];
-    shouldUpdateCache = NO;
+    shouldUpdateCacheForTitle = NO;
+    shouldUpdateCacheForPic =NO;
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getNewsByType:) name:@"getNewsByType" object:nil];
     //读取缓存数据
     self.cachaDic = [ConnectionAPI readFileDic];
+    if (self.cachaDic == nil) {
+        self.cachaDic = [[NSMutableDictionary alloc]init];
+    }
     NSString * interface = [app.interfaceTransform objectForKey:app.titleForCurrentPage];
     if ([[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]] isKindOfClass:[NSMutableDictionary class]]) {
-        self.dataList = [[self.cachaDic objectForKey:interface]objectForKey:@"data"];
+        self.dataList = [[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]]objectForKey:@"data"];
         //如果读取的数据大于每页请求数
         while (self.dataList.count >NUMBEROFTITLEFORPAGE) {
             [self.dataList removeLastObject];
@@ -110,11 +115,11 @@
     NSString * interface = [app.interfaceTransform objectForKey:app.titleForCurrentPage];
     NSString * serverMD5 = [ConnectionAPI md5:[NSString stringWithFormat:@"%@",noteDic]];
     NSString * cacheMD5 = [ConnectionAPI md5:[NSString stringWithFormat:@"%@",[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]]]];
-    if(shouldUpdateCache && ![serverMD5 isEqualToString:cacheMD5]){
+    if(shouldUpdateCacheForTitle && ![serverMD5 isEqualToString:cacheMD5]){
         [self.cachaDic setObject:noteDic forKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]];
         [NSThread detachNewThreadSelector:@selector(writeFileDic:) toTarget:self withObject:self.cachaDic];
-        shouldUpdateCache = NO;
-        NSLog(@"缓存已更新");
+        shouldUpdateCacheForTitle = NO;
+        NSLog(@"Title缓存已更新");
     }
     
     int threadCount = 0;
@@ -151,14 +156,18 @@
         NSLog(@"图片已下载");
         if ([ImgView respondsToSelector:@selector(setFrame:)]  && [image respondsToSelector:@selector(imageOrientation)]) {
             [self.cachaDic setObject:ImgView forKey:url];
+            shouldUpdateCacheForPic =YES;
             NSLog(@"图片已加入字典");
         }
     }
     threadBackCount ++;
     //所有进程都已返回
     if (threadBackCount == [(NSString *)[tempArrays objectAtIndex:1]intValue]) {
-        //[GMDCircleLoader hideFromView:self.view animated:YES];
-        NSLog(@"%d",threadBackCount);
+        NSLog(@"threadBackCount:%d",threadBackCount);
+        if (shouldUpdateCacheForPic) {
+            [NSThread detachNewThreadSelector:@selector(writeFileDic:) toTarget:self withObject:self.cachaDic];
+            shouldUpdateCacheForPic = NO;
+        }
         if(self.refresh.refreshingDirection==DJRefreshingDirectionTop){
             [self.dataList removeAllObjects];
         }
@@ -196,7 +205,7 @@
         }else if(self.refresh.refreshingDirection==DJRefreshingDirectionTop){
             app.pager = [app.pager init];
             //下拉更新时将第一页数据缓存
-            shouldUpdateCache = YES;
+            shouldUpdateCacheForTitle = YES;
             //数据返回太快   影响动画效果  顾延迟请求
             [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServer) userInfo:nil repeats:NO];
             
@@ -247,8 +256,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
     if (isLoading == NO) {
-    titleID = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"id"];
-    [app.network getDetailViewWithToken:@"jiou" AndID:titleID];
+        titleID = [[self.dataList objectAtIndex:indexPath.row]objectForKey:@"id"];
+        [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
+        [app.network getDetailViewWithToken:@"jiou" AndID:titleID];
         MYDDCBGViewController * myddcbg = [[MYDDCBGViewController alloc]init];
         [self.navigationController pushViewController:myddcbg animated:YES];
     }

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Pager.h"
-@interface ConnectionAPI : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate>{
+@interface ConnectionAPI : NSObject<NSXMLParserDelegate, NSURLConnectionDelegate >{
     //UIAlertView * alerts;
     float timeout;
     BOOL isback;
