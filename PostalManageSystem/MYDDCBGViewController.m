@@ -126,7 +126,7 @@
 
 //在HTML代码中找到图片标签(<img) 并在后面添加图片的长宽标签(@" width=\"100%\" height=\"auto\" ")适应屏幕
 - (NSMutableString *)adjustPicForScreen:(NSMutableString *)htmlString{
-    
+    htmlString = [[NSMutableString alloc]initWithString:htmlString];
     if ([htmlString rangeOfString:@"<img"].length>0) {
         NSString * tempString = [NSString stringWithFormat:@"%@",htmlString];
         NSMutableArray * tempArray = [[NSMutableArray alloc]init];

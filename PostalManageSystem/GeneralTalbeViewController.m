@@ -65,6 +65,7 @@
     if (self.cachaDic == nil) {
         self.cachaDic = [[NSMutableDictionary alloc]init];
     }
+#warning 貌似不需要interface这个参数
     NSString * interface = [app.interfaceTransform objectForKey:app.titleForCurrentPage];
     if ([[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]] isKindOfClass:[NSMutableDictionary class]]) {
         self.dataList = [[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]]objectForKey:@"data"];
@@ -112,6 +113,7 @@
         [alerts show];
     }
     //通过md5值判断缓存是否需要更新
+#warning 貌似不需要interface这个参数
     NSString * interface = [app.interfaceTransform objectForKey:app.titleForCurrentPage];
     NSString * serverMD5 = [ConnectionAPI md5:[NSString stringWithFormat:@"%@",noteDic]];
     NSString * cacheMD5 = [ConnectionAPI md5:[NSString stringWithFormat:@"%@",[self.cachaDic objectForKey:[NSString stringWithFormat:@"%@%@",interface,app.titleForCurrentPage]]]];

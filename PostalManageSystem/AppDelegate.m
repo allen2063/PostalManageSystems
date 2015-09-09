@@ -29,12 +29,19 @@
     self.pager = [[Pager alloc]init];
     MainViewController * mainViewController = [[MainViewController alloc] initWithNibName:nil bundle:nil];
     self.interfaceTransform = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"baseNewsApi/getNewsByType",@"满意度调查结果通告", nil];
-    
+    [self picTest];
     UINavigationController * navCon = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     self.window.rootViewController = navCon;
     [self.window makeKeyAndVisible];
-
+    
     return YES;
+}
+
+- (void)picTest {
+    NSData * imageData1 =UIImageJPEGRepresentation([UIImage imageNamed:@"logo.png"], 1.0);
+    NSData * imageData2 =UIImagePNGRepresentation([UIImage imageNamed:@"logo.png"]);
+    NSLog(@"imageData1:%@  imageData2:%@",imageData1,imageData2);
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
