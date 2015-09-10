@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RECORDS>
+<RECORD id="1" provinceid="110000" province="北京市"/>
+<RECORD id="2" provinceid="120000" province="天津市"/>
+<RECORD id="3" provinceid="130000" province="河北省"/>
+<RECORD id="4" provinceid="140000" province="山西省"/>
+<RECORD id="5" provinceid="150000" province="内蒙古自治区"/>
+<RECORD id="6" provinceid="210000" province="辽宁省"/>
+<RECORD id="7" provinceid="220000" province="吉林省"/>
+<RECORD id="8" provinceid="230000" province="黑龙江省"/>
+<RECORD id="9" provinceid="310000" province="上海市"/>
+<RECORD id="10" provinceid="320000" province="江苏省"/>
+<RECORD id="11" provinceid="330000" province="浙江省"/>
+<RECORD id="12" provinceid="340000" province="安徽省"/>
+<RECORD id="13" provinceid="350000" province="福建省"/>
+<RECORD id="14" provinceid="360000" province="江西省"/>
+<RECORD id="15" provinceid="370000" province="山东省"/>
+<RECORD id="16" provinceid="410000" province="河南省"/>
+<RECORD id="17" provinceid="420000" province="湖北省"/>
+<RECORD id="18" provinceid="430000" province="湖南省"/>
+<RECORD id="19" provinceid="440000" province="广东省"/>
+<RECORD id="20" provinceid="450000" province="广西壮族自治区"/>
+<RECORD id="21" provinceid="460000" province="海南省"/>
+<RECORD id="22" provinceid="500000" province="重庆市"/>
+<RECORD id="23" provinceid="510000" province="四川省"/>
+<RECORD id="24" provinceid="520000" province="贵州省"/>
+<RECORD id="25" provinceid="530000" province="云南省"/>
+<RECORD id="26" provinceid="540000" province="西藏自治区"/>
+<RECORD id="27" provinceid="610000" province="陕西省"/>
+<RECORD id="28" provinceid="620000" province="甘肃省"/>
+<RECORD id="29" provinceid="630000" province="青海省"/>
+<RECORD id="30" provinceid="640000" province="宁夏回族自治区"/>
+<RECORD id="31" provinceid="650000" province="新疆维吾尔自治区"/>
+<RECORD id="32" provinceid="710000" province="台湾省"/>
+<RECORD id="33" provinceid="810000" province="香港特别行政区"/>
+<RECORD id="34" provinceid="820000" province="澳门特别行政区"/>
+</RECORDS>

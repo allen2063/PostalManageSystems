@@ -149,7 +149,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     //信息公告
     UIButton * xxggBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    xxggBtn.frame = CGRectMake(0, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    xxggBtn.frame = CGRectMake(0, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     xxggBtn.backgroundColor = [UIColor whiteColor];
     xxggBtn.tag = 9;
     [xxggBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -158,7 +158,7 @@
     
     //行业动态
     UIButton * hydtBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    hydtBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    hydtBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     hydtBtn.backgroundColor = [UIColor whiteColor];
     hydtBtn.tag = 10;
     [hydtBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -167,7 +167,7 @@
     
     //领导讲话
     UIButton * ldjhBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    ldjhBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    ldjhBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     ldjhBtn.backgroundColor = [UIColor whiteColor];
     ldjhBtn.tag = 11;
     [ldjhBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -176,7 +176,7 @@
     
     //行业统计
     UIButton * hytjBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    hytjBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    hytjBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     hytjBtn.backgroundColor = [UIColor whiteColor];
     hytjBtn.tag = 12;
     [hytjBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -190,7 +190,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     //周边网点查询
     UIButton * zbwdcxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    zbwdcxBtn.frame = CGRectMake(0, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    zbwdcxBtn.frame = CGRectMake(0, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     zbwdcxBtn.backgroundColor = [UIColor whiteColor];
     zbwdcxBtn.tag = 5;
     [zbwdcxBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -199,7 +199,7 @@
     
     //满意度调查结果通告
     UIButton * myddcjgtgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    myddcjgtgBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    myddcjgtgBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     myddcjgtgBtn.backgroundColor = [UIColor whiteColor];
     myddcjgtgBtn.tag = 6;
     [myddcjgtgBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -208,7 +208,7 @@
     
     //邮政编码查询
     UIButton * yzbmcxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    yzbmcxBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    yzbmcxBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     yzbmcxBtn.backgroundColor = [UIColor whiteColor];
     yzbmcxBtn.tag = 7;
     [yzbmcxBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -217,7 +217,7 @@
     
     //禁限寄物品名录
     UIButton * jxjwpmlBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    jxjwpmlBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    jxjwpmlBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     jxjwpmlBtn.backgroundColor = [UIColor whiteColor];
     jxjwpmlBtn.tag = 8;
     [jxjwpmlBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -229,7 +229,7 @@
     self.view.backgroundColor = [UIColor grayColor];
     //便民服务
     UIButton * bmfwBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    bmfwBtn.frame = CGRectMake(0, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    bmfwBtn.frame = CGRectMake(0, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     bmfwBtn.backgroundColor = [UIColor whiteColor];
     bmfwBtn.tag = 1;
     [bmfwBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -239,7 +239,7 @@
     
     //邮政资讯
     UIButton * yzzxBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    yzzxBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    yzzxBtn.frame = CGRectMake(self.view.frame.size.width/2+1, NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     yzzxBtn.backgroundColor = [UIColor whiteColor];
     yzzxBtn.tag = 2;
     [yzzxBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -248,7 +248,7 @@
     
     //政策法规
     UIButton * zcfgBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    zcfgBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1);
+    zcfgBtn.frame = CGRectMake(0, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1);
     zcfgBtn.backgroundColor = [UIColor whiteColor];
     zcfgBtn.tag = 3;
     [zcfgBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
@@ -257,7 +257,7 @@
     
     //办事大厅
     UIButton * bsdtBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    bsdtBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHIGHT)/2+1+NAVIGATIONHIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHIGHT)/2-1 );
+    bsdtBtn.frame = CGRectMake(self.view.frame.size.width/2+1, (self.view.frame.size.height-NAVIGATIONHEIGHT)/2+1+NAVIGATIONHEIGHT, self.view.frame.size.width/2-1,(self.view.frame.size.height-NAVIGATIONHEIGHT)/2-1 );
     bsdtBtn.backgroundColor = [UIColor whiteColor];
     bsdtBtn.tag = 4;
     [bsdtBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];

@@ -77,7 +77,7 @@
     
     self.tempDataList = [[NSMutableArray alloc]init];
     self.automaticallyAdjustsScrollViewInsets=NO;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATIONHIGHT , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHIGHT)];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NAVIGATIONHEIGHT , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHEIGHT)];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     [self.view addSubview:self.tableView];

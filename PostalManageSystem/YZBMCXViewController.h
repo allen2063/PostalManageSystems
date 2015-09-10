@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YZBMCXViewController : UIViewController
+@interface YZBMCXViewController : UIViewController<NSXMLParserDelegate>
+@property (strong, nonatomic) NSXMLParser *xmlParser;
 
 @end

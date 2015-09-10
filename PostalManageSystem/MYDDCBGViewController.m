@@ -28,13 +28,13 @@
         matchingElement = @"img";
         int headLabelHieght = UISCREENHEIGHT/7 < 70 ? UISCREENHEIGHT/7: 70;
 
-        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT + headLabelHieght, UISCREENWIDTH, UISCREENHEIGHT-NAVIGATIONHIGHT - headLabelHieght)];
+        self.webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, NAVIGATIONHEIGHT + headLabelHieght, UISCREENWIDTH, UISCREENHEIGHT-NAVIGATIONHEIGHT - headLabelHieght)];
         self.webView.backgroundColor = [UIColor clearColor];
         self.webView.scrollView.bounces = YES;
         self.webView.delegate = self;
         [self.view addSubview:self.webView];
         self.automaticallyAdjustsScrollViewInsets = NO;
-        UILabel * headLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT, UISCREENWIDTH, headLabelHieght)];
+        UILabel * headLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, NAVIGATIONHEIGHT, UISCREENWIDTH, headLabelHieght)];
         headLabel.backgroundColor = [UIColor clearColor];
         [self.view addSubview:headLabel];
         

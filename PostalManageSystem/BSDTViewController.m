@@ -9,7 +9,7 @@
 #import "BSDTViewController.h"
 #import "BSDTDetailViewController.h"
 #define BTNWIDTH (UISCREENWIDTH/2-2)
-#define BTNHEIGHT ((UISCREENHEIGHT - NAVIGATIONHIGHT)/4-2)
+#define BTNHEIGHT ((UISCREENHEIGHT - NAVIGATIONHEIGHT)/4-2)
 #define IMGSIZERATIO 0.7
 #define TABLEVIEWCELLWIDTH 70
 @interface BSDTViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>{
@@ -79,7 +79,7 @@
     yhxxxgImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [yhxxxgBtn addSubview:yhxxxgImageView];
     yhxxxgBtn.backgroundColor = [UIColor whiteColor];
-    yhxxxgBtn.frame = CGRectMake(1, NAVIGATIONHIGHT+1,BTNWIDTH,BTNHEIGHT );
+    yhxxxgBtn.frame = CGRectMake(1, NAVIGATIONHEIGHT+1,BTNWIDTH,BTNHEIGHT );
     [yhxxxgBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     yhxxxgBtn.tag = 1;
     [self.view addSubview:yhxxxgBtn];
@@ -90,7 +90,7 @@
     sqxzwdImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqxzwdBtn addSubview:sqxzwdImageView];
     sqxzwdBtn.backgroundColor = [UIColor whiteColor];
-    sqxzwdBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHIGHT+1,BTNWIDTH,BTNHEIGHT );
+    sqxzwdBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHEIGHT+1,BTNWIDTH,BTNHEIGHT );
     [sqxzwdBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqxzwdBtn.tag = 2;
     [self.view addSubview:sqxzwdBtn];
@@ -101,7 +101,7 @@
     sqcxwdImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqcxwdBtn addSubview:sqcxwdImageView];
     sqcxwdBtn.backgroundColor = [UIColor whiteColor];
-    sqcxwdBtn.frame = CGRectMake(1, NAVIGATIONHIGHT+1+BTNHEIGHT+2,BTNWIDTH,BTNHEIGHT );
+    sqcxwdBtn.frame = CGRectMake(1, NAVIGATIONHEIGHT+1+BTNHEIGHT+2,BTNWIDTH,BTNHEIGHT );
     [sqcxwdBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqcxwdBtn.tag = 3;
     [self.view addSubview:sqcxwdBtn];
@@ -112,7 +112,7 @@
     sqbdwdImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqbgwddBtn addSubview:sqbdwdImageView];
     sqbgwddBtn.backgroundColor = [UIColor whiteColor];
-    sqbgwddBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHIGHT+1+BTNHEIGHT+2,BTNWIDTH,BTNHEIGHT );
+    sqbgwddBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHEIGHT+1+BTNHEIGHT+2,BTNWIDTH,BTNHEIGHT );
     [sqbgwddBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqbgwddBtn.tag = 4;
     [self.view addSubview:sqbgwddBtn];
@@ -123,7 +123,7 @@
     sqztzxblywImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqztzxblywBtn addSubview:sqztzxblywImageView];
     sqztzxblywBtn.backgroundColor = [UIColor whiteColor];
-    sqztzxblywBtn.frame = CGRectMake(1, NAVIGATIONHIGHT+1+(BTNHEIGHT+2)*2,BTNWIDTH,BTNHEIGHT );
+    sqztzxblywBtn.frame = CGRectMake(1, NAVIGATIONHEIGHT+1+(BTNHEIGHT+2)*2,BTNWIDTH,BTNHEIGHT );
     [sqztzxblywBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqztzxblywBtn.tag = 5;
     [self.view addSubview:sqztzxblywBtn];
@@ -134,7 +134,7 @@
     sqtxywImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqtxywBtn addSubview:sqtxywImageView];
     sqtxywBtn.backgroundColor = [UIColor whiteColor];
-    sqtxywBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHIGHT+1+(BTNHEIGHT+2)*2,BTNWIDTH,BTNHEIGHT );
+    sqtxywBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHEIGHT+1+(BTNHEIGHT+2)*2,BTNWIDTH,BTNHEIGHT );
     [sqtxywBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqtxywBtn.tag = 6;
     [self.view addSubview:sqtxywBtn];
@@ -145,7 +145,7 @@
     sqhfywImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [sqhfywBtn addSubview:sqhfywImageView];
     sqhfywBtn.backgroundColor = [UIColor whiteColor];
-    sqhfywBtn.frame = CGRectMake(1, NAVIGATIONHIGHT+1+(BTNHEIGHT+2)*3,BTNWIDTH,BTNHEIGHT );
+    sqhfywBtn.frame = CGRectMake(1, NAVIGATIONHEIGHT+1+(BTNHEIGHT+2)*3,BTNWIDTH,BTNHEIGHT );
     [sqhfywBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     sqhfywBtn.tag = 7;
     [self.view addSubview:sqhfywBtn];
@@ -156,7 +156,7 @@
     qysqcxImageView.center = CGPointMake(BTNWIDTH/2, BTNHEIGHT/2);
     [qysqcxBtn addSubview:qysqcxImageView];
     qysqcxBtn.backgroundColor = [UIColor whiteColor];
-    qysqcxBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHIGHT+1+(BTNHEIGHT+2)*3,BTNWIDTH,BTNHEIGHT );
+    qysqcxBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHEIGHT+1+(BTNHEIGHT+2)*3,BTNWIDTH,BTNHEIGHT );
     [sqhfywBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     qysqcxBtn.tag = 8;
     [self.view addSubview:qysqcxBtn];
@@ -167,7 +167,7 @@
         self.loginView.backgroundColor = [UIColor whiteColor];
         self.titleLabel.text = @"用户登录";
         
-        accountTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, NAVIGATIONHIGHT, UISCREENWIDTH, 50)];
+        accountTextField = [[UITextField alloc]initWithFrame:CGRectMake(0, NAVIGATIONHEIGHT, UISCREENWIDTH, 50)];
         accountTextField.delegate = self;
         [accountTextField setBorderStyle:UITextBorderStyleLine];
         accountTextField.placeholder = @"账号";
@@ -179,7 +179,7 @@
         accountTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
         [self.loginView addSubview:accountTextField];
         
-        passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0,NAVIGATIONHIGHT+ 50, UISCREENWIDTH, 50)];
+        passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(0,NAVIGATIONHEIGHT+ 50, UISCREENWIDTH, 50)];
         passwordTextField.delegate = self;
         [passwordTextField setBorderStyle:UITextBorderStyleLine];
         passwordTextField.placeholder = @"密码";
@@ -193,7 +193,7 @@
         
         UIButton * loginBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         loginBtn.frame = CGRectMake(0, 0, UISCREENWIDTH*2/3, 40);
-        loginBtn.center = CGPointMake(UISCREENWIDTH/2, NAVIGATIONHIGHT+150);
+        loginBtn.center = CGPointMake(UISCREENWIDTH/2, NAVIGATIONHEIGHT+150);
         loginBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
         //绘制圆角矩形按钮和边线
         [loginBtn.layer setMasksToBounds:YES];
@@ -210,7 +210,7 @@
         [self.loginView addSubview:loginBtn];
         
         UIButton * forgetBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        forgetBtn.frame = CGRectMake(UISCREENWIDTH*4/5, NAVIGATIONHIGHT+180, UISCREENWIDTH*1/5, 40);
+        forgetBtn.frame = CGRectMake(UISCREENWIDTH*4/5, NAVIGATIONHEIGHT+180, UISCREENWIDTH*1/5, 40);
         forgetBtn.backgroundColor = [UIColor clearColor];
         [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
         [forgetBtn setTintColor:[UIColor redColor]];
@@ -334,7 +334,7 @@
 
 - (void)showTableView{
     [UIView animateWithDuration:0.3 animations:^{
-        self.table.frame = CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, NAVIGATIONHIGHT, TABLEVIEWCELLWIDTH, 44*self.dataList.count);
+        self.table.frame = CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, NAVIGATIONHEIGHT, TABLEVIEWCELLWIDTH, 44*self.dataList.count);
                 }];
 }
 

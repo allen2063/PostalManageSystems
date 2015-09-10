@@ -12,11 +12,11 @@
 //json化
 #import <objc/runtime.h>
 
-//@interface ConnectionAPI () < , HttpDelegate>
-//
-//@property (nonatomic , strong) HttpOperation *currentOperation;
-//
-//@end
+@interface ConnectionAPI ()
+
+
+
+@end
 
 
 
@@ -38,6 +38,8 @@
     if (self.cacheDic == nil) {
         self.cacheDic = [[NSMutableDictionary alloc]init];
     }
+    
+
     return self;
 }
 
@@ -166,7 +168,7 @@
 }
 
 //2参数
-- (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(NSString *)argument2Value{
+- (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(id)argument2Value{
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name, nil];
     NSString *soapMsg = [NSString stringWithFormat:@"%@",dic];
     
@@ -353,11 +355,26 @@
     }
 }
 
-#pragma mark - read&write FileDic
+//uinicode转UNT8
++(NSString *)replaceUnicode:(NSString *)unicodeStr {
+    NSString *tempStr1 = [unicodeStr stringByReplacingOccurrencesOfString:@"\\u" withString:@"\\U"];
+    NSString *tempStr2 = [tempStr1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""];
+    NSString *tempStr3 = [[@"\"" stringByAppendingString:tempStr2] stringByAppendingString:@"\""];
+    NSData *tempData = [tempStr3 dataUsingEncoding:NSUTF8StringEncoding];
+    NSString* returnStr = [NSPropertyListSerialization propertyListFromData:tempData
+                                                           mutabilityOption:NSPropertyListImmutable
+                                                                     format:NULL
+                                                           errorDescription:NULL];
+    
+    return [returnStr stringByReplacingOccurrencesOfString:@"\\r\\n" withString:@"\n"];
+}
+
+#pragma mark - read&write File
 //读取缓存
 +(NSMutableDictionary *)readFileDic{
     NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *path = [documents stringByAppendingPathComponent:@"cacheDic.archiver"];
+    
     if ([[NSKeyedUnarchiver unarchiveObjectWithFile:path]isKindOfClass:[NSMutableDictionary class]]) {
         NSLog( @"read file successfully!");
         return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
@@ -365,6 +382,23 @@
         NSLog( @"ERROR FROM READ FILE");
         return [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
+}
+
+//读取XML
++(NSString *)readXMLStringWithFileName:(NSString *)name
+{
+    NSString* path = [[NSBundle mainBundle] pathForResource:name ofType:@"xml"];
+
+    //dataPath 表示当前目录下指定的一个文件 data.plist
+    //NSString *dataPath = [[NSBundle mainBundle] pathForResource:@"Data" ofType:@"plist"];
+    //filePath 表示程序目录下指定文件
+    //NSString *filePath = [self documentsPath:@"provinces.xml"];
+    //NSLog(@"path:%@",filePath);
+    //从filePath 这个指定的文件里读
+    NSError * error;
+    NSString * str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    //NSLog(@"XML:%@",str);
+    return str;
 }
 
 +(NSString *)documentsPath:(NSString *)fileName {
@@ -382,17 +416,20 @@
     NSLog(@"%@",writeResult ? @"写入缓存成功ConnectionAPI":@"写入缓存失败ConnectionAPI");
 }
 
+//图片转二进制
++ (NSData *)picToStringWithImage:(UIImage *)image{
+    NSData *data;
+    if (UIImagePNGRepresentation(image)==nil) {
+        data = UIImageJPEGRepresentation(image, 1.0);
+    }else{
+        data = UIImagePNGRepresentation(image);
+    }
+    return data;
+}
+
 #pragma mark - 图片上传
-
-
-
-
-
-
-
 +(NSString *)PostImagesToServer:(NSString *) strUrl dicPostParams:(NSMutableDictionary *)params dicImages:(NSMutableDictionary *) dicImages{
     NSString * res;
-    
     
     //分界线的标识符
     NSString *TWITTERFON_FORM_BOUNDARY = @"AaB03x";
@@ -411,7 +448,7 @@
     //NSData* data = UIImagePNGRepresentation(image);
     //http body的字符串
     NSMutableString *body=[[NSMutableString alloc]init];
-    //参数的集合的所有key的集合
+    //参数的集合的所有key的集合        我们这里这个不重要  表单用的。。。
     NSArray *keys= [params allKeys];
     
     //遍历keys
@@ -437,7 +474,7 @@
     //将body字符串转化为UTF8格式的二进制
     [myRequestData appendData:[body dataUsingEncoding:NSUTF8StringEncoding]];
     
-    //循环加入上传图片
+    //循环加入上传图片          这个是放要上传的图片的
     keys = [dicImages allKeys];
     for(int i = 0; i< [keys count] ; i++){
         //要上传的图片
@@ -510,111 +547,5 @@
     NSLog(@"服务器返回：%@", res);
     return res;
 }
-
-//-(void)loadImage:(NSString*)aurl
-//{
-//    NSData              *imageData;
-//    NSMutableData       *postBody;
-//    NSString            *stringBoundary, *contentType;
-//    NSURL *url = [NSURL URLWithString:aurl];  //将字符串转换为NSURL格式
-//    
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"1.jpg"];
-//    
-//    imageData = [[NSData alloc] initWithContentsOfFile:path];
-//    
-//    ASIFormDataRequest *aRequest = [[ASIFormDataRequest alloc] initWithURL:url];
-//    
-//    stringBoundary = [NSString stringWithString:@"0xKhTmLbOuNdArY"];
-//    
-//    contentType    = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", stringBoundary];
-//    
-//    [aRequest addRequestHeader:@"Content-Type" value:contentType];
-//    
-//    postBody = [[NSMutableData alloc] init];
-//    
-//    [postBody appendData:[[NSString stringWithFormat:@"\r\n\r\n--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"title\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithString:@"lighttable"] dataUsingEncoding:NSUTF8StringEncoding]];  // So Light Table show up as source in Twitter post
-//    
-//    NSString *imageFileName = [NSString stringWithFormat:@"photo.jpeg"];
-//    
-//    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"upload\"; filename=\"%@\"\r\n",imageFileName] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[@"Content-Type: image/jpeg\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:imageData];
-//    
-//    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"password\"\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithString:@"lighttablexxxxxxxx"] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [postBody appendData:[[NSString stringWithFormat:@"\r\n--%@\r\n", stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [aRequest setDelegate:self];
-//    
-//    [aRequest appendPostData:postBody];
-//    
-//    [aRequest setRequestMethod:@"POST"];
-//    
-//    [aRequest startAsynchronous];
-//    
-//    [postBody release];
-//    [aRequest release];
-//}
-//
-//- (void)uploadSessionWithPlace:(NSString*)place reason:(NSString*)reason carNumber:(NSString*)carNumber image:(UIImage*)image andImageFileName:(NSString*)fileName
-//{
-//    HttpOperation *operation = [[HttpOperation alloc] init];
-//    self.currentOperation = operation;
-//    
-//    [operation setUrl:URL_SendViolationSession];
-//    [operation setTimeOut:30];
-//    [operation setOperationDescription:@"SaveViolationSession"];
-//    [operation setContentType:MEDIA_CONTENT_TYPE withBoundary:BOUNDARY_CONSTANT];
-//    [operation setMethod:@"POST"];
-//    [operation setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-//    [operation setHTTPShuoldHandleCookes:NO];
-//    
-//    [operation setUploadProgressDelegate:self];
-//    [operation setCommonDelegate:self];
-//    
-//    NSString *userID = [[PersonalInfoRecorder sharedInstance] userID];
-//    NSString *schoolID = [[PersonalInfoRecorder sharedInstance] schoolID];
-//    
-//    NSMutableData *body = [[NSMutableData alloc] init];
-//    NSDictionary *params = [[NSDictionary alloc] initWithObjectsAndKeys:place , @"illegal.place" , reason , @"illegal.type.id" ,  carNumber , @"illegal.vehPlate" , userID , @"illegal.creation.id" , schoolID , @"illegal.schoolInfo", fileName , @"fileFileName" ,  nil];
-//    
-//    /* Add the attach params at first */
-//    for(NSString* param in [params allKeys])
-//    {
-//        [body appendData:[[NSString stringWithFormat:@"--%@\r\n" , BOUNDARY_CONSTANT] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n" , param] dataUsingEncoding:NSUTF8StringEncoding]];
-//        [body appendData:[[NSString stringWithFormat:@"%@\r\n", [params valueForKey:param]] dataUsingEncoding:NSUTF8StringEncoding]];
-//    }
-//    
-//    /* Add the image content */
-//    [body appendData:[[NSString stringWithFormat:@"--%@\r\n" , BOUNDARY_CONSTANT] dataUsingEncoding:NSUTF8StringEncoding]];
-//    [body appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@\"\r\n" , fileName] dataUsingEncoding:NSUTF8StringEncoding]];
-//    [body appendData:[@"Content-Type: application/octet-stream\r\n" dataUsingEncoding:NSUTF8StringEncoding] ];
-//    [body appendData:[@"Content-Transfer-Encoding: binary\r\n\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    [body appendData: UIImageJPEGRepresentation(image, 0.1)];
-//    [body appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [body appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n" , BOUNDARY_CONSTANT] dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    [operation setPostLength:[body length]];
-//    [operation setBody:body];
-//    [operation submit];
-//}
-
-
 
 @end

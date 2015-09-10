@@ -20,11 +20,24 @@
     NSString * urlToServer;
     UIAlertView * alerts;
 }
+//unicoude转utf8
++(NSString *)replaceUnicode:(NSString *)unicodeStr ;
+//读取XML
++(NSString *)readXMLStringWithFileName:(NSString *)name;
+//图片转二进制
++ (NSData *)picToStringWithImage:(UIImage *)image;
+//读取文件
 +(NSMutableDictionary *)readFileDic;
-+ (NSString *)md5:(NSString *)str;  //md5加密
-- (void)loginWithToken:(NSString *)token AndUserName:(NSString *)userName AndUserPassword:(NSString *)userPassword;                     //获取首页热点新闻的图片、标题、内容
+//md5加密
++ (NSString *)md5:(NSString *)str;
+//登陆
+- (void)loginWithToken:(NSString *)token AndUserName:(NSString *)userName AndUserPassword:(NSString *)userPassword;
+//获取首页热点新闻的图片、标题、内容
 - (void)getListWithToken:(NSString *)token AndType:(NSString *)type AndListPager:(Pager *)listPager;
+//获取详情
 - (void)getDetailViewWithToken:(NSString *)token AndID:(NSString *)ID;
+//上传图片
++(NSString *)PostImagesToServer:(NSString *) strUrl dicPostParams:(NSMutableDictionary *)params dicImages:(NSMutableDictionary *) dicImages;
 @property (strong, nonatomic) NSMutableData *webData;
 @property (strong, nonatomic) NSURLConnection *conn;
 @property (strong, nonatomic) NSMutableString *getXMLResults;

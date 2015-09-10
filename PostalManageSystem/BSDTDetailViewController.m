@@ -109,7 +109,7 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int keyboardHeight = keyboardRect.size.height;
-    if ((keyboardHeight - (UISCREENHEIGHT - textFieldHeight)+NAVIGATIONHIGHT >0)&&[currentView isKindOfClass:[UIScrollView class]]) {   //判断键盘是否会遮到输入框   是则调整画面
+    if ((keyboardHeight - (UISCREENHEIGHT - textFieldHeight)+NAVIGATIONHEIGHT >0)&&[currentView isKindOfClass:[UIScrollView class]]) {   //判断键盘是否会遮到输入框   是则调整画面
         UIScrollView * temp = (UIScrollView * )currentView;
         tempOffset = temp.contentOffset;
         [UIView animateWithDuration:0.3 animations:^{
@@ -125,7 +125,7 @@
     NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [aValue CGRectValue];
     int keyboardHeight = keyboardRect.size.height;
-    if ((keyboardHeight - (UISCREENHEIGHT - textFieldHeight)+NAVIGATIONHIGHT >0)&&[currentView isKindOfClass:[UIScrollView class]]) {   //判断键盘是否会遮到输入框   是则调整画面
+    if ((keyboardHeight - (UISCREENHEIGHT - textFieldHeight)+NAVIGATIONHEIGHT >0)&&[currentView isKindOfClass:[UIScrollView class]]) {   //判断键盘是否会遮到输入框   是则调整画面
         UIScrollView * temp = (UIScrollView * )currentView;
         [UIView animateWithDuration:0.3 animations:^{
             temp.contentOffset = tempOffset;
@@ -135,7 +135,7 @@
 
 #pragma mark - 用户信息修改页面
 - (void)initYHXXXG{
-    UITextField * accountTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30, UISCREENWIDTH-20, 40)];
+    UITextField * accountTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30, UISCREENWIDTH-20, 40)];
     UILabel * accountLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50, 40)];
     accountLabel.text = @" 账号:";
     accountTextField.leftView = accountLabel;
@@ -145,7 +145,7 @@
     accountTextField.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:accountTextField];
     
-    UITextField * passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30+41, UISCREENWIDTH-20, 40)];
+    UITextField * passwordTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30+41, UISCREENWIDTH-20, 40)];
     UILabel * passwordLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50, 40)];
     passwordLabel.text = @" 密码:";
     passwordTextField.leftView = passwordLabel;
@@ -155,7 +155,7 @@
     passwordTextField.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:passwordTextField];
     
-    UITextField * nameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30+41*2, UISCREENWIDTH-20, 40)];
+    UITextField * nameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30+41*2, UISCREENWIDTH-20, 40)];
     UILabel * nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50, 40)];
     nameLabel.text = @" 姓名:";
     nameTextField.leftView = nameLabel;
@@ -165,7 +165,7 @@
     nameTextField.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:nameTextField];
     
-    UITextField * addressTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30+41*3, UISCREENWIDTH-20, 40)];
+    UITextField * addressTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30+41*3, UISCREENWIDTH-20, 40)];
     UILabel * addressLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 50, 40)];
     addressLabel.text = @" 地址:";
     addressTextField.leftView = addressLabel;
@@ -175,7 +175,7 @@
     addressTextField.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:addressTextField];
     
-    UITextField * phoneTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30+41*4, UISCREENWIDTH-20, 40)];
+    UITextField * phoneTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30+41*4, UISCREENWIDTH-20, 40)];
     UILabel * phoneLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 90, 40)];
     phoneLabel.text = @" 联系电话:";
     phoneTextField.leftView = phoneLabel;
@@ -185,7 +185,7 @@
     phoneTextField.returnKeyType = UIReturnKeyDone;
     [self.view addSubview:phoneTextField];
     
-    UITextField * emailTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHIGHT+30+41*5, UISCREENWIDTH-20, 40)];
+    UITextField * emailTextField = [[UITextField alloc]initWithFrame:CGRectMake(10, NAVIGATIONHEIGHT+30+41*5, UISCREENWIDTH-20, 40)];
     UILabel * emailLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 90, 40)];
     emailLabel.text = @" 电子邮箱:";
     emailTextField.leftView = emailLabel;
@@ -196,7 +196,7 @@
     [self.view addSubview:emailTextField];
     
     UIButton * submitBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    submitBtn.frame = CGRectMake(10, NAVIGATIONHIGHT+60+41*6.2, UISCREENWIDTH-20, 40);
+    submitBtn.frame = CGRectMake(10, NAVIGATIONHEIGHT+60+41*6.2, UISCREENWIDTH-20, 40);
     submitBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
     //绘制圆角矩形按钮和边线
     [submitBtn.layer setMasksToBounds:YES];
@@ -942,8 +942,8 @@
             tempOffset = temp.contentOffset;
             if (self.selectedTable.frame.size.height+self.selectedTable.frame.origin.y > UISCREENHEIGHT+temp.contentOffset.y) {  //tableView底部低于屏幕底部
                 temp.contentOffset = CGPointMake(0,self.selectedTable.frame.size.height+self.selectedTable.frame.origin.y - UISCREENHEIGHT);
-            }else if (self.selectedTable.frame.origin.y<temp.contentOffset.y + NAVIGATIONHIGHT){        //tableView顶点高于导航栏底部
-                temp.contentOffset = CGPointMake(0,self.selectedTable.frame.origin.y - NAVIGATIONHIGHT);
+            }else if (self.selectedTable.frame.origin.y<temp.contentOffset.y + NAVIGATIONHEIGHT){        //tableView顶点高于导航栏底部
+                temp.contentOffset = CGPointMake(0,self.selectedTable.frame.origin.y - NAVIGATIONHEIGHT);
             }
         }
     }
@@ -973,7 +973,7 @@
             if ([currentView isKindOfClass:[UIScrollView class]]) {
                 UIScrollView * temp = (UIScrollView *)currentView;
                 tempOffset = temp.contentOffset;
-                self.selectedTable.frame = CGRectMake(leftInterval*4, temp.contentOffset.y+NAVIGATIONHIGHT+heightForOneLine, UISCREENWIDTH -leftInterval*8, tableViewCellHeight*self.dataList.count);
+                self.selectedTable.frame = CGRectMake(leftInterval*4, temp.contentOffset.y+NAVIGATIONHEIGHT+heightForOneLine, UISCREENWIDTH -leftInterval*8, tableViewCellHeight*self.dataList.count);
                 okBtn.center = CGPointMake(UISCREENWIDTH/2, self.selectedTable.frame.size.height+self.selectedTable.frame.origin.y +40);
                 [temp addSubview:okBtn];
                 

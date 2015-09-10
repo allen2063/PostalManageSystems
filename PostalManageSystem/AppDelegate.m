@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
-
+#import "GDataXMLNode.h"
 
 @interface AppDelegate ()
 @end
@@ -29,20 +29,52 @@
     self.pager = [[Pager alloc]init];
     MainViewController * mainViewController = [[MainViewController alloc] initWithNibName:nil bundle:nil];
     self.interfaceTransform = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"baseNewsApi/getNewsByType",@"满意度调查结果通告", nil];
-    [self picTest];
     UINavigationController * navCon = [[UINavigationController alloc] initWithRootViewController:mainViewController];
     self.window.rootViewController = navCon;
     [self.window makeKeyAndVisible];
     
+    
+
+//    NSError * error;
+//    GDataXMLDocument * gdataXml =[[GDataXMLDocument alloc]initWithData:dataString options:0 error:&error];
+//    NSMutableString * string = [[NSMutableString alloc]init];
+//    GDataXMLElement * rootElement = [gdataXml rootElement];
+//    NSArray * arrProvince = [rootElement elementsForName:@"RECORD"];
+//    for (GDataXMLElement * nodeElement in arrProvince) {
+//        [string appendFormat:@"======province=======/n" ];
+//        GDataXMLNode * node = [nodeElement attributeForName:@"province"];
+//        NSLog(@"node%@   %@   nodecount:%lu  node%@",nodeElement,[node.children class],(unsigned long)node.childCount,node);
+//        ;
+//    
+//        NSDictionary * dic = (NSDictionary *)[node.children objectAtIndex:0];
+//        NSLog(@"dic%@",[[node.children objectAtIndex:0] class]);
+//        for (int k =0; k<[node childCount]; k++) {
+//            GDataXMLNode * pro_node = [node childAtIndex:k];
+//            switch (k) {
+//                case 0:
+//                    [string appendFormat:@"provice1=%@/r/n",[pro_node stringValue]];
+//                    break;
+//                case 1:
+//                    [string appendFormat:@"provice2=%@/r/n",[pro_node stringValue]];
+//                    break;
+//                case 2:
+//                    [string appendFormat:@"provice3=%@/r/n",[pro_node stringValue]];
+//                    break;
+//                    
+//                default:
+//                    break;
+//            }
+//        }
+    //}
+    
+    
+    //上传图片
+//    NSMutableDictionary * dic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"banshidating"],@"pic", nil];
+//    [ConnectionAPI PostImagesToServer:@"http://222.85.149.6:88/GuiYangPost/uploadpicture/upload" dicPostParams:dic dicImages:dic];
     return YES;
 }
 
-- (void)picTest {
-    NSData * imageData1 =UIImageJPEGRepresentation([UIImage imageNamed:@"logo.png"], 1.0);
-    NSData * imageData2 =UIImagePNGRepresentation([UIImage imageNamed:@"logo.png"]);
-    NSLog(@"imageData1:%@  imageData2:%@",imageData1,imageData2);
-    
-}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
