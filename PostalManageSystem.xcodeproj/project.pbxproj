@@ -75,9 +75,6 @@
 		56CE5BA41B9ADAFE008D3B75 /* DJRefreshBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B961B9ADAFE008D3B75 /* DJRefreshBottomView.m */; };
 		56CE5BA51B9ADAFE008D3B75 /* DJRefreshTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B991B9ADAFE008D3B75 /* DJRefreshTopView.m */; };
 		56CE5BA61B9ADAFE008D3B75 /* DJRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B9B1B9ADAFE008D3B75 /* DJRefreshView.m */; };
-		56E216741BA06D8B00C2234A /* YZBM.sql in Resources */ = {isa = PBXBuildFile; fileRef = 56E216731BA06D8B00C2234A /* YZBM.sql */; };
-		56E216771BA06E5800C2234A /* SQL.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E216761BA06E5800C2234A /* SQL.m */; };
-		56E216791BA06F4800C2234A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56E216781BA06F4800C2234A /* libsqlite3.dylib */; };
 		56E508191B9596E100DB22A7 /* ConnectionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E508181B9596E100DB22A7 /* ConnectionAPI.m */; };
 /* End PBXBuildFile section */
 
@@ -189,10 +186,6 @@
 		56CE5B991B9ADAFE008D3B75 /* DJRefreshTopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJRefreshTopView.m; sourceTree = "<group>"; };
 		56CE5B9A1B9ADAFE008D3B75 /* DJRefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJRefreshView.h; sourceTree = "<group>"; };
 		56CE5B9B1B9ADAFE008D3B75 /* DJRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJRefreshView.m; sourceTree = "<group>"; };
-		56E216731BA06D8B00C2234A /* YZBM.sql */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = YZBM.sql; path = Resource/YZBM.sql; sourceTree = "<group>"; };
-		56E216751BA06E5800C2234A /* SQL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQL.h; sourceTree = "<group>"; };
-		56E216761BA06E5800C2234A /* SQL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SQL.m; sourceTree = "<group>"; };
-		56E216781BA06F4800C2234A /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		56E508171B9596E100DB22A7 /* ConnectionAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionAPI.h; sourceTree = "<group>"; };
 		56E508181B9596E100DB22A7 /* ConnectionAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionAPI.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,7 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56E216791BA06F4800C2234A /* libsqlite3.dylib in Frameworks */,
 				56C8F07D1BA039C800763A4C /* libxml2.dylib in Frameworks */,
 				56B636E01B9C65400005290D /* libxml2.2.dylib in Frameworks */,
 			);
@@ -293,10 +285,6 @@
 		56C59DCE1B82DD5F00D96F08 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				56E216781BA06F4800C2234A /* libsqlite3.dylib */,
-				56E216751BA06E5800C2234A /* SQL.h */,
-				56E216761BA06E5800C2234A /* SQL.m */,
-				56E216731BA06D8B00C2234A /* YZBM.sql */,
 				56B636D51B9C65030005290D /* Hpple */,
 				56CE5B871B9ADAFE008D3B75 /* DJRefresh */,
 				565430601B96AF0900B49E0E /* Indicator */,
@@ -546,7 +534,6 @@
 				56C59E171B82F59D00D96F08 /* ic_launcher.png in Resources */,
 				56C59E1C1B82F59D00D96F08 /* mima.png in Resources */,
 				56C59E221B82F59D00D96F08 /* shenqingzantingxianyewu.png in Resources */,
-				56E216741BA06D8B00C2234A /* YZBM.sql in Resources */,
 				56C59E1B1B82F59D00D96F08 /* manyidudiaochajieguotonggao.png in Resources */,
 				56C59E1E1B82F59D00D96F08 /* shenqingchexiaowangdian.png in Resources */,
 				56CE5B9D1B9ADAFE008D3B75 /* pull_loading@2x.png in Resources */,
@@ -603,7 +590,6 @@
 				56CE5B861B9AD769008D3B75 /* Pager.m in Sources */,
 				56C59E451B8331D500D96F08 /* HZAreaPickerView.m in Sources */,
 				56C8F07B1BA0397B00763A4C /* GDataXMLNode.m in Sources */,
-				56E216771BA06E5800C2234A /* SQL.m in Sources */,
 				56C59E471B8331D500D96F08 /* HZLocation.m in Sources */,
 				56B636DD1B9C65030005290D /* TFHppleElement.m in Sources */,
 				565430631B96AF3300B49E0E /* GMDCircleLoader.m in Sources */,

@@ -8,7 +8,6 @@
 
 #import "YZBMCXViewController.h"
 #import "HZAreaPickerView.h"
-#import "SQL.h"
 #define tableViewCellHeight 35
 #define selectedfont 14
 #define defualtFont 17
