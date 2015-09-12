@@ -360,6 +360,15 @@
     else if ([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById"] && [self.getXMLResults rangeOfString:@"启动公告"].length !=0){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"qdgg" object:self userInfo:resultDic];
     }
+    //禁限寄物品名录list
+    else if ([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"] && [self.getXMLResults rangeOfString:@"禁限寄物品名录"].length !=0 && [self.getXMLResults rangeOfString:@"listPager"].length !=0){
+        NSString * ID = [[[resultDic objectForKey:@"data"]objectAtIndex:0]objectForKey:@"id"];
+        [self getDetailViewWithToken:@"jiou" AndID:ID];
+    }
+    //禁限寄物品名录detail
+    else if ([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById"] && [self.getXMLResults rangeOfString:@"禁限寄物品名录"].length !=0){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"jxjwp" object:self userInfo:resultDic];
+    }
     //获取新闻列表
     else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsByType" object:self userInfo:resultDic];
