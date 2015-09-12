@@ -11,10 +11,7 @@
 #define tableViewCellHeight 35
 #define selectedfont 14
 #define defualtFont 17
-#define FINDPROVINCEID 1
-#define FINDCITYID 2
-#define FINDAREAID 3
-#define FINDZIPCODE 4
+
 #define GETPROVINCENAME 11
 #define GETCITYNAME 12
 #define GETAREANAME 13
@@ -30,6 +27,7 @@
     NSMutableArray * provinceArray;
     NSMutableArray * cityArray;
     NSMutableArray * areaArray;
+    NSMutableArray * areaNameArray;
     
     NSMutableString * DistrictTextFieldString;
     
@@ -161,9 +159,10 @@
     [self.view addSubview:searchBtn];
     
     informationLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, UISCREENWIDTH-100, UISCREENHEIGHT/8)];
-    informationLabel.center = CGPointMake(self.view.center.x, self.view.center.y+informationLabel.frame.size.height*1.8);
+    informationLabel.center = CGPointMake(self.view.center.x, UISCREENHEIGHT - NAVIGATIONHEIGHT*2.5);
     informationLabel.text = @"";
     informationLabel.textAlignment = NSTextAlignmentCenter;
+    informationLabel.font = [UIFont systemFontOfSize:defualtFont];
     [informationLabel.layer setMasksToBounds:YES];
     [informationLabel.layer setCornerRadius:8.0]; //设置矩形四个圆角半径
     [informationLabel.layer setBorderWidth:2.0];   //边框宽度
@@ -174,6 +173,12 @@
     [self.view addSubview:informationLabel];
     
     districtArray = [[NSMutableArray alloc]init];
+    areaNameArray = [[NSMutableArray alloc]init];
+    provinceArray = [[NSMutableArray alloc]init];
+    
+    cityArray = [[NSMutableArray alloc]init];
+    
+    areaArray = [[NSMutableArray alloc]init];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -184,6 +189,9 @@
 -(void)change{
     self.districtLabel.text= @"请输入要查询的地区";
     self.districtLabel.font= [UIFont systemFontOfSize:17];
+    
+    informationLabel.frame = CGRectMake(0, 0, UISCREENWIDTH-100, UISCREENHEIGHT/8);
+    informationLabel.center = CGPointMake(self.view.center.x, UISCREENHEIGHT - NAVIGATIONHEIGHT*2.5);
     
     if (segmentControl.selectedSegmentIndex == 1) {
         instructionLabel.text = @"请输入邮件编码：";
@@ -223,6 +231,7 @@
 //    // Release any retained subviews of the main view.
 //}
 
+//检测文字是否超过label的长度   如若超过则调小字体适应
 - (CGFloat  )adaptTextFontForString:(NSString *) string AndWidth:(float)width{
     CGFloat font = defualtFont;
     UILabel * adaptLabel = [[UILabel alloc]init];
@@ -240,16 +249,65 @@
     return font;
 }
 
+//根据邮政编码显示地区
 - (void)displayTheDistrict{
     [DistrictTextFieldString setString:@""];
-    for (int i = (int)districtArray.count -1; i>=0 ;i--) {
-    
-        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[districtArray objectAtIndex:i]]];
+//    for (int i = (int)districtArray.count -1; i>=0 ;i--) {
+//    
+//        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[districtArray objectAtIndex:i]]];
+//    }
+    for (NSMutableDictionary * dic in districtArray) {
+        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[dic objectForKey:@"province"]]];
+        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[dic objectForKey:@"city"]]];
+        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@\n",[dic objectForKey:@"area"]]];
     }
     
-    CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的邮政编码对应的地区是:%@",DistrictTextFieldString] AndWidth:informationLabel.frame.size.width*2];
+    CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的邮政编码对应的地区是:/n%@",DistrictTextFieldString] AndWidth:informationLabel.frame.size.width*2];
+    
     informationLabel.font = [UIFont systemFontOfSize:font];
-    informationLabel.text = [NSString stringWithFormat:@"您查询的邮政编码对应的地区是:%@",DistrictTextFieldString];
+    informationLabel.text = [NSString stringWithFormat:@"您查询的邮政编码对应的地区是:\n%@",DistrictTextFieldString];
+    informationLabel.numberOfLines = 0;
+    //自适应高度
+    CGSize size = [informationLabel sizeThatFits:CGSizeMake(informationLabel.frame.size.width, MAXFLOAT)];
+
+    if (size.height<UISCREENHEIGHT/8) {
+        informationLabel.frame = CGRectMake(0, 0, UISCREENWIDTH-100,  UISCREENHEIGHT/8);
+    }else{
+        informationLabel.frame = CGRectMake(0, 0, UISCREENWIDTH-100,  size.height);
+    }
+    informationLabel.center = CGPointMake(self.view.center.x, UISCREENHEIGHT - NAVIGATIONHEIGHT*2.5);
+    
+    
+}
+
+- (void)search{
+    if ([_zipCodeText isFirstResponder]) {
+        [_zipCodeText resignFirstResponder];
+    }
+    
+    if ([_zipCodeText.text length] != 6) {
+        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"输入非法" message:@"请核对邮政编码后输入！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
+        return;
+    }
+    
+    //查询前清零  方便为后面是否查询到邮编做判断
+    provinceid = -10000;
+    
+    //通过地区查邮编
+    if (segmentControl.selectedSegmentIndex == 0) {
+        CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode] AndWidth:informationLabel.frame.size.width*2];
+        informationLabel.font = [UIFont systemFontOfSize:font];
+        informationLabel.text = [NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode];
+    }
+    //邮编查地区  可能一个邮编对应多个地区
+    else{
+        zipcode = [_zipCodeText.text intValue];
+        [areaArray removeAllObjects];
+        [areaNameArray removeAllObjects];
+        [districtArray removeAllObjects];
+        [self getZipCode];
+    }
 }
 
 #pragma mark - tableView
@@ -263,8 +321,10 @@
         if (_dataList.count * tableViewCellHeight > UISCREENHEIGHT -NAVIGATIONHEIGHT -30) {
             _tableView.frame = CGRectMake(UISCREENWIDTH/8, NAVIGATIONHEIGHT +50, UISCREENWIDTH*3/4,  UISCREENHEIGHT -NAVIGATIONHEIGHT -50);
             _tableView.center = CGPointMake(self.view.center.x, self.view.center.y + NAVIGATIONHEIGHT/2);
-        }else
+        }else{
+        _tableView.frame = CGRectMake(UISCREENWIDTH/8, NAVIGATIONHEIGHT +50, UISCREENWIDTH*3/4,  _dataList.count * tableViewCellHeight);
         _tableView.center = CGPointMake(self.view.center.x, self.view.center.y + NAVIGATIONHEIGHT/2);
+        }
     }];
 //    NSLog(@"table %@",NSStringFromCGRect(_tableView.frame));
 }
@@ -406,6 +466,7 @@
     }
 }
 
+//通过地区查找邮政编码时  输入地区时的响应事件
 - (void)lableTouched{
     DistrictTextFieldString = [[NSMutableString alloc]initWithString:@"请输入要查询的地区"];
     self.districtLabel.text = DistrictTextFieldString;
@@ -440,69 +501,20 @@
 #pragma mark - XML查询  地区——》邮政编码  ||邮政编码——》地区
 - (void)getProvinceName{
     searchState = GETPROVINCENAME;
-    provinceArray = [[NSMutableArray alloc]init];
     [self getProvinceInfo];
 }
 
 - (void)getCityName{
     searchState = GETCITYNAME;
-    cityArray = [[NSMutableArray alloc]init];
-    [self getCityInfo];
+        [self getCityInfo];
 }
 
 - (void)getAreaName{
     searchState = GETAREANAME;
-    areaArray = [[NSMutableArray alloc]init];
     [self getAreaInfo];
 }
 
 #pragma mark - XML查询  地区——》邮政编码  ||邮政编码——》地区
-- (void)search{
-    if (segmentControl.selectedSegmentIndex == 0) {
-        CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode] AndWidth:informationLabel.frame.size.width*2];
-        informationLabel.font = [UIFont systemFontOfSize:font];
-        informationLabel.text = [NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode];
-    }else{
-        zipcode = [_zipCodeText.text intValue];
-        [self getZipCode];
-        
-    }
-    
-//    if (_tableView.superview != self.view) {
-//        [self.view addSubview:_tableView];
-//    }//else NSLog(@"未添加");
-//    
-//    [self.view bringSubviewToFront:_tableView];
-//    searchState = GETPROVINCENAME;
-//    stringToInt = YES;
-//    [self getProvinceName];
-    
-    
-//    NSString * districtString =  self.areaText.text ;
-//    districtArray = (NSMutableArray *)[districtString componentsSeparatedByString:@" "];
-//    for (int i = 0; i < districtArray.count ; i++) {
-//        NSString * str = [NSString stringWithFormat:@"%@",[districtArray objectAtIndex:i]];
-//        if ([str length] == 0) {
-//            [districtArray removeObject:str];
-//        }
-//    }
-//    
-//    NSLog(@"%lu   %@",(unsigned long)districtArray.count, [districtArray objectAtIndex:0]);
-//    //转换判断  是int—>string 还是 string->int
-//    if ([[districtArray objectAtIndex:0]isKindOfClass:[NSString class]]) {
-//        stringToInt = YES;
-//        //查找省份信息
-//        [self getProvinceInfo];
-//        //查找城市信息
-//        [self getCityInfo];
-//        //查找地区信息
-//        [self getAreaInfo];
-//        //查找邮政编码
-//        [self getZipCode];
-//    }else{
-//        stringToInt = NO;
-//    }
-}
 
 - (void)getProvinceInfo{
     NSLog(@"getProvinceInfo");
@@ -514,31 +526,11 @@
         self.xmlParser.delegate = self;
         [self.xmlParser setShouldResolveExternalEntities: YES];
         [self.xmlParser parse];
-    }else{
-        NSString * str = [ConnectionAPI readXMLStringWithFileName:@"provinces"];
-        NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
-        self.xmlParser = [[NSXMLParser alloc] initWithData: dataString];
-        self.xmlParser.delegate = self;
-        [self.xmlParser setShouldResolveExternalEntities: YES];
-        [self.xmlParser parse];
     }
-//    if (stringToInt) {
-//        //searchState = FINDPROVINCEID;
-//        // 使用NSXMLParser解析出我们想要的结果
-//        NSString * str = [ConnectionAPI readXMLStringWithFileName:@"provinces"];
-//        NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
-//        self.xmlParser = [[NSXMLParser alloc] initWithData: dataString];
-//        self.xmlParser.delegate = self;
-//        [self.xmlParser setShouldResolveExternalEntities: YES];
-//        [self.xmlParser parse];
-//    }
 }
 
 - (void)getCityInfo{
     NSLog(@"getCityInfo");
-
-    if (stringToInt) {
-        //searchState = FINDCITYID;
         // 使用NSXMLParser解析出我们想要的结果
         NSString * str = [ConnectionAPI readXMLStringWithFileName:@"cities"];
         NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
@@ -546,21 +538,10 @@
         self.xmlParser.delegate = self;
         [self.xmlParser setShouldResolveExternalEntities: YES];
         [self.xmlParser parse];
-    }else{
-        NSString * str = [ConnectionAPI readXMLStringWithFileName:@"cities"];
-        NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
-        self.xmlParser = [[NSXMLParser alloc] initWithData: dataString];
-        self.xmlParser.delegate = self;
-        [self.xmlParser setShouldResolveExternalEntities: YES];
-        [self.xmlParser parse];
-    }
 }
 
 - (void)getAreaInfo{
     NSLog(@"getAreaInfo");
-
-    if (stringToInt) {
-        //searchState = FINDAREAID;
         // 使用NSXMLParser解析出我们想要的结果
         NSString * str = [ConnectionAPI readXMLStringWithFileName:@"areas"];
         NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
@@ -568,21 +549,11 @@
         self.xmlParser.delegate = self;
         [self.xmlParser setShouldResolveExternalEntities: YES];
         [self.xmlParser parse];
-    }else{
-        NSString * str = [ConnectionAPI readXMLStringWithFileName:@"areas"];
-        NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
-        self.xmlParser = [[NSXMLParser alloc] initWithData: dataString];
-        self.xmlParser.delegate = self;
-        [self.xmlParser setShouldResolveExternalEntities: YES];
-        [self.xmlParser parse];
-    }
-    
 }
 
 - (void)getZipCode{
     NSLog(@"getZipCodeInfo");
     searchState = GETZIPCODE;
-    if (stringToInt) {
         //searchState = FINDZIPCODE;
         // 使用NSXMLParser解析出我们想要的结果
         NSString * str = [ConnectionAPI readXMLStringWithFileName:@"zipcode"];
@@ -591,14 +562,6 @@
         self.xmlParser.delegate = self;
         [self.xmlParser setShouldResolveExternalEntities: YES];
         [self.xmlParser parse];
-    }else{
-        NSString * str = [ConnectionAPI readXMLStringWithFileName:@"zipcode"];
-        NSData * dataString = [str dataUsingEncoding:NSUTF8StringEncoding ];
-        self.xmlParser = [[NSXMLParser alloc] initWithData: dataString];
-        self.xmlParser.delegate = self;
-        [self.xmlParser setShouldResolveExternalEntities: YES];
-        [self.xmlParser parse];
-    }
 }
 
 #pragma mark XML Parser Delegate Methods
@@ -608,52 +571,9 @@
     //节点名称是否匹配
     if ([elementName isEqual:_matchingElement]) {
         //获取数据
-        
-        
         //通过地名查找邮政编码
         if (stringToInt) {
-            NSString * str ;
-            NSString * string;
-            
             switch (searchState) {
-                case 1:    //查找省份ID
-                {//找到对应省份名称
-                    str = [districtArray objectAtIndex:0];
-                    string =[NSString stringWithFormat:@"%@省",str];
-                    if([[attributeDict objectForKey:@"province"]isEqual:string]){
-                        provinceid = [[attributeDict objectForKey:@"provinceid"]intValue];
-                        NSLog(@"provinceid  %d",provinceid);
-                    }
-                    break;
-                }
-                case 2:    //查找城市ID
-                {   //找到对应城市名称
-                    str = [districtArray objectAtIndex:1];
-                    string =[NSString stringWithFormat:@"%@市",str];
-                    if([[attributeDict objectForKey:@"city"]isEqual:string]){
-                        cityid = [[attributeDict objectForKey:@"cityid"]intValue];
-                        NSLog(@"cityid  %d",cityid);
-                    }
-                    break;
-                }
-                case 3:    //查找区县ID
-                {   //找到对应区县名称
-                    str = [districtArray objectAtIndex:2];
-                    string =[NSString stringWithFormat:@"%@",str];
-                    if([[attributeDict objectForKey:@"area"]isEqual:string]){
-                        areaid = [[attributeDict objectForKey:@"areaid"]intValue];
-                        NSLog(@"areaid  %d",areaid);
-                    }
-                    break;
-                }
-                case 4:    //查找邮政编码
-                {   //找到对应区县名称
-                    if([[attributeDict objectForKey:@"areaid"]intValue ] == areaid){
-                        zipcode = [[attributeDict objectForKey:@"zip"]intValue];
-                        NSLog(@"zipcode  %d",zipcode);
-                    }
-                    break;
-                }
                 case 11:    //获取省份名称
                 {   //省份名称做key    省份ID做value
                     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:[attributeDict objectForKey:@"provinceid"],[attributeDict objectForKey:@"province"], nil];
@@ -684,7 +604,6 @@
                     if([[attributeDict objectForKey:@"areaid"]intValue] == areaid){
                         zipcode = [[attributeDict objectForKey:@"zip"]intValue];
                         NSLog(@"zip:  %@",[attributeDict objectForKey:@"zip"]);
-                        
                     }
                     break;
                 }
@@ -693,48 +612,60 @@
             }
         }
         else{
-        switch (searchState) {
-        case 11:    //获取省份名称
-            {   //省份名称做key    省份ID做value
-                if([[attributeDict objectForKey:@"provinceid"]intValue] == provinceid){
-                    [districtArray addObject: [attributeDict objectForKey:@"province"]];
-                    NSLog(@"provinceid:  %d  %@",provinceid,[attributeDict objectForKey:@"province"]);
-                    
-                    //显示
-                    [self displayTheDistrict];
+            switch (searchState) {
+                case 11:    //获取省份名称
+                {   //省份名称做key    省份ID做value
+                    if([[attributeDict objectForKey:@"provinceid"]intValue] == provinceid){
+                        //[districtArray addObject: [attributeDict objectForKey:@"province"]];
+                        NSLog(@"provinceid:  %d  province%@",provinceid,[attributeDict objectForKey:@"province"]);
+                        for (NSMutableDictionary * dic in districtArray) {
+                            NSDictionary * dics = [[NSDictionary alloc]initWithObjectsAndKeys:[dic objectForKey:@"area"],@"area",[dic objectForKey:@"city"],@"city",[attributeDict objectForKey:@"province"],@"province", nil];
+                            [dic removeAllObjects];
+                            [dic setDictionary:dics];
+                        }
+                        //显示查询到的结果
+                        [self displayTheDistrict];
+                    }
+                    break;
                 }
-                break;
-            }
-        case 12:    //获取城市名称
-            {   //通过选定的省份id获取市的名称   并且市名称做key    市ID做value
-                if([[attributeDict objectForKey:@"cityid"]intValue] == cityid){
-                    provinceid = [[attributeDict objectForKey:@"provinceid"]intValue];
-                    [districtArray addObject: [attributeDict objectForKey:@"city"]];
-                    NSLog(@"provinceid:  %d  %@",cityid,[attributeDict objectForKey:@"city"]);
+                case 12:    //获取城市名称
+                {   //通过选定的省份id获取市的名称   并且市名称做key    市ID做value
+                    if([[attributeDict objectForKey:@"cityid"]intValue] == cityid){
+                        provinceid = [[attributeDict objectForKey:@"provinceid"]intValue];
+                        for (NSString * str in areaNameArray) {
+                            NSMutableDictionary * dic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:str,@"area",[attributeDict objectForKey:@"city"],@"city", nil];
+                            [districtArray addObject: dic];
+                        }
+                        NSLog(@"cityid:  %d  city%@",cityid,[attributeDict objectForKey:@"city"]);
+                    }
+                    break;
                 }
-                break;
-            }
-        case 13:    //获取地区名称
-            {   //通过选定的市id获取地区的名称   并且地区名称做key    地区ID做value
-                if([[attributeDict objectForKey:@"areaid"]intValue] == areaid){
-                    cityid = [[attributeDict objectForKey:@"cityid"]intValue];
-                                           // NSLog(@"cityid:  %d",cityid);
-                    [districtArray addObject: [attributeDict objectForKey:@"area"]];
-                    NSLog(@"provinceid:  %d  %@",areaid,[attributeDict objectForKey:@"area"]);
+                case 13:    //通过选定的地区id获取市的名称   并且地区名称做key    地区ID做value
+                {//匹配多个area
+                    for (NSString * str in areaArray) {
+                        areaid = [str intValue];
+                        //NSLog(@"areaid:  %d",areaid);
+                        if([[attributeDict objectForKey:@"areaid"]intValue] == areaid){
+                            cityid = [[attributeDict objectForKey:@"cityid"]intValue];
+                            [areaNameArray addObject: [attributeDict objectForKey:@"area"]];
+                            //[districtArray addObject: [attributeDict objectForKey:@"area"]];
+                            NSLog(@"areaid:  %d  area%@",areaid,[attributeDict objectForKey:@"area"]);
+                        }
+                    }
+                    break;
                 }
-                break;
-            }
-        case 14:    //获取邮政编码
-            {   //通过选定的地区id获取邮政编码
-                if([[attributeDict objectForKey:@"zip"]intValue] == zipcode){
-                    areaid = [[attributeDict objectForKey:@"areaid"]intValue];
-                    NSLog(@"areaid:  %d",areaid);
+                case 14:   //通过邮政编码获取的地区id
+                {
+                    if([[attributeDict objectForKey:@"zip"]intValue] == zipcode){
+                        
+                        //可能对应多个ID
+                        [areaArray addObject:[attributeDict objectForKey:@"areaid"]];
+                    }
+                    break;
                 }
-                break;
+                default:
+                    break;
             }
-        default:
-            break;
-        }
         }
     }
 }
@@ -780,6 +711,10 @@
     }else{
         switch (searchState) {
             case 11:
+                //没找到
+                if (provinceid == -10000) {
+                    informationLabel.text = @"对不起,没有找到该邮政编码对应的地区,请检查后输入！";
+                }
                 NSLog(@"finish");
                 break;
             case 12:

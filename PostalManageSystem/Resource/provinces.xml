@@ -31,7 +31,7 @@
 <RECORD id="29" provinceid="630000" province="青海省"/>
 <RECORD id="30" provinceid="640000" province="宁夏回族自治区"/>
 <RECORD id="31" provinceid="650000" province="新疆维吾尔自治区"/>
-<RECORD id="32" provinceid="710000" province="台湾省"/>
-<RECORD id="33" provinceid="810000" province="香港特别行政区"/>
-<RECORD id="34" provinceid="820000" province="澳门特别行政区"/>
+<!--<RECORD id="32" provinceid="710000" province="台湾省"/>-->
+<!--<RECORD id="33" provinceid="810000" province="香港特别行政区"/>-->
+<!--<RECORD id="34" provinceid="820000" province="澳门特别行政区"/>-->
 </RECORDS>
