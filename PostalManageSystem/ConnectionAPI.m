@@ -320,11 +320,12 @@
                                               encoding:NSUTF8StringEncoding];
     // 打印出得到的XML
     NSLog(@"得到的返回数据：%@", theXML);
+    self.getXMLResults = [[ NSMutableString alloc ]initWithString:theXML];
     //服务器报错
     isfault = NO;
     //json解析
-        NSData *aData = [theXML dataUsingEncoding: NSUTF8StringEncoding];
-        NSDictionary * resultDic =  [NSJSONSerialization JSONObjectWithData:aData options:NSJSONReadingMutableContainers error:nil];
+    NSData *aData = [theXML dataUsingEncoding: NSUTF8StringEncoding];
+    NSDictionary * resultDic =  [NSJSONSerialization JSONObjectWithData:aData options:NSJSONReadingMutableContainers error:nil];
         isback = YES;
     [self analysisTheResult:resultDic];
 
@@ -346,11 +347,25 @@
 //        [self.cacheDic setObject:resultDic forKey:communicatingInterface];
 //        [NSThread detachNewThreadSelector:@selector(writeFileDic) toTarget:self withObject:nil];
 //    }
+    //登录
     if ([communicatingInterface isEqualToString:@"manageApi/doLogin"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"doLogin" object:self userInfo:resultDic];
-    }else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"]){
+    }
+    //启动公告list
+    else if ([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"] && [self.getXMLResults rangeOfString:@"启动公告"].length !=0 && [self.getXMLResults rangeOfString:@"listPager"].length !=0){
+        NSString * ID = [[[resultDic objectForKey:@"data"]objectAtIndex:0]objectForKey:@"id"];
+        [self getDetailViewWithToken:@"jiou" AndID:ID];
+    }
+    //启动公告detail
+    else if ([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById"] && [self.getXMLResults rangeOfString:@"启动公告"].length !=0){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"qdgg" object:self userInfo:resultDic];
+    }
+    //获取新闻列表
+    else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsByType"]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsByType" object:self userInfo:resultDic];
-    }else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById" ]){
+    }
+    //获取新闻详情
+    else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById" ]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsById" object:self userInfo:resultDic];
     }
 }

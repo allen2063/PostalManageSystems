@@ -149,12 +149,12 @@
     [self.view addSubview:instructionLabel];
     
     UIButton * searchBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    searchBtn.backgroundColor = [UIColor lightGrayColor];
     [searchBtn setTitle:@"查询" forState:UIControlStateNormal];
     searchBtn.frame =CGRectMake(0, 0, UISCREENWIDTH/3, 30);
     searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +20);;
     searchBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
-    [searchBtn setTintColor:[UIColor yellowColor]];
+//    [searchBtn setTintColor:[UIColor yellowColor]];
+    [searchBtn setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchBtn];
     
