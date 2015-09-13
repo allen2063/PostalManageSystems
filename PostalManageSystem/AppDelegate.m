@@ -10,7 +10,8 @@
 #import "MainViewController.h"
 #import "GDataXMLNode.h"
 
-@interface AppDelegate ()<UIWebViewDelegate>
+@interface AppDelegate ()<UIWebViewDelegate,BMKGeneralDelegate>
+@property (strong,nonatomic) BMKMapManager* mapManager;
 
 @property (strong,nonatomic)UIView * backgroundView;
 @property (strong,nonatomic)UIView * blackView;
@@ -37,10 +38,16 @@
     self.window.rootViewController = navCon;
     [self.window makeKeyAndVisible];
     
+    //百度地图
+    _mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [_mapManager start:@"ZapzSYH7i8OrtOurZsCu7DGc"  generalDelegate:self];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }
     
-    
-    Pager * pager;
-    [self.network getListWithToken:@"jiou" AndType:@"qdgg" AndListPager:pager];
+   // Pager * pager;
+//    [self.network getListWithToken:@"jiou" AndType:@"qdgg" AndListPager:pager];
     _blackView = [[UIView alloc]initWithFrame:self.window.bounds];
     _blackView.alpha = 0.0;
     _blackView.backgroundColor = [UIColor blackColor];

@@ -8,6 +8,7 @@
 
 #import "BSDTViewController.h"
 #import "BSDTDetailViewController.h"
+#import "UploadPicViewController.h"
 #define BTNWIDTH (UISCREENWIDTH/2-2)
 #define BTNHEIGHT ((UISCREENHEIGHT - NAVIGATIONHEIGHT)/4-2)
 #define IMGSIZERATIO 0.7
@@ -225,6 +226,8 @@
 
 - (void)jumpPageForBSDT:(UIButton*)btn{
     BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
+    UploadPicViewController * uploadPic = [[UploadPicViewController alloc]init];
+
     switch (btn.tag) {
         case 1:
             app.titleForCurrentPage = @"用户信息修改";
@@ -236,7 +239,10 @@
             bsdt = [bsdt init];
             [self.navigationController pushViewController:bsdt animated:YES];
             break;
-            
+        case 3:
+            app.titleForCurrentPage = @"照片上传";
+            [self.navigationController pushViewController:uploadPic animated:YES];
+            break;
         default:
             break;
     }

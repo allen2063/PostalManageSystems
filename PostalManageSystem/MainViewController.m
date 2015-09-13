@@ -11,6 +11,7 @@
 #import "YZBMCXViewController.h"
 #import "JXJWPMLCXViewController.h"
 #import "BSDTViewController.h"
+#import "BaiduMapSearch.h"
 @interface MainViewController (){
     AppDelegate * app;
 }
@@ -89,6 +90,12 @@
             BSDTViewController * bsdtViewCotntroller = [[BSDTViewController alloc]init];
             [self.navigationController pushViewController:bsdtViewCotntroller animated:YES];
         }
+            break;case 5:
+        {
+            app.titleForCurrentPage = @"周边网点查询";
+            BaiduMapSearch * mapCotntroller = [[BaiduMapSearch alloc]init];
+            [self.navigationController pushViewController:mapCotntroller animated:YES];
+        }
             break;
         case 6:
         {
@@ -146,6 +153,7 @@
 }
 
 - (void)initForYZZX{
+    UIImage * img;
     self.view.backgroundColor = [UIColor grayColor];
     //信息公告
     UIButton * xxggBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -153,7 +161,29 @@
     xxggBtn.backgroundColor = [UIColor whiteColor];
     xxggBtn.tag = 9;
     [xxggBtn addTarget:self action:@selector(jumpPage:) forControlEvents:UIControlEventTouchUpInside];
-    [xxggBtn setBackgroundImage:[UIImage imageNamed:@"xinxigonggao"] forState:UIControlStateNormal];
+    img = [UIImage imageNamed:@"xinxigonggao"];
+//    
+//    
+//    CGFloat top = (xxggBtn.frame.size.height - UISCREENWIDTH/3*1.64*1.15)/2; // 顶端盖高度
+//    
+//    CGFloat bottom = (xxggBtn.frame.size.height - UISCREENWIDTH/3*1.64*1.15)/2 ; // 底端盖高度
+//    
+//    CGFloat left = UISCREENWIDTH/12; // 左端盖宽度
+//    
+//    CGFloat right = UISCREENWIDTH/12; // 右端盖宽度
+//    
+//    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+//    //img = [img stretchableImageWithLeftCapWidth:100 topCapHeight:100*1.64*1.95];
+//    img = [img resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    
+//    //    UIImageResizingModeStretch：拉伸模式，通过拉伸UIEdgeInsets指定的矩形区域来填充图片
+//    
+//    //    UIImageResizingModeTile：平铺模式，通过重复显示UIEdgeInsets指定的矩形区域来填充图片
+//    
+//    NSLog( @"%@   %@",NSStringFromCGRect(self.view.bounds) ,NSStringFromCGRect(xxggBtn.frame) );
+    
+    //[xxggBtn setBackgroundImage:img forState:UIControlStateNormal];
+    [xxggBtn setImage:[UIImage imageNamed:@"xinxigonggao"] forState:UIControlStateNormal];
     [self.view addSubview:xxggBtn];
     
     //行业动态

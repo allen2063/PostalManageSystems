@@ -16,6 +16,11 @@
 #import "AppDelegate.h"
 #import "ConnectionAPI.h"
 #import "Pager.h"
+
+#import <BaiduMapAPI/BMapKit.h>//引入所有的头文件
+
+//#import <BaiduMapAPI/BMKMapView.h>//只引入所需的单个头文件
+
 #define UISCREENHEIGHT  self.view.bounds.size.height
 #define UISCREENWIDTH  self.view.bounds.size.width
 #define isPhone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)?YES:NO

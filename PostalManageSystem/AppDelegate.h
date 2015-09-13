@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ConnectionAPI.h"
 #import "Pager.h"
+#import <BaiduMapAPI/BMapKit.h>//引入所有的头文件
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

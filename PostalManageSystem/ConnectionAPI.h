@@ -28,6 +28,7 @@
 + (NSData *)picToStringWithImage:(UIImage *)image;
 //读取文件
 +(NSMutableDictionary *)readFileDic;
++(NSString *)documentsPath:(NSString *)fileName;
 //md5加密
 + (NSString *)md5:(NSString *)str;
 //登陆

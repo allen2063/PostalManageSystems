@@ -422,6 +422,27 @@
     NSError * error;
     NSString * str = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
     //NSLog(@"XML:%@",str);
+    
+    
+    
+//    NSString * new = @" <RECORD id=\"24\" provinceid=\"520000\" province=\"贵州省\"/> ";
+//    NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:new,name ,nil];
+//    
+//    NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *paths = [documents stringByAppendingPathComponent:@"xmlDic.archiver"];//拓展名可以自己随便取
+//    
+//    BOOL writeResult =[NSKeyedArchiver archiveRootObject:dic toFile:paths];
+//    NSLog(@"%@",writeResult ? @"写入缓存成功ConnectionAPI":@"写入缓存失败ConnectionAPI");
+//    
+//    if (writeResult) {
+//        NSString *documents = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//        NSString *path = [documents stringByAppendingPathComponent:@"xmlDic.archiver"];
+//        
+//        NSMutableDictionary * newDic = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+//        ;
+//        NSLog(@"读取ing  %@",[newDic objectForKey:name]);
+//    }
+//    
     return str;
 }
 

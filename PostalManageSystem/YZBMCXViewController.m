@@ -30,7 +30,6 @@
     NSMutableArray * areaNameArray;
     
     NSMutableString * DistrictTextFieldString;
-    
     int provinceid;
     int cityid;
     int areaid;
@@ -215,9 +214,7 @@
         self.districtLabel.hidden = NO;
         informationLabel.text = @"";
     }
-    
 }
-
 
 -(void)setAreaValue:(NSString *)areaValue
 {
