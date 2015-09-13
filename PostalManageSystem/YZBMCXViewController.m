@@ -187,6 +187,10 @@
 }
 
 -(void)change{
+    
+    if ([_zipCodeText isFirstResponder]) {
+        [_zipCodeText resignFirstResponder];
+    }
     self.districtLabel.text= @"请输入要查询的地区";
     self.districtLabel.font= [UIFont systemFontOfSize:17];
     
@@ -252,20 +256,21 @@
 //根据邮政编码显示地区
 - (void)displayTheDistrict{
     [DistrictTextFieldString setString:@""];
-//    for (int i = (int)districtArray.count -1; i>=0 ;i--) {
-//    
-//        [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[districtArray objectAtIndex:i]]];
-//    }
+    if (districtArray.count == 0) {
+        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"查询失败" message:@"邮政编码输入错误或不在查询范围" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
+        return;
+    }
     for (NSMutableDictionary * dic in districtArray) {
         [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[dic objectForKey:@"province"]]];
         [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@ ",[dic objectForKey:@"city"]]];
         [DistrictTextFieldString appendString:[NSString stringWithFormat:@"%@\n",[dic objectForKey:@"area"]]];
     }
     
-    CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的邮政编码对应的地区是:/n%@",DistrictTextFieldString] AndWidth:informationLabel.frame.size.width*2];
+    CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的地区是:/n%@",DistrictTextFieldString] AndWidth:informationLabel.frame.size.width*2];
     
     informationLabel.font = [UIFont systemFontOfSize:font];
-    informationLabel.text = [NSString stringWithFormat:@"您查询的邮政编码对应的地区是:\n%@",DistrictTextFieldString];
+    informationLabel.text = [NSString stringWithFormat:@"您查询的地区是:\n%@",DistrictTextFieldString];
     informationLabel.numberOfLines = 0;
     //自适应高度
     CGSize size = [informationLabel sizeThatFits:CGSizeMake(informationLabel.frame.size.width, MAXFLOAT)];
@@ -276,7 +281,10 @@
         informationLabel.frame = CGRectMake(0, 0, UISCREENWIDTH-100,  size.height);
     }
     informationLabel.center = CGPointMake(self.view.center.x, UISCREENHEIGHT - NAVIGATIONHEIGHT*2.5);
-    
+    //位置判断  不能超出搜索按钮
+    if (informationLabel.frame.origin.y < self.view.center.y +45) {
+        informationLabel.center =  CGPointMake(self.view.center.x, self.view.center.y +45 + informationLabel.frame.size.height/2);
+    }
     
 }
 
@@ -284,30 +292,60 @@
     if ([_zipCodeText isFirstResponder]) {
         [_zipCodeText resignFirstResponder];
     }
-    
-    if ([_zipCodeText.text length] != 6) {
-        UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"输入非法" message:@"请核对邮政编码后输入！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alerts show];
-        return;
-    }
-    
     //查询前清零  方便为后面是否查询到邮编做判断
     provinceid = -10000;
-    
+    //清空之前缓存的数据
+    [areaArray removeAllObjects];
+    [areaNameArray removeAllObjects];
+    [districtArray removeAllObjects];
+    [provinceArray removeAllObjects];
+    [cityArray removeAllObjects];
     //通过地区查邮编
     if (segmentControl.selectedSegmentIndex == 0) {
+        if ([self.districtLabel.text isEqualToString:@"请输入要查询的地区"] || zipcode == 0) {
+            UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"输入非法" message:@"请输入要查询的地区" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alerts show];
+            return;
+        }
         CGFloat font = [self adaptTextFontForString:[NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode] AndWidth:informationLabel.frame.size.width*2];
         informationLabel.font = [UIFont systemFontOfSize:font];
         informationLabel.text = [NSString stringWithFormat:@"您查询的地区的邮政编码为:%d",zipcode];
+        //zipcode = 0;
     }
     //邮编查地区  可能一个邮编对应多个地区
     else{
+        if ([_zipCodeText.text length] != 6) {
+            UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"输入非法" message:@"请核对邮政编码后输入！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alerts show];
+            return;
+        }
         zipcode = [_zipCodeText.text intValue];
         [areaArray removeAllObjects];
         [areaNameArray removeAllObjects];
         [districtArray removeAllObjects];
         [self getZipCode];
     }
+}
+
+
+//通过地区查找邮政编码时  输入地区时的响应事件
+- (void)lableTouched{
+    
+    [areaArray removeAllObjects];
+    [areaNameArray removeAllObjects];
+    [districtArray removeAllObjects];
+    [provinceArray removeAllObjects];
+    [cityArray removeAllObjects];
+    
+    DistrictTextFieldString = [[NSMutableString alloc]initWithString:@"请输入要查询的地区"];
+    self.districtLabel.text = DistrictTextFieldString;
+    if (_tableView.superview != self.view) {
+        [self.view addSubview:_tableView];
+    }//else NSLog(@"未添加");
+    
+    [self.view bringSubviewToFront:_tableView];
+    searchState = GETPROVINCENAME;
+    [self getProvinceName];
 }
 
 #pragma mark - tableView
@@ -322,7 +360,7 @@
             _tableView.frame = CGRectMake(UISCREENWIDTH/8, NAVIGATIONHEIGHT +50, UISCREENWIDTH*3/4,  UISCREENHEIGHT -NAVIGATIONHEIGHT -50);
             _tableView.center = CGPointMake(self.view.center.x, self.view.center.y + NAVIGATIONHEIGHT/2);
         }else{
-        _tableView.frame = CGRectMake(UISCREENWIDTH/8, NAVIGATIONHEIGHT +50, UISCREENWIDTH*3/4,  _dataList.count * tableViewCellHeight);
+        _tableView.frame = CGRectMake(UISCREENWIDTH/8, NAVIGATIONHEIGHT +50, UISCREENWIDTH*3/4,  _dataList.count * tableViewCellHeight+23);
         _tableView.center = CGPointMake(self.view.center.x, self.view.center.y + NAVIGATIONHEIGHT/2);
         }
     }];
@@ -464,31 +502,6 @@
     }else{
         return YES;
     }
-}
-
-//通过地区查找邮政编码时  输入地区时的响应事件
-- (void)lableTouched{
-    DistrictTextFieldString = [[NSMutableString alloc]initWithString:@"请输入要查询的地区"];
-    self.districtLabel.text = DistrictTextFieldString;
-    if (_tableView.superview != self.view) {
-        [self.view addSubview:_tableView];
-    }//else NSLog(@"未添加");
-    
-    [self.view bringSubviewToFront:_tableView];
-    searchState = GETPROVINCENAME;
-    [self getProvinceName];
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    [super touchesBegan:touches withEvent:event];
-    UITouch *touch = [touches anyObject];
-    if (touch.view == blackView) {
-        [self cancelLocatePicker];
-    }else if (touch.view == self.districtLabel){
-        
-
-    }
-    NSLog(@"touch.view.tag%ld",(long)touch.view.tag);
 }
 
 // 一般用来隐藏键盘
@@ -737,6 +750,17 @@
 // 出错时，例如强制结束解析
 - (void) parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     
+    
+}
+
+#pragma mark - HZAreaPicker delegate
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];   //scrollview捕获了touch事件
+    UITouch *touch = [touches anyObject];
+    if (touch.view == blackView) {
+        zipcode = 0;
+       [self cancelLocatePicker];
+    }
     
 }
 

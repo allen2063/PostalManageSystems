@@ -10,7 +10,7 @@
 #import "MainViewController.h"
 #import "GDataXMLNode.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<UIWebViewDelegate>
 
 @property (strong,nonatomic)UIView * backgroundView;
 @property (strong,nonatomic)UIView * blackView;
@@ -41,7 +41,6 @@
     
     Pager * pager;
     [self.network getListWithToken:@"jiou" AndType:@"qdgg" AndListPager:pager];
-#warning 启动公告的显示效果是什么样子的？
     _blackView = [[UIView alloc]initWithFrame:self.window.bounds];
     _blackView.alpha = 0.0;
     _blackView.backgroundColor = [UIColor blackColor];
@@ -66,9 +65,11 @@
     authorTimelabel.font = [UIFont systemFontOfSize:13];
     [_backgroundView addSubview:authorTimelabel];
     
-    UITextView * qdggView = [[UITextView alloc]initWithFrame:CGRectMake(0, 60, _backgroundView.frame.size.width, _backgroundView.frame.size.height - 60)];
-    qdggView.tag = 3;
-    [_backgroundView addSubview:qdggView];
+    UIWebView * webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, 60, _backgroundView.frame.size.width, _backgroundView.frame.size.height - 60)];
+    webView.tag = 3;
+    webView.scrollView.bounces = NO;
+    webView.delegate = self;
+    [_backgroundView addSubview:webView];
     //_backgroundView.alpha = 0.8;
     
     //上传图片
@@ -122,10 +123,10 @@
             detailTextView.text = [data objectForKey:@"details"];
             detailTextView.font = [UIFont systemFontOfSize:15];
         }else{
-            UITextView * detailTextView = (UITextView *)[_backgroundView viewWithTag:3];
-            detailTextView.frame = CGRectMake(0, 60 , _backgroundView.frame.size.width, _backgroundView.frame.size.height - 60 - cancelBtn.frame.size.height);
-            detailTextView.text = @"然而电影艺术中的情色场景其实和别的场景在本质上没有太大区别，甚至还相对的更有表现性，通过展现人类最私密的情感，和最原始的欲望来揭示人性中最原本，也最普遍的东西：懦弱、恐惧、依赖、温暖、勾引、背叛，罪恶，或者是爱。国内对电影中*河蟹*场面的接受能力还是有限的，一些优秀的影片可能还因此被大刀一砍，再无缘和观众在电影院中见面。然而，即便在相对开放的欧美国家，尽管许多未删减的原版电影能够过审上映，影片中的情爱镜头仍会引起一波又一波的争议和批评，仿佛这是个人类亘古不变的话题，人们因此繁衍，却又因此获罪。今天八卦君为大家罗列了15部由于影片中的逼真情爱镜头而引起极大争议的电影，大家也一起评判一下，到底孰是孰非吧。丹麦导演拉斯·冯·提尔（Lars von Trier）执导的《女性瘾者》是一部讲述对*河蟹*病态依赖问题的电影，从一位女性瘾者的自述角度，讲述了她从出生到50岁的*河蟹*旅程。在这样的主题下，影片中出现大量*河蟹*场景也就情有可原了。然而，尽管电影包含的*河蟹*镜头看上去极为真实，主演们其实并没有真的“亲历亲为”。那么影片的拍摄是怎样实现的呢？事实上，希安·拉博夫（Shia LaBeouf），夏洛特·甘斯布（Charlotte Gainsbourg）和斯塔西·马汀（Stacy Martin）等演员在拍摄过程中，完全是穿着衣服的，他们会根据剧本的明确要求做出相应的动作，摆出具体的姿势。（想想就好尴尬呀~）其后，来自世界各地的*河蟹*演员们则会担任替身，拍摄那些比较棘手的色情场景。他们的身体会通过特效和主演们的身体合为一体，从而创造出真实和谐的*河蟹*场面。";//[data objectForKey:@"details"];
-            detailTextView.font = [UIFont systemFontOfSize:15];
+            UIWebView * webView = (UIWebView *)[_backgroundView viewWithTag:3];
+            webView.frame = CGRectMake(0, 60 , _backgroundView.frame.size.width, _backgroundView.frame.size.height - 60 - cancelBtn.frame.size.height);
+            NSString * htmlString =@"然而电影艺术中的情色场景其实和别的场景在本质上没有太大区别，甚至还相对的更有表现性，通过展现人类最私密的情感，和最原始的欲望来揭示人性中最原本，也最普遍的东西：懦弱、恐惧、依赖、温暖、勾引、背叛，罪恶，或者是爱。国内对电影中*河蟹*场面的接受能力还是有限的，一些优秀的影片可能还因此被大刀一砍，再无缘和观众在电影院中见面。然而，即便在相对开放的欧美国家，尽管许多未删减的原版电影能够过审上映，影片中的情爱镜头仍会引起一波又一波的争议和批评，仿佛这是个人类亘古不变的话题，人们因此繁衍，却又因此获罪。今天八卦君为大家罗列了15部由于影片中的逼真情爱镜头而引起极大争议的电影，大家也一起评判一下，到底孰是孰非吧。丹麦导演拉斯·冯·提尔（Lars von Trier）执导的《女性瘾者》是一部讲述对*河蟹*病态依赖问题的电影，从一位女性瘾者的自述角度，讲述了她从出生到50岁的*河蟹*旅程。在这样的主题下，影片中出现大量*河蟹*场景也就情有可原了。然而，尽管电影包含的*河蟹*镜头看上去极为真实，主演们其实并没有真的“亲历亲为”。那么影片的拍摄是怎样实现的呢？事实上，希安·拉博夫（Shia LaBeouf），夏洛特·甘斯布（Charlotte Gainsbourg）和斯塔西·马汀（Stacy Martin）等演员在拍摄过程中，完全是穿着衣服的，他们会根据剧本的明确要求做出相应的动作，摆出具体的姿势。（想想就好尴尬呀~）其后，来自世界各地的*河蟹*演员们则会担任替身，拍摄那些比较棘手的色情场景。他们的身体会通过特效和主演们的身体合为一体，从而创造出真实和谐的*河蟹*场面。";//[data objectForKey:@"details"];
+            [webView loadHTMLString:htmlString baseURL:[NSURL URLWithString:htmlString]];
         }
         [self.window addSubview:_backgroundView];
         [self.window addSubview:_blackView];
@@ -149,6 +150,14 @@
         [_blackView removeFromSuperview];
         [_backgroundView removeFromSuperview];
     }];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    [GMDCircleLoader hideFromView:self.window animated:YES];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView{
+    [GMDCircleLoader setOnView:self.window withTitle:@"解析中..." animated:YES];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
