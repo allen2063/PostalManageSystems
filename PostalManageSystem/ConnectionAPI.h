@@ -37,6 +37,10 @@
 - (void)getListWithToken:(NSString *)token AndType:(NSString *)type AndListPager:(Pager *)listPager;
 //获取详情
 - (void)getDetailViewWithToken:(NSString *)token AndID:(NSString *)ID;
+//获取app用户列表
+- (void)getUserList;
+//全部申请查询
+- (void)getAllApplyListWithToken:(NSString *)token AndType:(NSString *)type AndUserName:(NSString *)userName AndPlaceName:(NSString *)placeName AndState:(NSString *)state AndPager:(Pager *)pager;
 //上传图片
 +(NSString *)PostImagesToServer:(NSString *) strUrl dicPostParams:(NSMutableDictionary *)params dicImages:(NSMutableDictionary *) dicImages;
 @property (strong, nonatomic) NSMutableData *webData;

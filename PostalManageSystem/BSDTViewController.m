@@ -9,6 +9,7 @@
 #import "BSDTViewController.h"
 #import "BSDTDetailViewController.h"
 #import "UploadPicViewController.h"
+#import "SearchForMyApply.h"
 #define BTNWIDTH (UISCREENWIDTH/2-2)
 #define BTNHEIGHT ((UISCREENHEIGHT - NAVIGATIONHEIGHT)/4-2)
 #define IMGSIZERATIO 0.7
@@ -24,6 +25,7 @@
 @property (strong,nonatomic) UIView * bsdtView;
 @property (strong,nonatomic) UITableView * table;
 @property (strong,nonatomic) NSMutableArray * dataList;
+@property (strong,nonatomic) SearchForMyApply * search;
 @end
 
 @implementation BSDTViewController
@@ -39,6 +41,7 @@
         self.table.delegate = self;
         self.table.frame = CGRectMake(UISCREENWIDTH - TABLEVIEWCELLWIDTH, 0, TABLEVIEWCELLWIDTH, 0);
         [self.view addSubview:self.table];
+
     }
     return self;
 }
@@ -158,7 +161,7 @@
     [qysqcxBtn addSubview:qysqcxImageView];
     qysqcxBtn.backgroundColor = [UIColor whiteColor];
     qysqcxBtn.frame = CGRectMake(UISCREENWIDTH/2+ 1, NAVIGATIONHEIGHT+1+(BTNHEIGHT+2)*3,BTNWIDTH,BTNHEIGHT );
-    [sqhfywBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
+    [qysqcxBtn addTarget:self action:@selector(jumpPageForBSDT:) forControlEvents:UIControlEventTouchUpInside];
     qysqcxBtn.tag = 8;
     [self.view addSubview:qysqcxBtn];
     
@@ -215,19 +218,21 @@
         forgetBtn.backgroundColor = [UIColor clearColor];
         [forgetBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
         [forgetBtn setTintColor:[UIColor redColor]];
+        [forgetBtn addTarget:self action:@selector(forget) forControlEvents:UIControlEventTouchUpInside];
         [self.loginView addSubview:forgetBtn];
         [self.view addSubview:self.loginView];
         [self.view bringSubviewToFront:self.loginView];
         accountTextField.text = @"1";
         passwordTextField.text = @"q";
     }
-
 }
 
 - (void)jumpPageForBSDT:(UIButton*)btn{
     BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
     UploadPicViewController * uploadPic = [[UploadPicViewController alloc]init];
-
+    //提前初始化查询  以接受服务器返回数据
+    _search = [[SearchForMyApply alloc]init];
+    [app.network getUserList];
     switch (btn.tag) {
         case 1:
             app.titleForCurrentPage = @"用户信息修改";
@@ -242,6 +247,11 @@
         case 3:
             app.titleForCurrentPage = @"照片上传";
             [self.navigationController pushViewController:uploadPic animated:YES];
+            break;
+        case 8:
+            [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
+            app.titleForCurrentPage = @"我的申请查询";
+            [self.navigationController pushViewController:_search animated:YES];
             break;
         default:
             break;
@@ -290,6 +300,12 @@
     }
 }
 
+- (void)forget{
+    UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"忘记密码提示" message:@"请与贵阳市邮政管理局联系，电话:0851-84584352" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    alerts.delegate = self;
+    [alerts show];
+}
+
 #pragma mark - TableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [self.dataList count];
@@ -314,9 +330,16 @@
     switch (indexPath.row) {
         case 0:{
             NSLog(@"注销");
-            UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"注销" message:@"是否确定注销" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-            alerts.delegate = self;
-            [alerts show];
+            if (app.login == YES) {
+                UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"注销" message:@"是否确定注销" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alerts.delegate = self;
+                [alerts show];
+            }else{
+                UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有登陆，请先登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+                alerts.delegate = self;
+                [alerts show];
+            }
+            
             break;
         }
         case 1:{

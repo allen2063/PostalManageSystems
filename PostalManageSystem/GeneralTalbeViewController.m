@@ -182,7 +182,7 @@
 }
 
 //网络请求
-- (void)getDataFromServer{
+- (void)getDataFromServerForGeneralTableView{
     if (isLoading == NO) {
         isLoading = YES;
         if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
@@ -209,7 +209,7 @@
         if (self.refresh.refreshingDirection==DJRefreshingDirectionBottom){
             if (app.pager.currentPage < app.pager.totalPages) {
                 //数据返回太快   影响动画效果  顾延迟请求
-                [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServer) userInfo:nil repeats:NO];
+                [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServerForGeneralTableView) userInfo:nil repeats:NO];
                 app.pager.currentPage ++;
             }else{
                 UIAlertView * alerts = [[UIAlertView alloc]initWithTitle:nil message:@"所有信息已加载完毕！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
@@ -221,7 +221,7 @@
             //下拉更新时将第一页数据缓存
             shouldUpdateCacheForTitle = YES;
             //数据返回太快   影响动画效果  顾延迟请求
-            [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServer) userInfo:nil repeats:NO];
+            [NSTimer scheduledTimerWithTimeInterval:0.4 target: self selector: @selector(getDataFromServerForGeneralTableView) userInfo:nil repeats:NO];
             
         }
    // }

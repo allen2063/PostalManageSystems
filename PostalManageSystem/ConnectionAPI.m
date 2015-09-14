@@ -30,6 +30,7 @@
 - (id)init{
     self = [super init];
     urlToServer = @"http://222.85.149.6:88/GuiYangPost/";//@"chisifang.imwork.net:11246/GuiYangPost/";    communicatingInterface = @"off";
+    //urlToServer = @"http://chisifang.imwork.net:11246/GuiYangPost/";
     alerts = [[UIAlertView alloc]init];
     isback =NO;
     requestCount = 0;
@@ -113,7 +114,25 @@
     return [self getObjectData:obj];
 }
 
-#pragma 接口
+
+
+//时间超时定义
+-(void) handleTimer:(NSTimer *)timer
+{
+    int threadInfo = 0;
+    //[[timer userInfo] isKindOfClass:[NSDictionary class]]?NSLog(@"yes"):NSLog(@"no");
+    if ([[timer userInfo] isKindOfClass:[NSDictionary class]]) {
+        threadInfo =[[[timer userInfo]objectForKey:@"threadInfo"] intValue];
+    }
+    if(!isback &&(threadInfo == requestCount)){  //时间到后未返回或者当前的线程标识不是设置计时器的线程标识 也就是说只有状态为未返回并且当前进程就是设置计时器的进程时成立
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"timeOut" object:self userInfo:nil];
+        //alerts = [[UIAlertView alloc]initWithTitle:@"网络请求超时" message:@"请检查您的网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        
+    }
+}
+
+
+#pragma -mark 接口
 //0参数
 - (void)withInterface:(NSString *)interface{
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:@"",@"", nil];
@@ -246,6 +265,33 @@
     }else NSLog(@"con为假  %@",webData);
 }
 
+//7参数
+- (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(NSString *)argument2Value andArgument3Name:(NSString *)argument3Name andArgument3Value:(NSString *)argument3Value andArgument4Name:(NSString *)argument4Name andArgument4Value:(NSString *)argument4Value  andArgument5Name:(NSString *)argument5Name andArgument5Value:(NSString *)argument5Value andArgument6Name:(NSString *)argument6Name andArgument6Value:(NSString *)argument6Value andArgument7Name:(NSString *)argument7Name andArgument7Value:(id)argument7Value{
+    
+    NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name,argument3Value,argument3Name,argument4Value,argument4Name,argument5Value,argument5Name,argument6Value,argument6Name,argument7Value,argument7Name, nil];
+    NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
+    NSLog(@"soapMsg %@",soapMsg);
+    NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
+    NSURL * url = [NSURL URLWithString:ur] ;
+    NSMutableURLRequest * req = [NSMutableURLRequest requestWithURL:url];
+    NSString *msgLength = [NSString stringWithFormat:@"%lu", (unsigned long)[soapMsg length]];
+    [req addValue: @"text/xml; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [req addValue: msgLength forHTTPHeaderField:@"Content-Length"];
+    [req setHTTPMethod:@"POST"];
+    [req setHTTPBody:[soapMsg dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    //自定义时间超时
+    requestCount ++;
+    NSDictionary * threadInfo = [[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",requestCount],@"threadInfo", nil];
+    [NSTimer scheduledTimerWithTimeInterval:timeout target: self selector: @selector(handleTimer:) userInfo:threadInfo repeats:NO];
+    isback =NO;
+    
+    conn = [[NSURLConnection alloc]initWithRequest:req delegate:self];
+    if(conn){
+        webData = [NSMutableData data];
+    }else NSLog(@"con为假  %@",webData);
+}
+
 - (void)loginWithToken:(NSString *)token AndUserName:(NSString *)userName AndUserPassword:(NSString *)userPassword{
     userPassword = [ConnectionAPI md5:userPassword ];
     communicatingInterface = @"manageApi/doLogin";
@@ -263,6 +309,16 @@
     [self withInterface:@"baseNewsApi/getNewsById" andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"id" andArgument2Value:ID];
 }
 
+- (void)getUserList{
+    communicatingInterface = @"manageApi/userList";
+    [self withInterface:@"manageApi/userList" andArgument1Name:@"token" andArgument1Value:@"jiou"];
+}
+
+- (void)getAllApplyListWithToken:(NSString *)token AndType:(NSString *)type AndUserName:(NSString *)userName AndPlaceName:(NSString *)placeName AndState:(NSString *)state AndPager:(Pager *)pager{
+    communicatingInterface = @"bsdtApi/getApplyList";
+    NSDictionary * listPagerJson = [ConnectionAPI getObjectData:pager];
+    [self withInterface:communicatingInterface andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"type" andArgument2Value:type andArgument3Name:@"userName" andArgument3Value:userName andArgument4Name:@"wdxx" andArgument4Value:placeName andArgument5Name:@"status" andArgument5Value:state andArgument6Name:@"userId" andArgument6Value:@"" andArgument7Name:@"listPager" andArgument7Value:listPagerJson];
+}
 
 //连接
 
@@ -285,31 +341,17 @@
     NSLog(@"!!!!!!!!!!!!%@",error);
     //alerts = [[UIAlertView alloc] initWithTitle:@"错误" message:[error localizedDescription]  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 
-    if (alerts.visible != YES) {
-        alerts = [alerts initWithTitle:@"错误" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-         [alerts show];
-    }
+//    if (alerts.visible != YES) {
+//        alerts = [alerts initWithTitle:@"错误" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//         [alerts show];
+//        NSLog(@"alert没有按钮？？？？ %@",[error localizedDescription]);
+//    }
    
     NSDictionary * d = [[NSDictionary alloc]initWithObjectsAndKeys:error,@"error" ,nil];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"fault" object:self userInfo:d];
-}
-
-
-//时间超时定义
--(void) handleTimer:(NSTimer *)timer
-{
-    int threadInfo = 0;
-    //[[timer userInfo] isKindOfClass:[NSDictionary class]]?NSLog(@"yes"):NSLog(@"no");
-    if ([[timer userInfo] isKindOfClass:[NSDictionary class]]) {
-        threadInfo =[[[timer userInfo]objectForKey:@"threadInfo"] intValue];
-    }
-    if(!isback &&(threadInfo == requestCount)){  //时间到后未返回或者当前的线程标识不是设置计时器的线程标识 也就是说只有状态为未返回并且当前进程就是设置计时器的进程时成立
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"fault" object:self userInfo:nil];
-        //alerts = [[UIAlertView alloc]initWithTitle:@"网络请求超时" message:@"请检查您的网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        if (alerts.visible != YES) {
-            alerts = [alerts initWithTitle:@"网络请求超时" message:@"请检查您的网络！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-            [alerts show];
-        }
+    if ([[error localizedDescription] rangeOfString:@"timed out"].length != 0) {
+        NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:[error localizedDescription],@"timeOut", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"timeOut" object:self userInfo:dic];
     }
 }
 
@@ -376,6 +418,15 @@
     //获取新闻详情
     else if([communicatingInterface isEqualToString:@"baseNewsApi/getNewsById" ]){
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getNewsById" object:self userInfo:resultDic];
+    }
+    //获取用户列表
+    else if ([communicatingInterface isEqualToString:@"manageApi/userList"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"userList" object:self userInfo:resultDic];
+    }
+    //
+    else if ([communicatingInterface isEqualToString:@"bsdtApi/getApplyList"]){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getApplyList" object:self userInfo:resultDic];
+
     }
 }
 

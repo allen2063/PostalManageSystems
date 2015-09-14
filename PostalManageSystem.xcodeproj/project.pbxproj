@@ -29,7 +29,6 @@
 		56B88E371BA5A734000B54D0 /* jia.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B88E331BA5A734000B54D0 /* jia.png */; };
 		56B88E381BA5A734000B54D0 /* jian.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B88E341BA5A734000B54D0 /* jian.png */; };
 		56B88E391BA5A734000B54D0 /* location.png in Resources */ = {isa = PBXBuildFile; fileRef = 56B88E351BA5A734000B54D0 /* location.png */; };
-		56B88E3B1BA5AF31000B54D0 /* areas121.xml in Resources */ = {isa = PBXBuildFile; fileRef = 56B88E3A1BA5AF31000B54D0 /* areas121.xml */; };
 		56BFF5411B8AF2AB00D5E896 /* BSDTDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */; };
 		56C59DD11B82DD5F00D96F08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD01B82DD5F00D96F08 /* main.m */; };
 		56C59DD41B82DD5F00D96F08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD31B82DD5F00D96F08 /* AppDelegate.m */; };
@@ -79,6 +78,8 @@
 		56C8F0771BA0344A00763A4C /* zipcode.xml in Resources */ = {isa = PBXBuildFile; fileRef = 56C8F0731BA0344A00763A4C /* zipcode.xml */; };
 		56C8F07B1BA0397B00763A4C /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C8F07A1BA0397B00763A4C /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		56C8F07D1BA039C800763A4C /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 56C8F07C1BA039C800763A4C /* libxml2.dylib */; };
+		56CC7CF71BA666DF003BF6BE /* SearchForMyApply.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7CF61BA666DF003BF6BE /* SearchForMyApply.m */; };
+		56CC7CFA1BA6B537003BF6BE /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CC7CF91BA6B537003BF6BE /* CustomTableViewCell.m */; };
 		56CE5B861B9AD769008D3B75 /* Pager.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B851B9AD769008D3B75 /* Pager.m */; };
 		56CE5B9C1B9ADAFE008D3B75 /* DJRefreshProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B8A1B9ADAFE008D3B75 /* DJRefreshProgressView.m */; };
 		56CE5B9D1B9ADAFE008D3B75 /* pull_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 56CE5B8B1B9ADAFE008D3B75 /* pull_loading@2x.png */; };
@@ -135,7 +136,6 @@
 		56B88E331BA5A734000B54D0 /* jia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jia.png; sourceTree = "<group>"; };
 		56B88E341BA5A734000B54D0 /* jian.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jian.png; sourceTree = "<group>"; };
 		56B88E351BA5A734000B54D0 /* location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location.png; sourceTree = "<group>"; };
-		56B88E3A1BA5AF31000B54D0 /* areas121.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = areas121.xml; sourceTree = "<group>"; };
 		56BFF53F1B8AF2AB00D5E896 /* BSDTDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTDetailViewController.h; sourceTree = "<group>"; };
 		56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTDetailViewController.m; sourceTree = "<group>"; };
 		56C59DCB1B82DD5F00D96F08 /* PostalManageSystem.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PostalManageSystem.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -201,6 +201,10 @@
 		56C8F0791BA0397B00763A4C /* GDataXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDataXMLNode.h; sourceTree = "<group>"; };
 		56C8F07A1BA0397B00763A4C /* GDataXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDataXMLNode.m; sourceTree = "<group>"; };
 		56C8F07C1BA039C800763A4C /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		56CC7CF51BA666DF003BF6BE /* SearchForMyApply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchForMyApply.h; sourceTree = "<group>"; };
+		56CC7CF61BA666DF003BF6BE /* SearchForMyApply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchForMyApply.m; sourceTree = "<group>"; };
+		56CC7CF81BA6B537003BF6BE /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		56CC7CF91BA6B537003BF6BE /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 		56CE5B841B9AD769008D3B75 /* Pager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pager.h; sourceTree = "<group>"; };
 		56CE5B851B9AD769008D3B75 /* Pager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pager.m; sourceTree = "<group>"; };
 		56CE5B891B9ADAFE008D3B75 /* DJRefreshProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJRefreshProgressView.h; sourceTree = "<group>"; };
@@ -270,6 +274,10 @@
 				56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */,
 				56B88E2F1BA56C07000B54D0 /* UploadPicViewController.h */,
 				56B88E301BA56C07000B54D0 /* UploadPicViewController.m */,
+				56CC7CF51BA666DF003BF6BE /* SearchForMyApply.h */,
+				56CC7CF61BA666DF003BF6BE /* SearchForMyApply.m */,
+				56CC7CF81BA6B537003BF6BE /* CustomTableViewCell.h */,
+				56CC7CF91BA6B537003BF6BE /* CustomTableViewCell.m */,
 			);
 			name = BanShiDaTing;
 			sourceTree = "<group>";
@@ -385,7 +393,6 @@
 				56B88E331BA5A734000B54D0 /* jia.png */,
 				56B88E341BA5A734000B54D0 /* jian.png */,
 				56B88E351BA5A734000B54D0 /* location.png */,
-				56B88E3A1BA5AF31000B54D0 /* areas121.xml */,
 				56C8F0701BA0344A00763A4C /* areas.xml */,
 				56C8F0711BA0344A00763A4C /* cities.xml */,
 				56C8F0721BA0344A00763A4C /* provinces.xml */,
@@ -630,7 +637,6 @@
 				56C59E1F1B82F59D00D96F08 /* shenqinghuifuyewu.png in Resources */,
 				56C59E261B82F59D00D96F08 /* youzhengbianmachaxun.png in Resources */,
 				56C59E131B82F59D00D96F08 /* fanhui.png in Resources */,
-				56B88E3B1BA5AF31000B54D0 /* areas121.xml in Resources */,
 				56C59E191B82F59D00D96F08 /* lingdaojianghua.png in Resources */,
 				56C59E251B82F59D00D96F08 /* yonghuxinxixiugai.png in Resources */,
 				56CE5B9F1B9ADAFE008D3B75 /* pull_refresh@2x.png in Resources */,
@@ -665,6 +671,8 @@
 				56CE5BA11B9ADAFE008D3B75 /* SampleRefreshView.m in Sources */,
 				56CE5B861B9AD769008D3B75 /* Pager.m in Sources */,
 				56C59E451B8331D500D96F08 /* HZAreaPickerView.m in Sources */,
+				56CC7CFA1BA6B537003BF6BE /* CustomTableViewCell.m in Sources */,
+				56CC7CF71BA666DF003BF6BE /* SearchForMyApply.m in Sources */,
 				56C8F07B1BA0397B00763A4C /* GDataXMLNode.m in Sources */,
 				56C59E471B8331D500D96F08 /* HZLocation.m in Sources */,
 				56B88E171BA558E8000B54D0 /* test.mm in Sources */,

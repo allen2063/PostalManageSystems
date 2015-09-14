@@ -27,7 +27,6 @@
         self.view.backgroundColor = [UIColor whiteColor];
         _imagePicker = [[UIImagePickerController alloc] init];
         _imagePicker.delegate = self;
-
     }
     return self;
 }
@@ -100,6 +99,56 @@
     _imagePicker.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     _imagePicker.allowsEditing = NO;
     [self presentViewController:_imagePicker animated:YES completion:nil];
+}
+
+//当选择一张图片后进入这里
+-(void)imagePickerController:(UIImagePickerController*)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *type = [info objectForKey:UIImagePickerControllerMediaType];
+    //当选择的类型是图片
+    if ([type isEqualToString:@"public.image"])
+    {
+        //先把图片转成NSData
+        UIImage* image = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+        NSData *data;
+        if (UIImagePNGRepresentation(image) == nil)
+        {
+            data = UIImageJPEGRepresentation(image, 1.0);
+        }
+        else
+        {
+            data = UIImagePNGRepresentation(image);
+        }
+        //图片保存的路径
+        //这里将图片放在沙盒的documents文件夹中
+        NSString * DocumentsPath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        //文件管理器
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+       
+        //把刚刚图片转换的data对象拷贝至沙盒中 并保存为image.png
+        [fileManager createDirectoryAtPath:DocumentsPath withIntermediateDirectories:YES attributes:nil error:nil];
+        [fileManager createFileAtPath:[DocumentsPath stringByAppendingString:@"/image.png"] contents:data attributes:nil];
+        //得到选择后沙盒中图片的完整路径
+
+        //filePath = [[NSString alloc]initWithFormat:@"%@%@",DocumentsPath,  @"/image.png"];
+        //关闭相册界面
+
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        //创建一个选择后图片的小图标放在下方
+        //类似微薄选择图后的效果
+        UIImageView *smallimage = [[UIImageView alloc] initWithFrame:CGRectMake(50, NAVIGATIONHEIGHT + UISCREENWIDTH, 200, 200)];
+        smallimage.image = image;
+        //加在视图中
+        [self.view addSubview:smallimage];
+    }
 
 }
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    NSLog(@"您取消了选择图片");
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
 @end

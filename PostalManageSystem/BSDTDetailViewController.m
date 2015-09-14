@@ -10,7 +10,7 @@
 #define leftInterval 10
 #define heightInterval 10
 #define heightForOneLine 30
-#define tableViewCellHeight 35
+#define tableViewCellHeight 35   
 #define selectedfont 14
 @interface BSDTDetailViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>{
     AppDelegate *app;

@@ -152,7 +152,6 @@
     searchBtn.frame =CGRectMake(0, 0, UISCREENWIDTH/3, 30);
     searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +20);;
     searchBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
-//    [searchBtn setTintColor:[UIColor yellowColor]];
     [searchBtn setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:searchBtn];
@@ -508,6 +507,7 @@
     }
     return YES;
 }
+
 #pragma mark - XML查询  地区——》邮政编码  ||邮政编码——》地区
 - (void)getProvinceName{
     searchState = GETPROVINCENAME;
@@ -750,7 +750,7 @@
     
 }
 
-#pragma mark - HZAreaPicker delegate
+#pragma mark - touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];   //scrollview捕获了touch事件
     UITouch *touch = [touches anyObject];

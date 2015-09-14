@@ -24,6 +24,7 @@
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(qdgg:) name:@"qdgg" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(timeOut:) name:@"timeOut" object:nil];
 
     [[UINavigationBar appearance] setBarTintColor:UIColorFromRGBValue(0x028e45)];//邮政的绿色
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
@@ -38,6 +39,35 @@
     self.window.rootViewController = navCon;
     [self.window makeKeyAndVisible];
     
+    [self initBDTT];
+    
+//    Pager * pager;
+//    [self.network getListWithToken:@"jiou" AndType:@"qdgg" AndListPager:pager];
+//    [self initQDGG];
+    //_backgroundView.alpha = 0.8;
+    
+    //上传图片
+//    NSMutableDictionary * dic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"banshidating"],@"pic", nil];
+//    [ConnectionAPI PostImagesToServer:@"http://222.85.149.6:88/GuiYangPost/uploadpicture/upload" dicPostParams:dic dicImages:dic];
+    return YES;
+}
+
+//超时处理
+- (void)timeOut:(NSNotification *)note{
+    NSDictionary * dic = [note userInfo];
+    [GMDCircleLoader hideFromView:self.window animated:YES];
+    UIAlertView * alerts = [[UIAlertView alloc]init];
+    if (alerts.visible != YES) {
+        NSString * str = @"请检查您的网络！";
+        if (dic != nil) {
+            str = [dic objectForKey:@"timeOut"];
+        }
+        alerts = [alerts initWithTitle:@"网络请求超时" message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alerts show];
+    }
+}
+
+- (void)initBDTT{
     //百度地图
     _mapManager = [[BMKMapManager alloc]init];
     // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
@@ -45,9 +75,9 @@
     if (!ret) {
         NSLog(@"manager start failed!");
     }
-    
-   // Pager * pager;
-//    [self.network getListWithToken:@"jiou" AndType:@"qdgg" AndListPager:pager];
+}
+
+- (void)initQDGG{
     _blackView = [[UIView alloc]initWithFrame:self.window.bounds];
     _blackView.alpha = 0.0;
     _blackView.backgroundColor = [UIColor blackColor];
@@ -55,7 +85,7 @@
     _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.window.frame.size.width*7/8, (self.window.frame.size.height - NAVIGATIONHEIGHT)*7/8)];
     _backgroundView.backgroundColor = [UIColor whiteColor];
     _backgroundView.center = CGPointMake(self.window.center.x, self.window.center.y*3);
-
+    
     UILabel * titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, _backgroundView.frame.size.width, 40)];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.numberOfLines = 1;
@@ -77,12 +107,6 @@
     webView.scrollView.bounces = NO;
     webView.delegate = self;
     [_backgroundView addSubview:webView];
-    //_backgroundView.alpha = 0.8;
-    
-    //上传图片
-//    NSMutableDictionary * dic = [[NSMutableDictionary alloc]initWithObjectsAndKeys:[UIImage imageNamed:@"banshidating"],@"pic", nil];
-//    [ConnectionAPI PostImagesToServer:@"http://222.85.149.6:88/GuiYangPost/uploadpicture/upload" dicPostParams:dic dicImages:dic];
-    return YES;
 }
 
 - (void)qdgg:(NSNotification *)note{
@@ -146,7 +170,6 @@
             _blackView.alpha = 0.5;
         }];
     }
-    
 }
 
 - (void)cancelView{
