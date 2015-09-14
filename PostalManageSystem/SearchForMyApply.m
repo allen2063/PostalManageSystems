@@ -28,7 +28,16 @@
     NSDictionary * interfaceTransform;
     UIAlertView * alerts;
     //搜索的选项是否发生改变  yes为改变了   no为没改变   点击一次didselect设置为yes   点击一次submit设置为no
-    BOOL searchStateChange;
+    BOOL isSearchStateChange;
+    
+    UITextField * placeNameTextField;
+    UITextField * loginNameTextField;
+    UITextField * serviceTypeTextField;
+    UITextField * stateTextField;
+    
+    UITextField * placeNameTextField2;
+    UITextField * serviceTypeTextField2;
+    UITextField * stateTextField2;
 }
 @property (strong,nonatomic) UILabel * titleLabel;
 @property (strong,nonatomic) UITableView * selectedTable;
@@ -39,6 +48,8 @@
 @property (strong,nonatomic) NSMutableArray * dataListForDisplay;
 @property (strong,nonatomic) NSMutableDictionary * pagerDci;
 @property (nonatomic,strong)DJRefresh *refresh;
+@property (nonatomic,strong) NSMutableDictionary * cachaDataForDifferentSegPage0;
+@property (nonatomic,strong) NSMutableDictionary * cachaDataForDifferentSegPage1;
 
 @end
 @implementation SearchForMyApply
@@ -101,7 +112,7 @@
     placeNameLabel.font = [UIFont systemFontOfSize:defualtFont];
     placeNameLabel.textAlignment = NSTextAlignmentCenter;
     [allApplySearch addSubview:placeNameLabel];
-    UITextField * placeNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 5, UISCREENWIDTH*3/4-20, 30)];
+    placeNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 5, UISCREENWIDTH*3/4-20, 30)];
     placeNameTextField.delegate = self;
     placeNameTextField.tag = 1;
     placeNameTextField.userInteractionEnabled = YES;
@@ -115,7 +126,7 @@
     loginNameLabel.font = [UIFont systemFontOfSize:defualtFont];
     loginNameLabel.textAlignment = NSTextAlignmentCenter;
     [allApplySearch addSubview:loginNameLabel];
-    UITextField * loginNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 10+ 30, UISCREENWIDTH*3/4-20, 30)];
+    loginNameTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 10+ 30, UISCREENWIDTH*3/4-20, 30)];
     loginNameTextField.delegate = self;
     loginNameTextField.tag = 2;
     loginNameTextField.font = [UIFont systemFontOfSize:defualtFont];
@@ -129,7 +140,7 @@
     serviceTypeLabel.font = [UIFont systemFontOfSize:defualtFont];
     serviceTypeLabel.textAlignment = NSTextAlignmentCenter;
     [allApplySearch addSubview:serviceTypeLabel];
-    UITextField * serviceTypeTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 15+ 60, UISCREENWIDTH*3/4-20, 30)];
+    serviceTypeTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 15+ 60, UISCREENWIDTH*3/4-20, 30)];
     serviceTypeTextField.delegate = self;
     serviceTypeTextField.tag = 3;
     serviceTypeTextField.font = [UIFont systemFontOfSize:defualtFont];
@@ -143,7 +154,7 @@
     stateLabel.font = [UIFont systemFontOfSize:defualtFont];
     stateLabel.textAlignment = NSTextAlignmentCenter;
     [allApplySearch addSubview:stateLabel];
-    UITextField * stateTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 20+ 90, UISCREENWIDTH*3/4-30 - UISCREENWIDTH/5, 30)];
+    stateTextField = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 20+ 90, UISCREENWIDTH*3/4-30 - UISCREENWIDTH/5, 30)];
     stateTextField.delegate = self;
     stateTextField.tag = 4;
     stateTextField.font = [UIFont systemFontOfSize:defualtFont];
@@ -170,7 +181,7 @@
     placeNameLabel2.font = [UIFont systemFontOfSize:defualtFont];
     placeNameLabel2.textAlignment = NSTextAlignmentCenter;
     [myApplySearch addSubview:placeNameLabel2];
-    UITextField * placeNameTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 5, UISCREENWIDTH*3/4-20, 30)];
+    placeNameTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 5, UISCREENWIDTH*3/4-20, 30)];
     placeNameTextField2.delegate = self;
     placeNameTextField2.tag = 5;
     placeNameTextField2.font = [UIFont systemFontOfSize:defualtFont];
@@ -183,7 +194,7 @@
     serviceTypeLabel2.font = [UIFont systemFontOfSize:defualtFont];
     serviceTypeLabel2.textAlignment = NSTextAlignmentCenter;
     [myApplySearch addSubview:serviceTypeLabel2];
-    UITextField * serviceTypeTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 10+ 30, UISCREENWIDTH*3/4-20, 30)];
+    serviceTypeTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 10+ 30, UISCREENWIDTH*3/4-20, 30)];
     serviceTypeTextField2.delegate = self;
     serviceTypeTextField2.tag = 6;
     serviceTypeTextField2.font = [UIFont systemFontOfSize:defualtFont];
@@ -197,7 +208,7 @@
     stateLabel2.font = [UIFont systemFontOfSize:defualtFont];
     stateLabel2.textAlignment = NSTextAlignmentCenter;
     [myApplySearch addSubview:stateLabel2];
-    UITextField * stateTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 15+ 60, UISCREENWIDTH*3/4-30 - UISCREENWIDTH/5, 30)];
+    stateTextField2 = [[UITextField alloc]initWithFrame:CGRectMake(10 + UISCREENWIDTH/4, 15+ 60, UISCREENWIDTH*3/4-30 - UISCREENWIDTH/5, 30)];
     stateTextField2.delegate = self;
     stateTextField2.tag = 7;
     stateTextField2.font = [UIFont systemFontOfSize:defualtFont];
@@ -245,6 +256,9 @@
     if (_type==eRefreshTypeProgress) {
         [_refresh registerClassForTopView:[DJRefreshProgressView class]];
     }
+    _cachaDataForDifferentSegPage0 = [[NSMutableDictionary alloc]init];
+    _cachaDataForDifferentSegPage1 = [[NSMutableDictionary alloc]init];
+
 }
 
 
@@ -261,12 +275,64 @@
 
 -(void)change{
     [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
+    //存储改变前页面数据
+    if (segmentControl.selectedSegmentIndex == 1) {
+
+        _cachaDataForDifferentSegPage0 = [_cachaDataForDifferentSegPage0 initWithObjectsAndKeys:tableViewCacheDictionary,@"tableViewCacheDictionary",app.pager,@"pager",_tableViewForDisplay,@"_tableViewForDisplay",_dataListForDisplay,@"_dataListForDisplay",isSearchStateChange,@"isSearchStateChange",placeNameTextField,@"placeNameTextField",loginNameTextField,@"loginNameTextField",serviceTypeTextField,@"serviceTypeTextField",stateTextField,@"stateTextField", nil];
+    }else{
+        UITextField * placeNameText = (UITextField *)[self.view viewWithTag:1];
+//        UITextField * loginNameText = (UITextField *)[self.view viewWithTag:2];
+        UITextField * serviceTypeText = (UITextField *)[self.view viewWithTag:3];
+        UITextField * stateNameText = (UITextField *)[self.view viewWithTag:4];
+        
+        _cachaDataForDifferentSegPage1 = [_cachaDataForDifferentSegPage1 initWithObjectsAndKeys:tableViewCacheDictionary,@"tableViewCacheDictionary",app.pager,@"pager",_tableViewForDisplay,@"_tableViewForDisplay",_dataListForDisplay,@"_dataListForDisplay",isSearchStateChange,@"isSearchStateChange",placeNameText,@"placeNameText",serviceTypeText,@"serviceTypeText",stateNameText,@"stateNameText", nil];
+    }
+    
     if (segmentControl.selectedSegmentIndex == 0) {
+        //判断是否有缓存
+        if ([_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"] != nil) {
+            //取出改变后页面数据
+            tableViewCacheDictionary = [_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"];
+            app.pager = [_cachaDataForDifferentSegPage0 objectForKey:@"pager"];
+            _tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
+            _dataListForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_dataListForDisplay"];
+            isSearchStateChange = [_cachaDataForDifferentSegPage0 objectForKey:@"isSearchStateChange"];
+            placeNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"placeNameTextField"];
+            loginNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"loginNameTextField"];
+            serviceTypeTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"serviceTypeTextField"];
+            stateTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"stateTextField"];
+        }else{
+            tableViewCacheDictionary = [[NSMutableDictionary alloc]init];
+            app.pager = [app.pager init];
+            _tableViewForDisplay = [[UITableView alloc]init];
+            _dataListForDisplay = [[NSMutableArray alloc]init];
+            isSearchStateChange = NO;
+        }
+        
         allApplySearch.hidden = NO;
         myApplySearch.hidden = YES;
         _tableViewForDisplay.frame = CGRectMake(0, allApplySearch.frame.origin.y +allApplySearch.frame.size.height  , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHEIGHT - segmentControl.frame.size.height -allApplySearch.frame.size.height);
 
     }else{
+        //判断是否有缓存
+        if ([_cachaDataForDifferentSegPage1 objectForKey:@"tableViewCacheDictionary"] != nil) {
+            //取出改变后页面数据
+            tableViewCacheDictionary = [_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"];
+            app.pager = [_cachaDataForDifferentSegPage0 objectForKey:@"pager"];
+            _tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
+            _dataListForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_dataListForDisplay"];
+            isSearchStateChange = [_cachaDataForDifferentSegPage0 objectForKey:@"isSearchStateChange"];
+            placeNameTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"placeNameTextField2"];
+            serviceTypeTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"serviceTypeTextField2"];
+            stateTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"stateTextField2"];
+        }else{
+            tableViewCacheDictionary = [[NSMutableDictionary alloc]init];
+            app.pager = [app.pager init];
+            _tableViewForDisplay = [[UITableView alloc]init];
+            _dataListForDisplay = [[NSMutableArray alloc]init];
+            isSearchStateChange = NO;
+        }
+        
         allApplySearch.hidden = YES;
         myApplySearch.hidden = NO;
         _tableViewForDisplay.frame = CGRectMake(0, myApplySearch.frame.origin.y +myApplySearch.frame.size.height  , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHEIGHT - segmentControl.frame.size.height -myApplySearch.frame.size.height) ;
@@ -274,12 +340,11 @@
 }
 
 - (void)submit{
-    searchStateChange = NO;
+    isSearchStateChange = NO;
     [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
     if (segmentControl.selectedSegmentIndex == 0) {
         segmentStateString = [NSString stringWithFormat:@"0"];
-//         UITextField * placeText = (UITextField *)[self.view viewWithTag:1];
-//        UITextField * loginNameText = (UITextField *)[self.view viewWithTag:2];
+        
 //        NSString * loginName = loginNameText.text;
 //        if ([loginName rangeOfString:@"全部"].length != 0) {
 //            loginName = @"";
@@ -368,7 +433,7 @@
     directionForNow = direction;
     //isLoading = YES;
     //if ([app.titleForCurrentPage isEqualToString:@"满意度调查结果通告"]) {
-    if (searchStateChange) {
+    if (isSearchStateChange) {
         [self submit];
         return;
     }
@@ -518,7 +583,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
-    searchStateChange = YES;
+    isSearchStateChange = YES;
     if (tableView == _selectedTable) {
         UITextField * text = (UITextField *)[self.view viewWithTag:selectedTextFieldTag];
         text.text =  [self.dataList objectAtIndex:indexPath.row];

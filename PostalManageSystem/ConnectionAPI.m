@@ -39,8 +39,6 @@
     if (self.cacheDic == nil) {
         self.cacheDic = [[NSMutableDictionary alloc]init];
     }
-    
-
     return self;
 }
 
