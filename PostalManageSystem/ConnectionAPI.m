@@ -324,6 +324,12 @@
     [self withInterface:communicatingInterface andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"type" andArgument2Value:type andArgument3Name:@"userName" andArgument3Value:userName andArgument4Name:@"wdxx" andArgument4Value:placeName andArgument5Name:@"status" andArgument5Value:state andArgument6Name:@"userId" andArgument6Value:@"" andArgument7Name:@"listPager" andArgument7Value:listPagerJson];
 }
 
+- (void)getFlowIDWithInterface:(NSString *)interface ANdToken:(NSString *)token AndFlowID:(NSString *)flowID {
+    communicatingInterface = [NSString stringWithFormat:@"bsdtApi/get%@",interface];
+    
+    [self withInterface:communicatingInterface andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"flowid" andArgument2Value:flowID];
+}
+
 //连接
 
 #pragma mark URL Connection Data Delegate Methods

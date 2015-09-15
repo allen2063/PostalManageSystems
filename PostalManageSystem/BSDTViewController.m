@@ -223,7 +223,7 @@
         [self.view addSubview:self.loginView];
         [self.view bringSubviewToFront:self.loginView];
         accountTextField.text = @"1";
-        passwordTextField.text = @"q";
+        passwordTextField.text = @"111111";
     }
 }
 
@@ -232,7 +232,6 @@
     UploadPicViewController * uploadPic = [[UploadPicViewController alloc]init];
     //提前初始化查询  以接受服务器返回数据
     _search = [[SearchForMyApply alloc]init];
-    [app.network getUserList];
     switch (btn.tag) {
         case 1:
             app.titleForCurrentPage = @"用户信息修改";
@@ -249,6 +248,7 @@
             [self.navigationController pushViewController:uploadPic animated:YES];
             break;
         case 8:
+            [app.network getUserList];
             [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
             app.titleForCurrentPage = @"我的申请查询";
             [self.navigationController pushViewController:_search animated:YES];

@@ -819,7 +819,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PostalManageSystem/BaiduMap",
 				);
-				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostalManageSystem/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${SDK_DIR}\"/usr/include/libxml2";
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -841,7 +841,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PostalManageSystem/BaiduMap",
 				);
-				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostalManageSystem/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

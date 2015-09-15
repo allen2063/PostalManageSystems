@@ -656,7 +656,10 @@
         [self cancelView];
         [tableViewCacheDictionary setObject:tableView forKey:[NSString stringWithFormat:@"%ld",(long)selectedTextFieldTag]];
     }else{
-        
+        NSMutableString * flowID = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"flowId"];
+        NSString * interface = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"type"];
+        [flowID insertString:@"\"" atIndex:0];
+        [app.network getFlowIDWithInterface:interface ANdToken:@"jiou" AndFlowID:[NSString stringWithFormat:@"%@",@"00000380"]];
     }
     
 }
