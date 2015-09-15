@@ -13,7 +13,7 @@
 #define tableViewCellHeight 35
 #define selectedfont 14
 #define defualtFont 17
-@interface SearchForMyApply()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,DJRefreshDelegate>{
+@interface SearchForMyApply()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate,DJRefreshDelegate,UIScrollViewDelegate>{
     AppDelegate *app;
     UISegmentedControl *segmentControl;
     UIView * allApplySearch;
@@ -72,6 +72,8 @@
     //监听通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userList:) name:@"userList" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(getApplyList:) name:@"getApplyList" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(cellBack:) name:@"isScrolledToRight" object:nil];
+
     isInitState =YES;
     //获取单例  userList
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
@@ -89,7 +91,7 @@
     segmentControl=[[UISegmentedControl alloc]initWithItems:array];
     //segmentControl.segmentedControlStyle=UISegmentedControlSegment;
     //设置位置 大小
-    segmentControl.frame=CGRectMake(0, NAVIGATIONHEIGHT-1, self.view.frame.size.width, 40);
+    segmentControl.frame=CGRectMake(0, NAVIGATIONHEIGHT-1, self.view.frame.size.width, 50);
     //默认选择
     segmentControl.selectedSegmentIndex=0;
     //设置背景色
@@ -199,7 +201,7 @@
     serviceTypeTextField2.tag = 6;
     serviceTypeTextField2.font = [UIFont systemFontOfSize:defualtFont];
     [serviceTypeTextField2 setBorderStyle:UITextBorderStyleLine];
-    serviceTypeTextField2.text = @"请选择";
+    serviceTypeTextField2.text = @"全部申请类型";
     serviceTypeTextField2.returnKeyType = UIReturnKeyDone;
     [myApplySearch addSubview:serviceTypeTextField2];
     
@@ -213,7 +215,7 @@
     stateTextField2.tag = 7;
     stateTextField2.font = [UIFont systemFontOfSize:defualtFont];
     [stateTextField2 setBorderStyle:UITextBorderStyleLine];
-    stateTextField2.text = @"请选择";
+    stateTextField2.text = @"全部";
     stateTextField2.returnKeyType = UIReturnKeyDone;
     [myApplySearch addSubview:stateTextField2];
     
@@ -245,6 +247,7 @@
     _tableViewForDisplay = [[UITableView alloc]initWithFrame:CGRectMake(0, allApplySearch.frame.origin.y +allApplySearch.frame.size.height  , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHEIGHT - segmentControl.frame.size.height -allApplySearch.frame.size.height) ];
     _tableViewForDisplay.delegate = self;
     _tableViewForDisplay.dataSource = self;
+    _tableViewForDisplay.hidden = YES;
     [self.view addSubview:_tableViewForDisplay];
     
     app.pager = [app.pager init];
@@ -277,34 +280,51 @@
     [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
     //存储改变前页面数据
     if (segmentControl.selectedSegmentIndex == 1) {
-
-        _cachaDataForDifferentSegPage0 = [_cachaDataForDifferentSegPage0 initWithObjectsAndKeys:tableViewCacheDictionary,@"tableViewCacheDictionary",app.pager,@"pager",_tableViewForDisplay,@"_tableViewForDisplay",_dataListForDisplay,@"_dataListForDisplay",isSearchStateChange,@"isSearchStateChange",placeNameTextField,@"placeNameTextField",loginNameTextField,@"loginNameTextField",serviceTypeTextField,@"serviceTypeTextField",stateTextField,@"stateTextField", nil];
+        NSString * isSearchStateChangeString = [NSString stringWithFormat:@"%@",isSearchStateChange ? @"YES":@"NO"];
+        [_cachaDataForDifferentSegPage0 setObject:tableViewCacheDictionary forKey:@"tableViewCacheDictionary"];
+        [_cachaDataForDifferentSegPage0 setObject:app.pager forKey:@"pager"];
+        [_cachaDataForDifferentSegPage0 setObject:_tableViewForDisplay forKey:@"_tableViewForDisplay"];
+        [_cachaDataForDifferentSegPage0 setObject:_dataListForDisplay forKey:@"_dataListForDisplay"];
+        [_cachaDataForDifferentSegPage0 setObject:isSearchStateChangeString forKey:@"isSearchStateChangeString"];
+//        [_cachaDataForDifferentSegPage0 setObject:placeNameTextField forKey:@"placeNameTextField"];
+//        [_cachaDataForDifferentSegPage0 setObject:loginNameTextField forKey:@"loginNameTextField"];
+//        [_cachaDataForDifferentSegPage0 setObject:serviceTypeTextField forKey:@"serviceTypeTextField"];
+//        [_cachaDataForDifferentSegPage0 setObject:stateTextField forKey:@"stateTextField"];
+        NSLog(@"页面0已缓存");
     }else{
-        UITextField * placeNameText = (UITextField *)[self.view viewWithTag:1];
-//        UITextField * loginNameText = (UITextField *)[self.view viewWithTag:2];
-        UITextField * serviceTypeText = (UITextField *)[self.view viewWithTag:3];
-        UITextField * stateNameText = (UITextField *)[self.view viewWithTag:4];
-        
-        _cachaDataForDifferentSegPage1 = [_cachaDataForDifferentSegPage1 initWithObjectsAndKeys:tableViewCacheDictionary,@"tableViewCacheDictionary",app.pager,@"pager",_tableViewForDisplay,@"_tableViewForDisplay",_dataListForDisplay,@"_dataListForDisplay",isSearchStateChange,@"isSearchStateChange",placeNameText,@"placeNameText",serviceTypeText,@"serviceTypeText",stateNameText,@"stateNameText", nil];
+        NSString * isSearchStateChangeString = [NSString stringWithFormat:@"%@",isSearchStateChange ? @"YES":@"NO"];
+        [_cachaDataForDifferentSegPage1 setObject:tableViewCacheDictionary forKey:@"tableViewCacheDictionary"];
+        [_cachaDataForDifferentSegPage1 setObject:app.pager forKey:@"pager"];
+        [_cachaDataForDifferentSegPage1 setObject:_tableViewForDisplay forKey:@"_tableViewForDisplay"];
+        [_cachaDataForDifferentSegPage1 setObject:_dataListForDisplay forKey:@"_dataListForDisplay"];
+        [_cachaDataForDifferentSegPage1 setObject:isSearchStateChangeString forKey:@"isSearchStateChangeString"];
+//        [_cachaDataForDifferentSegPage1 setObject:placeNameTextField forKey:@"placeNameTextField"];
+//        [_cachaDataForDifferentSegPage1 setObject:serviceTypeTextField forKey:@"serviceTypeTextField"];
+//        [_cachaDataForDifferentSegPage1 setObject:stateTextField forKey:@"stateTextField"];
+        NSLog(@"页面1已缓存");
     }
     
     if (segmentControl.selectedSegmentIndex == 0) {
         //判断是否有缓存
         if ([_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"] != nil) {
             //取出改变后页面数据
+            NSLog(@"页面0有缓存  读取ing");
+            NSString * isSearchStateChangeString;
             tableViewCacheDictionary = [_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"];
             app.pager = [_cachaDataForDifferentSegPage0 objectForKey:@"pager"];
-            _tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
+            //_tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
             _dataListForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_dataListForDisplay"];
-            isSearchStateChange = [_cachaDataForDifferentSegPage0 objectForKey:@"isSearchStateChange"];
-            placeNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"placeNameTextField"];
-            loginNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"loginNameTextField"];
-            serviceTypeTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"serviceTypeTextField"];
-            stateTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"stateTextField"];
+            isSearchStateChangeString = [_cachaDataForDifferentSegPage0 objectForKey:@"isSearchStateChangeString"];
+//            placeNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"placeNameTextField"];
+//            loginNameTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"loginNameTextField"];
+//            serviceTypeTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"serviceTypeTextField"];
+//            stateTextField = [_cachaDataForDifferentSegPage0 objectForKey:@"stateTextField"];
+            isSearchStateChange = [isSearchStateChangeString boolValue];
         }else{
+            NSLog(@"页面0无缓存  创建中ing");
             tableViewCacheDictionary = [[NSMutableDictionary alloc]init];
             app.pager = [app.pager init];
-            _tableViewForDisplay = [[UITableView alloc]init];
+            //_tableViewForDisplay = [[UITableView alloc]init];
             _dataListForDisplay = [[NSMutableArray alloc]init];
             isSearchStateChange = NO;
         }
@@ -317,18 +337,22 @@
         //判断是否有缓存
         if ([_cachaDataForDifferentSegPage1 objectForKey:@"tableViewCacheDictionary"] != nil) {
             //取出改变后页面数据
-            tableViewCacheDictionary = [_cachaDataForDifferentSegPage0 objectForKey:@"tableViewCacheDictionary"];
-            app.pager = [_cachaDataForDifferentSegPage0 objectForKey:@"pager"];
-            _tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
-            _dataListForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_dataListForDisplay"];
-            isSearchStateChange = [_cachaDataForDifferentSegPage0 objectForKey:@"isSearchStateChange"];
-            placeNameTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"placeNameTextField2"];
-            serviceTypeTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"serviceTypeTextField2"];
-            stateTextField2 = [_cachaDataForDifferentSegPage0 objectForKey:@"stateTextField2"];
+            NSLog(@"页面1有缓存  读取ing");
+            NSString * isSearchStateChangeString;
+            tableViewCacheDictionary = [_cachaDataForDifferentSegPage1 objectForKey:@"tableViewCacheDictionary"];
+            app.pager = [_cachaDataForDifferentSegPage1 objectForKey:@"pager"];
+            //_tableViewForDisplay = [_cachaDataForDifferentSegPage0 objectForKey:@"_tableViewForDisplay"];
+            _dataListForDisplay = [_cachaDataForDifferentSegPage1 objectForKey:@"_dataListForDisplay"];
+            isSearchStateChangeString = [_cachaDataForDifferentSegPage1 objectForKey:@"isSearchStateChangeString"];
+//            placeNameTextField2 = [_cachaDataForDifferentSegPage1 objectForKey:@"placeNameTextField2"];
+//            serviceTypeTextField2 = [_cachaDataForDifferentSegPage1 objectForKey:@"serviceTypeTextField2"];
+//            stateTextField2 = [_cachaDataForDifferentSegPage1 objectForKey:@"stateTextField2"];
+            isSearchStateChange = [isSearchStateChangeString boolValue];
         }else{
+            NSLog(@"页面1无缓存  创建中ing");
             tableViewCacheDictionary = [[NSMutableDictionary alloc]init];
             app.pager = [app.pager init];
-            _tableViewForDisplay = [[UITableView alloc]init];
+            //_tableViewForDisplay = [[UITableView alloc]init];
             _dataListForDisplay = [[NSMutableArray alloc]init];
             isSearchStateChange = NO;
         }
@@ -337,11 +361,14 @@
         myApplySearch.hidden = NO;
         _tableViewForDisplay.frame = CGRectMake(0, myApplySearch.frame.origin.y +myApplySearch.frame.size.height  , UISCREENWIDTH, UISCREENHEIGHT - NAVIGATIONHEIGHT - segmentControl.frame.size.height -myApplySearch.frame.size.height) ;
     }
+    [_tableViewForDisplay reloadData];
 }
 
 - (void)submit{
+    [placeNameTextField resignFirstResponder];
+    [placeNameTextField2 resignFirstResponder];
+
     isSearchStateChange = NO;
-    [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
     if (segmentControl.selectedSegmentIndex == 0) {
         segmentStateString = [NSString stringWithFormat:@"0"];
         
@@ -362,13 +389,16 @@
 //        Pager * pager = [[Pager alloc]init];
 //        [app.network getAllApplyListWithToken:@"jiou" AndType:typeName AndUserName:loginName AndPlaceName:placeText.text AndState:stateName AndPager:pager];
     }else{
-        segmentStateString = [NSString stringWithFormat:@"1"];    }
+        segmentStateString = [NSString stringWithFormat:@"1"];
+    }
+    [_refresh startRefreshingDirection:DJRefreshDirectionTop animation:YES];
 }
 
 //网络请求
 - (void)getDataFromServerForSearchMyApply{
     if (isLoading == NO) {
         isLoading = YES;
+        [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
         if (segmentControl.selectedSegmentIndex == 0) {
             segmentStateString = [NSString stringWithFormat:@"0"];
             UITextField * placeText = (UITextField *)[self.view viewWithTag:1];
@@ -393,6 +423,25 @@
                 stateName = [interfaceTransform objectForKey:stateName];
             }
             [app.network getAllApplyListWithToken:@"jiou" AndType:typeName AndUserName:loginName AndPlaceName:placeText.text AndState:stateName AndPager:app.pager];
+        }else{
+            segmentStateString = [NSString stringWithFormat:@"1"];
+       
+            NSString * loginName = [app.userData objectForKey:@"userName"];
+
+            NSString * typeName = serviceTypeTextField2.text;
+            if ([typeName rangeOfString:@"全部"].length != 0) {
+                typeName = @"";
+            }else{
+                typeName = [interfaceTransform objectForKey:typeName];
+            }
+            
+            NSString * stateName = stateTextField2.text;
+            if ([stateName rangeOfString:@"全部"].length != 0) {
+                stateName = @"";
+            }else{
+                stateName = [interfaceTransform objectForKey:stateName];
+            }
+            [app.network getAllApplyListWithToken:@"jiou" AndType:typeName AndUserName:loginName AndPlaceName:placeNameTextField2.text AndState:stateName AndPager:app.pager];
         }
     }
 }
@@ -412,6 +461,7 @@
 }
 
 - (void)getApplyList:(NSNotification *)note{
+    [GMDCircleLoader hideFromView:self.view animated:YES];
     NSDictionary * dic = [note userInfo];
     if ([[dic objectForKey:@"result"] isEqualToString:@"1"]) {
         //填充对应页面下方list的页面信息
@@ -423,10 +473,16 @@
             [_dataListForDisplay addObject: dics];
         }
     }
+    if(_dataListForDisplay.count == 0){
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"数据为空" message:@"没有该项数据" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alert show];
+        _tableViewForDisplay.hidden = YES;
+    }else{
+        _tableViewForDisplay.hidden = NO;
+    }
+
      [self addDataWithDirection:directionForNow];
 }
-
-
 
 #pragma mark - DJrefresh df
 - (void)refresh:(DJRefresh *)refresh didEngageRefreshDirection:(DJRefreshDirection)direction{
@@ -500,21 +556,21 @@
             [self showTableViewWith:textField];
             return NO;
             break;
-        case 5:
-            [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
-            selectedTextFieldTag = 5;
-            return NO;
-            break;
+//        case 5:
+//            [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
+//            selectedTextFieldTag = 5;
+//            return NO;
+//            break;
         case 6:
             [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
-            self.dataList = [[NSMutableArray alloc]initWithObjects:@"有",@"无", nil];
+            _dataList = [[NSMutableArray alloc]initWithObjects:@"全部申请类型",@"设置新网点",@"撤销普遍服务网点",@"撤销非普遍服务网点",@"备案信息变更",@"就近迁址",@"停限业务",@"暂停限业务",@"恢复业务", nil];
             selectedTextFieldTag = 6;
             [self showTableViewWith:textField];
             return NO;
             break;
         case 7:
             [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
-            self.dataList = [[NSMutableArray alloc]initWithObjects:@"信件",@"物流",@"集邮",@"包裹",@"印刷品",@"报刊零售",@"邮政储蓄",@"盲人读物",@"特快专递",@"报刊订阅",@"邮政汇兑",@"义务兵信函",@"烈士遗物包裹",@"其他", nil];
+            _dataList = [[NSMutableArray alloc]initWithObjects:@"全部",@"未审核",@"审核未通过",@"已审核未上传照片",@"已审核以上传照片", nil];
             selectedTextFieldTag = 7;
             [self showTableViewWith:textField];
             return NO;
@@ -524,11 +580,7 @@
             
             break;
     }
-//    if (segmentControl.selectedSegmentIndex == 0) {
-//        return NO;
-//    }else{
         return YES;
-//    }
 }
 
 // 一般用来隐藏键盘
@@ -568,14 +620,15 @@
         if (cell == nil) {
             cell = [[CustomTableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
         }
-        cell.placeNameLabel.text = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"wdxx"];
-        cell.serviceTypeLabel.text = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"typeName"];
-        
-        NSMutableString * timeAndApllyPersonString = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"申请时间:%@",[[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"startTime"]]];
-        [timeAndApllyPersonString setString:[timeAndApllyPersonString substringToIndex:15]];
-        [timeAndApllyPersonString appendString:[NSString stringWithFormat:@"       申请人:%@",[[NSMutableString alloc]initWithString:[[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"applyUserName"]]]];
-        cell.timeAndApllyPersonLabel.text = timeAndApllyPersonString;
-        
+        if (indexPath.row < _dataListForDisplay.count) {
+            cell.placeNameLabel.text = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"wdxx"];
+            cell.serviceTypeLabel.text = [[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"typeName"];
+            
+            NSMutableString * timeAndApllyPersonString = [[NSMutableString alloc]initWithString:[NSString stringWithFormat:@"申请时间:%@",[[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"startTime"]]];
+            [timeAndApllyPersonString setString:[timeAndApllyPersonString substringToIndex:15]];
+            [timeAndApllyPersonString appendString:[NSString stringWithFormat:@"       申请人:%@",[[NSMutableString alloc]initWithString:[[_dataListForDisplay objectAtIndex:indexPath.row]objectForKey:@"applyUserName"]]]];
+            cell.timeAndApllyPersonLabel.text = timeAndApllyPersonString;
+        }
         //    cell.accessoryType = UITableViewCellAccessoryCheckmark;
         return cell;
     }
@@ -645,6 +698,22 @@
     [tableViewCacheDictionary setObject:self.selectedTable forKey:[NSString stringWithFormat:@"%ld",(long)selectedTextFieldTag]];
 }
 
+//当有cell右滑滑出时  将其他cell左滑还原
+- (void)cellBack:(NSNotification *)note{
+    CustomTableViewCell * theCell = [[note userInfo]objectForKey:@"cell"];
+        //遍历cell 并将其他cell左滑还原
+        for (int row = 0; row < _dataListForDisplay.count; row ++) {
+            NSUInteger section = 0;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            CustomTableViewCell * cell = (CustomTableViewCell *)[_tableViewForDisplay cellForRowAtIndexPath:indexPath];
+            if (cell.backgroundScrollView.contentOffset.x > UISCREENWIDTH /2  &&  cell != theCell) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    cell.backgroundScrollView.contentOffset = CGPointMake(0, 0);
+                }];
+            }
+        }
+}
+
 #pragma mark - touch
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];   //scrollview捕获了touch事件
@@ -652,7 +721,26 @@
     if (touch.view != [self.view viewWithTag:1]) {
         [(UITextField *)[self.view viewWithTag:1] resignFirstResponder];
     }
-    
+    //不是cell  则将打开的cell全部左滑初始化
+    if(![touch.view isKindOfClass:[CustomTableViewCell class]]){
+        //遍历cell
+        for (int row = 0; row < _dataListForDisplay.count; row ++) {
+            NSUInteger section = 0;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+            CustomTableViewCell * cell = (CustomTableViewCell *)[_tableViewForDisplay cellForRowAtIndexPath:indexPath];
+            //判断是否右滑  如果右滑了左滑还原
+            if (cell.backgroundScrollView.contentOffset.x > UISCREENWIDTH /2) {
+                [UIView animateWithDuration:0.3 animations:^{
+                    cell.backgroundScrollView.contentOffset = CGPointMake(0, 0);
+                }];
+            }
+        }
+    }
+    //是cell  scrollView捕获了touch事件   这里监控不到了
+//    else{
+////        CustomTableViewCell * theCell = (CustomTableViewCell *)touch.view;
+//        //如果是cell  则判断现在是初始状态还是已经划出
+//        }
 }
 
 @end

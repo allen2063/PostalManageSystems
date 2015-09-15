@@ -284,7 +284,7 @@
         [alerts show];
     }else if ([loginResult isEqualToString:@"1"]){
         [self.view sendSubviewToBack:self.loginView];
-        
+        app.userData = [[note userInfo] objectForKey:@"data"];
         self.titleLabel.text = @"办事大厅";
         app.login = YES;
     }

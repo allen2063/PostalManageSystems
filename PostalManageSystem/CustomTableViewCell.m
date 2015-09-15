@@ -16,12 +16,14 @@
     if (self) {
         self.frame = CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, 80);         //iPhone6上宽度实际是375
         self.backgroundColor = UIColorFromRGBValue(0x9e9e9e);
-        self.backgroundScrollView = [[UIScrollView alloc]initWithFrame:self.bounds];
+        self.backgroundScrollView = [[MyScrollView alloc]initWithFrame:self.bounds];
         self.backgroundScrollView.contentSize = CGSizeMake(self.frame.size.width *1.6, self.frame.size.height);
         self.backgroundScrollView.delegate = self ;
         self.backgroundScrollView.pagingEnabled = YES;
         self.backgroundScrollView.showsHorizontalScrollIndicator = NO;
+        self.backgroundScrollView.bounces = NO;
         [self addSubview:self.backgroundScrollView] ;
+        
         self.serviceTypeLabel  =[[UILabel alloc]initWithFrame:CGRectMake(15, 0, self.frame.size.width-15, self.frame.size.height/3)];
         self.serviceTypeLabel.backgroundColor = [UIColor clearColor];
         self.serviceTypeLabel.font = [UIFont systemFontOfSize:defualtFont];
@@ -64,12 +66,28 @@
     }
     return self;
 }
+
+//- (void)scrollViewBack{
+//    if (_isScrolledToRight == YES) {
+//        [UIView animateWithDuration:0.3 animations:^{
+//            self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
+//        }];
+//    }
+//}
+
+#pragma -mark Scroll
 //1、只要view有滚动（不管是拖、拉、放大、缩小等导致）都会执行此函数
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.x>self.frame.size.width/6) {
-        scrollToRight = YES;
+    if (scrollView.contentOffset.x == self.frame.size.width*3/5) {
+        _isScrolledToRight = YES;
+        NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:self,@"cell", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"isScrolledToRight" object:self userInfo:dic];
+        
+//        [UIView animateWithDuration:0.3 animations:^{
+//            self.backgroundScrollView.contentOffset = CGPointMake(0, 0);
+//        }];
     }else{
-        scrollToRight = NO;
+        _isScrolledToRight = NO;
     }
 //    NSLog(@"1");
 }
@@ -91,28 +109,33 @@
 //        }];
 //    }
     
-    NSLog(@"contentOffset %f  %@",scrollView.contentOffset.x, scrollToRight ? @"right":@"left");
+//    NSLog(@"contentOffset %f  %@",scrollView.contentOffset.x, scrollToRight ? @"right":@"left");
 }
 //4、已经结束拖拽，手指刚离开view的那一刻
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerat{
 //    NSLog(@"4");
-    if (decelerat)
-    {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            printf("STOP IT!!\n");
-//            [scrollView setContentOffset:scrollView.contentOffset animated:NO];
-//        });
-    }
-    
-//    if (scrollToRight) {
-//        [UIView animateWithDuration:0.1 animations:^{
-//            //scrollView.contentOffset = CGPointMake(self.frame.size.width/2, 0);
-//            self.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
-//        }];
-//    }else{
-//        [UIView animateWithDuration:0.1 animations:^{
-//            scrollView.contentOffset = CGPointMake(0, 0);
-//        }];
+//    if (scrollView.contentOffset.x >= ) {
+//        <#statements#>
 //    }
+}
+@end
+
+
+
+@implementation MyScrollView
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesBegan:touches withEvent:event];
+    if ( !self.dragging )
+    {
+        [[self nextResponder] touchesBegan:touches withEvent:event];
+    }
+}
+
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    [super touchesEnded:touches withEvent:event];
+    if ( !self.dragging )
+    {
+        [[self nextResponder] touchesEnded:touches withEvent:event];
+    }
 }
 @end

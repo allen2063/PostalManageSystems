@@ -19,5 +19,6 @@
 @property (strong,nonatomic) ConnectionAPI * network;
 @property (strong,nonatomic) Pager * pager;
 @property (strong,nonatomic) NSMutableDictionary * interfaceTransform;
+@property (strong,nonatomic) NSMutableDictionary * userData;
 @end
 

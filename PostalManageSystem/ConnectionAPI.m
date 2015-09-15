@@ -29,8 +29,8 @@
 
 - (id)init{
     self = [super init];
-    urlToServer = @"http://222.85.149.6:88/GuiYangPost/";//@"chisifang.imwork.net:11246/GuiYangPost/";    communicatingInterface = @"off";
-    //urlToServer = @"http://chisifang.imwork.net:11246/GuiYangPost/";
+    //urlToServer = @"http://222.85.149.6:88/GuiYangPost/";//@"chisifang.imwork.net:11246/GuiYangPost/";    communicatingInterface = @"off";
+    urlToServer = @"http://chisifang.imwork.net:11246/GuiYangPost/";
     alerts = [[UIAlertView alloc]init];
     isback =NO;
     requestCount = 0;
@@ -266,8 +266,12 @@
 //7参数
 - (void)withInterface:(NSString *)interface andArgument1Name:(NSString *)argument1Name andArgument1Value:(NSString *)argument1Value andArgument2Name:(NSString *)argument2Name andArgument2Value:(NSString *)argument2Value andArgument3Name:(NSString *)argument3Name andArgument3Value:(NSString *)argument3Value andArgument4Name:(NSString *)argument4Name andArgument4Value:(NSString *)argument4Value  andArgument5Name:(NSString *)argument5Name andArgument5Value:(NSString *)argument5Value andArgument6Name:(NSString *)argument6Name andArgument6Value:(NSString *)argument6Value andArgument7Name:(NSString *)argument7Name andArgument7Value:(id)argument7Value{
     
+    
     NSDictionary * dic = [[NSDictionary alloc]initWithObjectsAndKeys:argument1Value,argument1Name,argument2Value,argument2Name,argument3Value,argument3Name,argument4Value,argument4Name,argument5Value,argument5Name,argument6Value,argument6Name,argument7Value,argument7Name, nil];
+
     NSString *soapMsg =[NSString stringWithFormat:@"%@",dic];
+    //中文有乱码  转码
+    soapMsg = [ConnectionAPI replaceUnicode:soapMsg];
     NSLog(@"soapMsg %@",soapMsg);
     NSString * ur = [NSString stringWithFormat:@"%@%@",urlToServer,interface];
     NSURL * url = [NSURL URLWithString:ur] ;
@@ -315,6 +319,8 @@
 - (void)getAllApplyListWithToken:(NSString *)token AndType:(NSString *)type AndUserName:(NSString *)userName AndPlaceName:(NSString *)placeName AndState:(NSString *)state AndPager:(Pager *)pager{
     communicatingInterface = @"bsdtApi/getApplyList";
     NSDictionary * listPagerJson = [ConnectionAPI getObjectData:pager];
+    
+    
     [self withInterface:communicatingInterface andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"type" andArgument2Value:type andArgument3Name:@"userName" andArgument3Value:userName andArgument4Name:@"wdxx" andArgument4Value:placeName andArgument5Name:@"status" andArgument5Value:state andArgument6Name:@"userId" andArgument6Value:@"" andArgument7Name:@"listPager" andArgument7Value:listPagerJson];
 }
 

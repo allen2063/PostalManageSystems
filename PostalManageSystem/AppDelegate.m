@@ -33,6 +33,7 @@
     self.login = NO;
     self.network = [[ConnectionAPI alloc]init];
     self.pager = [[Pager alloc]init];
+    self.userData = [[NSMutableDictionary alloc]init];
     MainViewController * mainViewController = [[MainViewController alloc] initWithNibName:nil bundle:nil];
     self.interfaceTransform = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"baseNewsApi/getNewsByType",@"满意度调查结果通告", nil];
     UINavigationController * navCon = [[UINavigationController alloc] initWithRootViewController:mainViewController];

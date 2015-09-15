@@ -126,13 +126,15 @@
     
     NSArray *array=@[@"按地区查询",@"按邮政编码查询"];
     segmentControl=[[UISegmentedControl alloc]initWithItems:array];
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:16.f],NSFontAttributeName ,nil];
+    [segmentControl setTitleTextAttributes:dic forState:UIControlStateSelected];
     //segmentControl.segmentedControlStyle=UISegmentedControlSegment;
     //设置位置 大小
-    segmentControl.frame=CGRectMake(0, NAVIGATIONHEIGHT-1, self.view.frame.size.width, 40);
+    segmentControl.frame=CGRectMake(0, NAVIGATIONHEIGHT-1, self.view.frame.size.width, 50);
     //默认选择
     segmentControl.selectedSegmentIndex=0;
     //设置背景色
-    segmentControl.tintColor=UIColorFromRGBValue(0x028e45);
+    segmentControl.tintColor=UIColorFromRGBValue(0xb3d5bd);
     //设置监听事件
     [segmentControl addTarget:self action:@selector(change) forControlEvents:UIControlEventValueChanged];
     [self.view addSubview:segmentControl];
@@ -142,7 +144,7 @@
     colorSpace = CGColorSpaceCreateDeviceRGB();
     colorref = CGColorCreate(colorSpace,(CGFloat[]){ 2/255.0, 142/255.0, 69.0/255.0, 1 });
     [segmentControl.layer setBorderColor:colorref];//边框颜色
-    
+    segmentControl.backgroundColor = UIColorFromRGBValue(0xffffff);
     instructionLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, NAVIGATIONHEIGHT*2, UISCREENWIDTH-20, 30)];
     instructionLabel.text = @"您选择的查询地区是：";
     [self.view addSubview:instructionLabel];
@@ -150,7 +152,11 @@
     UIButton * searchBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [searchBtn setTitle:@"查询" forState:UIControlStateNormal];
     searchBtn.frame =CGRectMake(0, 0, UISCREENWIDTH/3, 30);
-    searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +20);;
+    if (UISCREENHEIGHT == 480) {
+        searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +5);
+    }else{
+        searchBtn.center = CGPointMake(self.view.center.x, self.view.center.y +20);
+    }
     searchBtn.backgroundColor = UIColorFromRGBValue(0x028e45);
     [searchBtn setTitleColor:[UIColor yellowColor]forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(search) forControlEvents:UIControlEventTouchUpInside];
