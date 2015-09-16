@@ -5,6 +5,7 @@
 //  Created by ZengYifei on 15/8/21.
 //  Copyright (c) 2015年 IOS-developer. All rights reserved.
 //
+#import "PostalManageSystem-Swift.h"
 
 #import "BSDTViewController.h"
 #import "BSDTDetailViewController.h"
@@ -223,35 +224,77 @@
         [self.view addSubview:self.loginView];
         [self.view bringSubviewToFront:self.loginView];
         accountTextField.text = @"1";
-        passwordTextField.text = @"q";
+        passwordTextField.text = @"111111";
     }
 }
 
 - (void)jumpPageForBSDT:(UIButton*)btn{
-    BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
+//    BSDTDetailViewController * bsdt = [BSDTDetailViewController alloc];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    ChangeUserInfoViewController * changeUserInfoVC = [storyboard instantiateViewControllerWithIdentifier:@"changeUserInfoVC"];
+    ApplyAddBranchViewController * applyAddBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyAddBranchVC"];
+    ApplyResignBranchViewController2 * applyResignBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyResignBranchVC"];
+    ApplyChangeBranchViewController * applyChangeBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyChangeBranchVC"];
+    ApplyPausedViewController * applyPausedBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyPausedBranchVC"];
+    ApplyStopBranchViewController * applyStopBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyStopBranchVC"];
+    ApplyRestoreBranchViewController * applyRestoreBranchVC = [storyboard instantiateViewControllerWithIdentifier:@"applyRestoreBranchVC"];
+
+    
     UploadPicViewController * uploadPic = [[UploadPicViewController alloc]init];
     //提前初始化查询  以接受服务器返回数据
     _search = [[SearchForMyApply alloc]init];
-    [app.network getUserList];
     switch (btn.tag) {
         case 1:
             app.titleForCurrentPage = @"用户信息修改";
-            bsdt = [bsdt init];
-            [self.navigationController pushViewController:bsdt animated:YES];
+//            bsdt = [bsdt init];
+            [self.navigationController pushViewController:changeUserInfoVC animated:YES];
             break;
         case 2:
             app.titleForCurrentPage = @"申请新增网点";
-            bsdt = [bsdt init];
-            [self.navigationController pushViewController:bsdt animated:YES];
+//            bsdt = [bsdt init];
+           [self.navigationController pushViewController:applyAddBranchVC animated:YES];
             break;
         case 3:
-            app.titleForCurrentPage = @"照片上传";
-            [self.navigationController pushViewController:uploadPic animated:YES];
+        {
+            app.titleForCurrentPage = @"申请撤销网点";
+            [self.navigationController pushViewController:applyResignBranchVC animated:YES];
+        }
             break;
+            
+        case 4:
+        {
+            app.titleForCurrentPage = @"申请变更网点";
+            [self.navigationController pushViewController:applyChangeBranchVC animated:YES];
+        }
+            break;
+            
+        case 5:
+        {
+            app.titleForCurrentPage = @"申请暂停/暂限办理业务";
+            [self.navigationController pushViewController:applyPausedBranchVC animated:YES];
+        }
+            break;
+            
+        case 6:
+        {
+            app.titleForCurrentPage = @"申请停止/限制办理业务";
+            [self.navigationController pushViewController:applyStopBranchVC animated:YES];
+        }
+            break;
+        case 7:
+        {
+            app.titleForCurrentPage = @"申请恢复办理业务";
+            [self.navigationController pushViewController:applyRestoreBranchVC animated:YES];
+        }
+            break;
+            
         case 8:
+            [app.network getUserList];
             [GMDCircleLoader setOnView:self.view withTitle:@"加载中..." animated:YES];
             app.titleForCurrentPage = @"我的申请查询";
-            [self.navigationController pushViewController:_search animated:YES];
+            [self.navigationController pushViewController:[_search init] animated:YES];
             break;
         default:
             break;

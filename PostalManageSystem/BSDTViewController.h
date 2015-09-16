@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#define NAVIGATIONHEIGHT 64
 
 @interface BSDTViewController : UIViewController
 

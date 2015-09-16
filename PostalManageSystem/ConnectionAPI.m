@@ -324,6 +324,10 @@
     [self withInterface:communicatingInterface andArgument1Name:@"token" andArgument1Value:token andArgument2Name:@"type" andArgument2Value:type andArgument3Name:@"userName" andArgument3Value:userName andArgument4Name:@"wdxx" andArgument4Value:placeName andArgument5Name:@"status" andArgument5Value:state andArgument6Name:@"userId" andArgument6Value:@"" andArgument7Name:@"listPager" andArgument7Value:listPagerJson];
 }
 
+- (void)getFlowIDWithToken:(NSString *)token AndFlowID:(NSString *)flowID{
+//    self withInterface:1 andArgument1Name:<#(NSString *)#> andArgument1Value:<#(NSString *)#> andArgument2Name:<#(NSString *)#> andArgument2Value:<#(id)#>
+}
+
 //连接
 
 #pragma mark URL Connection Data Delegate Methods

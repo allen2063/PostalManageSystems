@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		565430631B96AF3300B49E0E /* GMDCircleLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 565430621B96AF3300B49E0E /* GMDCircleLoader.m */; };
 		565430691B96C3B500B49E0E /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 565430681B96C3B500B49E0E /* settings.png */; };
-		56B535881B8718B400238BE6 /* BSDTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B535871B8718B400238BE6 /* BSDTViewController.m */; };
 		56B636DC1B9C65030005290D /* TFHpple.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636D71B9C65030005290D /* TFHpple.m */; };
 		56B636DD1B9C65030005290D /* TFHppleElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636D91B9C65030005290D /* TFHppleElement.m */; };
 		56B636DE1B9C65030005290D /* XPathQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 56B636DB1B9C65030005290D /* XPathQuery.m */; };
@@ -33,7 +32,6 @@
 		56C59DD11B82DD5F00D96F08 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD01B82DD5F00D96F08 /* main.m */; };
 		56C59DD41B82DD5F00D96F08 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD31B82DD5F00D96F08 /* AppDelegate.m */; };
 		56C59DD71B82DD5F00D96F08 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DD61B82DD5F00D96F08 /* MainViewController.m */; };
-		56C59DDC1B82DD5F00D96F08 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56C59DDB1B82DD5F00D96F08 /* Images.xcassets */; };
 		56C59DDF1B82DD5F00D96F08 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 56C59DDD1B82DD5F00D96F08 /* LaunchScreen.xib */; };
 		56C59DEB1B82DD5F00D96F08 /* PostalManageSystemTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 56C59DEA1B82DD5F00D96F08 /* PostalManageSystemTests.m */; };
 		56C59E111B82F59D00D96F08 /* banshidating.png in Resources */ = {isa = PBXBuildFile; fileRef = 56C59DF71B82F59D00D96F08 /* banshidating.png */; };
@@ -93,6 +91,18 @@
 		56CE5BA51B9ADAFE008D3B75 /* DJRefreshTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B991B9ADAFE008D3B75 /* DJRefreshTopView.m */; };
 		56CE5BA61B9ADAFE008D3B75 /* DJRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 56CE5B9B1B9ADAFE008D3B75 /* DJRefreshView.m */; };
 		56E508191B9596E100DB22A7 /* ConnectionAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 56E508181B9596E100DB22A7 /* ConnectionAPI.m */; };
+		DCD830E51BA80249005578AD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCD830E41BA80249005578AD /* Main.storyboard */; };
+		DCD830F01BA802A6005578AD /* ApplyAddBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830E61BA802A6005578AD /* ApplyAddBranchViewController.swift */; };
+		DCD830F11BA802A6005578AD /* ApplyChangeBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830E71BA802A6005578AD /* ApplyChangeBranchViewController.swift */; };
+		DCD830F21BA802A6005578AD /* ApplyPausedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830E81BA802A6005578AD /* ApplyPausedViewController.swift */; };
+		DCD830F31BA802A6005578AD /* ApplyResignBranchViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830E91BA802A6005578AD /* ApplyResignBranchViewController2.swift */; };
+		DCD830F41BA802A6005578AD /* ApplyRestoreBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830EA1BA802A6005578AD /* ApplyRestoreBranchViewController.swift */; };
+		DCD830F51BA802A6005578AD /* ApplyStopBranchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830EB1BA802A6005578AD /* ApplyStopBranchViewController.swift */; };
+		DCD830F61BA802A6005578AD /* ChangeUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830EC1BA802A6005578AD /* ChangeUserInfoViewController.swift */; };
+		DCD830F71BA802A6005578AD /* ClassToJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD830EE1BA802A6005578AD /* ClassToJSON.m */; };
+		DCD830F81BA802A6005578AD /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD830EF1BA802A6005578AD /* Model.swift */; };
+		DCD830FB1BA802D1005578AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCD830FA1BA802D1005578AD /* Images.xcassets */; };
+		DCD830FD1BA802FD005578AD /* BSDTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DCD830FC1BA802FD005578AD /* BSDTViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +120,6 @@
 		565430621B96AF3300B49E0E /* GMDCircleLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GMDCircleLoader.m; path = Indicator/GMDCircleLoader.m; sourceTree = "<group>"; };
 		565430681B96C3B500B49E0E /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		56B535861B8718B400238BE6 /* BSDTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSDTViewController.h; sourceTree = "<group>"; };
-		56B535871B8718B400238BE6 /* BSDTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTViewController.m; sourceTree = "<group>"; };
 		56B636D61B9C65030005290D /* TFHpple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHpple.h; sourceTree = "<group>"; };
 		56B636D71B9C65030005290D /* TFHpple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFHpple.m; sourceTree = "<group>"; };
 		56B636D81B9C65030005290D /* TFHppleElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFHppleElement.h; sourceTree = "<group>"; };
@@ -145,7 +154,6 @@
 		56C59DD31B82DD5F00D96F08 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		56C59DD51B82DD5F00D96F08 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		56C59DD61B82DD5F00D96F08 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
-		56C59DDB1B82DD5F00D96F08 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		56C59DDE1B82DD5F00D96F08 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		56C59DE41B82DD5F00D96F08 /* PostalManageSystemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PostalManageSystemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		56C59DE91B82DD5F00D96F08 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -227,6 +235,20 @@
 		56CE5B9B1B9ADAFE008D3B75 /* DJRefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJRefreshView.m; sourceTree = "<group>"; };
 		56E508171B9596E100DB22A7 /* ConnectionAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionAPI.h; sourceTree = "<group>"; };
 		56E508181B9596E100DB22A7 /* ConnectionAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionAPI.m; sourceTree = "<group>"; };
+		DCD830E41BA80249005578AD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		DCD830E61BA802A6005578AD /* ApplyAddBranchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyAddBranchViewController.swift; sourceTree = "<group>"; };
+		DCD830E71BA802A6005578AD /* ApplyChangeBranchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyChangeBranchViewController.swift; sourceTree = "<group>"; };
+		DCD830E81BA802A6005578AD /* ApplyPausedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyPausedViewController.swift; sourceTree = "<group>"; };
+		DCD830E91BA802A6005578AD /* ApplyResignBranchViewController2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyResignBranchViewController2.swift; sourceTree = "<group>"; };
+		DCD830EA1BA802A6005578AD /* ApplyRestoreBranchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyRestoreBranchViewController.swift; sourceTree = "<group>"; };
+		DCD830EB1BA802A6005578AD /* ApplyStopBranchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyStopBranchViewController.swift; sourceTree = "<group>"; };
+		DCD830EC1BA802A6005578AD /* ChangeUserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeUserInfoViewController.swift; sourceTree = "<group>"; };
+		DCD830ED1BA802A6005578AD /* ClassToJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassToJSON.h; sourceTree = "<group>"; };
+		DCD830EE1BA802A6005578AD /* ClassToJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassToJSON.m; sourceTree = "<group>"; };
+		DCD830EF1BA802A6005578AD /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		DCD830FA1BA802D1005578AD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DCD830FC1BA802FD005578AD /* BSDTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSDTViewController.m; sourceTree = "<group>"; };
+		DCD831081BA8043F005578AD /* PostalManageSystem-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PostalManageSystem-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,8 +290,16 @@
 		56B535851B87186400238BE6 /* BanShiDaTing */ = {
 			isa = PBXGroup;
 			children = (
+				DCD831081BA8043F005578AD /* PostalManageSystem-Bridging-Header.h */,
+				DCD830E41BA80249005578AD /* Main.storyboard */,
+				DCD830E91BA802A6005578AD /* ApplyResignBranchViewController2.swift */,
+				DCD831091BA84794005578AD /* Completed */,
+				DCD830EC1BA802A6005578AD /* ChangeUserInfoViewController.swift */,
+				DCD830ED1BA802A6005578AD /* ClassToJSON.h */,
+				DCD830EE1BA802A6005578AD /* ClassToJSON.m */,
+				DCD830EF1BA802A6005578AD /* Model.swift */,
 				56B535861B8718B400238BE6 /* BSDTViewController.h */,
-				56B535871B8718B400238BE6 /* BSDTViewController.m */,
+				DCD830FC1BA802FD005578AD /* BSDTViewController.m */,
 				56BFF53F1B8AF2AB00D5E896 /* BSDTDetailViewController.h */,
 				56BFF5401B8AF2AB00D5E896 /* BSDTDetailViewController.m */,
 				56B88E2F1BA56C07000B54D0 /* UploadPicViewController.h */,
@@ -344,7 +374,6 @@
 				56C6628A1B85BBC300BA95BD /* GeneralTableViewCell.m */,
 				56B535851B87186400238BE6 /* BanShiDaTing */,
 				56C59E2B1B83162100D96F08 /* BianMinFuWu */,
-				56C59DDB1B82DD5F00D96F08 /* Images.xcassets */,
 				56C59DDD1B82DD5F00D96F08 /* LaunchScreen.xib */,
 				56C59DCE1B82DD5F00D96F08 /* Supporting Files */,
 			);
@@ -431,6 +460,7 @@
 		56C59E2B1B83162100D96F08 /* BianMinFuWu */ = {
 			isa = PBXGroup;
 			children = (
+				DCD830FA1BA802D1005578AD /* Images.xcassets */,
 				56C59E2C1B83164C00D96F08 /* MYDDCBGViewController.h */,
 				56C59E2D1B83164C00D96F08 /* MYDDCBGViewController.m */,
 				56C59E321B831DFC00D96F08 /* YZBMCXViewController.h */,
@@ -519,6 +549,18 @@
 			name = Network;
 			sourceTree = "<group>";
 		};
+		DCD831091BA84794005578AD /* Completed */ = {
+			isa = PBXGroup;
+			children = (
+				DCD830E61BA802A6005578AD /* ApplyAddBranchViewController.swift */,
+				DCD830E81BA802A6005578AD /* ApplyPausedViewController.swift */,
+				DCD830EA1BA802A6005578AD /* ApplyRestoreBranchViewController.swift */,
+				DCD830EB1BA802A6005578AD /* ApplyStopBranchViewController.swift */,
+				DCD830E71BA802A6005578AD /* ApplyChangeBranchViewController.swift */,
+			);
+			name = Completed;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -568,7 +610,7 @@
 				TargetAttributes = {
 					56C59DCA1B82DD5F00D96F08 = {
 						CreatedOnToolsVersion = 6.4;
-						DevelopmentTeam = 2FQ7N87PG5;
+						DevelopmentTeam = QRR5JC63ES;
 					};
 					56C59DE31B82DD5F00D96F08 = {
 						CreatedOnToolsVersion = 6.4;
@@ -615,6 +657,7 @@
 				56C59E1B1B82F59D00D96F08 /* manyidudiaochajieguotonggao.png in Resources */,
 				56C59E1E1B82F59D00D96F08 /* shenqingchexiaowangdian.png in Resources */,
 				56CE5B9D1B9ADAFE008D3B75 /* pull_loading@2x.png in Resources */,
+				DCD830E51BA80249005578AD /* Main.storyboard in Resources */,
 				56C59DDF1B82DD5F00D96F08 /* LaunchScreen.xib in Resources */,
 				56C59E161B82F59D00D96F08 /* hangyetongji.png in Resources */,
 				56C59E201B82F59D00D96F08 /* shenqingtingxianyewu.png in Resources */,
@@ -624,6 +667,7 @@
 				56CE5B9E1B9ADAFE008D3B75 /* pull_loading@3x.png in Resources */,
 				565430691B96C3B500B49E0E /* settings.png in Resources */,
 				56C8F0761BA0344A00763A4C /* provinces.xml in Resources */,
+				DCD830FB1BA802D1005578AD /* Images.xcassets in Resources */,
 				56B88E391BA5A734000B54D0 /* location.png in Resources */,
 				56C59E431B8331D500D96F08 /* area.plist in Resources */,
 				56CE5BA01B9ADAFE008D3B75 /* pull_refresh@3x.png in Resources */,
@@ -631,7 +675,6 @@
 				56C59E1D1B82F59D00D96F08 /* shenqingbiangengwangdian.png in Resources */,
 				56C59E141B82F59D00D96F08 /* gyyz.png in Resources */,
 				56B88E2B1BA55A27000B54D0 /* mapapi.bundle in Resources */,
-				56C59DDC1B82DD5F00D96F08 /* Images.xcassets in Resources */,
 				56C59E1A1B82F59D00D96F08 /* logo.png in Resources */,
 				56C8F0771BA0344A00763A4C /* zipcode.xml in Resources */,
 				56C59E1F1B82F59D00D96F08 /* shenqinghuifuyewu.png in Resources */,
@@ -665,29 +708,38 @@
 			files = (
 				56CE5BA51B9ADAFE008D3B75 /* DJRefreshTopView.m in Sources */,
 				56C6628E1B85CCE800BA95BD /* JXJWPMLCXViewController.m in Sources */,
+				DCD830F41BA802A6005578AD /* ApplyRestoreBranchViewController.swift in Sources */,
 				56E508191B9596E100DB22A7 /* ConnectionAPI.m in Sources */,
+				DCD830F01BA802A6005578AD /* ApplyAddBranchViewController.swift in Sources */,
 				56C59DD71B82DD5F00D96F08 /* MainViewController.m in Sources */,
+				DCD830F81BA802A6005578AD /* Model.swift in Sources */,
 				56B88E311BA56C07000B54D0 /* UploadPicViewController.m in Sources */,
+				DCD830FD1BA802FD005578AD /* BSDTViewController.m in Sources */,
 				56CE5BA11B9ADAFE008D3B75 /* SampleRefreshView.m in Sources */,
 				56CE5B861B9AD769008D3B75 /* Pager.m in Sources */,
 				56C59E451B8331D500D96F08 /* HZAreaPickerView.m in Sources */,
 				56CC7CFA1BA6B537003BF6BE /* CustomTableViewCell.m in Sources */,
+				DCD830F51BA802A6005578AD /* ApplyStopBranchViewController.swift in Sources */,
 				56CC7CF71BA666DF003BF6BE /* SearchForMyApply.m in Sources */,
 				56C8F07B1BA0397B00763A4C /* GDataXMLNode.m in Sources */,
+				DCD830F31BA802A6005578AD /* ApplyResignBranchViewController2.swift in Sources */,
 				56C59E471B8331D500D96F08 /* HZLocation.m in Sources */,
 				56B88E171BA558E8000B54D0 /* test.mm in Sources */,
+				DCD830F61BA802A6005578AD /* ChangeUserInfoViewController.swift in Sources */,
 				56B636DD1B9C65030005290D /* TFHppleElement.m in Sources */,
 				565430631B96AF3300B49E0E /* GMDCircleLoader.m in Sources */,
 				56B636DE1B9C65030005290D /* XPathQuery.m in Sources */,
 				56B636DC1B9C65030005290D /* TFHpple.m in Sources */,
 				56C59E341B831DFC00D96F08 /* YZBMCXViewController.m in Sources */,
-				56B535881B8718B400238BE6 /* BSDTViewController.m in Sources */,
 				56C59DD41B82DD5F00D96F08 /* AppDelegate.m in Sources */,
 				56CE5BA61B9ADAFE008D3B75 /* DJRefreshView.m in Sources */,
 				56C59DD11B82DD5F00D96F08 /* main.m in Sources */,
+				DCD830F71BA802A6005578AD /* ClassToJSON.m in Sources */,
 				56BFF5411B8AF2AB00D5E896 /* BSDTDetailViewController.m in Sources */,
 				56CE5BA41B9ADAFE008D3B75 /* DJRefreshBottomView.m in Sources */,
+				DCD830F11BA802A6005578AD /* ApplyChangeBranchViewController.swift in Sources */,
 				56CE5BA31B9ADAFE008D3B75 /* DJRefresh.m in Sources */,
+				DCD830F21BA802A6005578AD /* ApplyPausedViewController.swift in Sources */,
 				56C6628B1B85BBC300BA95BD /* GeneralTableViewCell.m in Sources */,
 				56C59E2E1B83164C00D96F08 /* MYDDCBGViewController.m in Sources */,
 				56C59E311B8316FF00D96F08 /* GeneralTalbeViewController.m in Sources */,
@@ -813,19 +865,23 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PostalManageSystem/BaiduMap",
 				);
-				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostalManageSystem/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${SDK_DIR}\"/usr/include/libxml2";
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PostalManageSystem/PostalManageSystem-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -835,19 +891,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PostalManageSystem/BaiduMap",
 				);
-				GCC_PREFIX_HEADER = /Users/ZengYifei/project/PostalManageSystem/PostalManageSystem/PrefixHeader.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostalManageSystem/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "${SDKROOT}/usr/include/libxml2";
 				INFOPLIST_FILE = PostalManageSystem/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "PostalManageSystem/PostalManageSystem-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
