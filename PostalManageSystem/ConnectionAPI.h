@@ -42,7 +42,8 @@
 //全部申请查询
 - (void)getAllApplyListWithToken:(NSString *)token AndType:(NSString *)type AndUserName:(NSString *)userName AndPlaceName:(NSString *)placeName AndState:(NSString *)state AndPager:(Pager *)pager;
 //获取flowID
-- (void)getFlowIDWithToken:(NSString *)token  AndFlowID:(NSString *)flowID;
+
+- (void)getFlowIDWithInterface:(NSString *)interface ANdToken:(NSString *)token AndFlowID:(NSString *)flowID;
 //上传图片
 +(NSString *)PostImagesToServer:(NSString *) strUrl dicPostParams:(NSMutableDictionary *)params dicImages:(NSMutableDictionary *) dicImages;
 @property (strong, nonatomic) NSMutableData *webData;
